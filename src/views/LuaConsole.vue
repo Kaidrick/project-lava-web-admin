@@ -9,7 +9,7 @@
     <el-input type="textarea"
               v-model="luaDebugString"
               placeholder="Enter Lua code to be executed in selected environment here."></el-input>
-    <el-button>Send</el-button>
+    <el-button @click="sendDebugString">Send</el-button>
   </div>
 </template>
 
@@ -24,7 +24,17 @@
 
         luaDebugString: 'trigger.action.outText("Hello from Project Lava Web Console!", 10)',
       }
-    }
+    },
+
+    methods: {
+      sendDebugString() {
+        this.$http.post('/api/lua/debug', {
+          luaString: this.luaDebugString,
+          level: this.debugEnvironment,
+          timeStamp: new Date(),
+        })
+      }
+    },
   }
 </script>
 

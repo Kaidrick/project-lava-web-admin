@@ -2,16 +2,16 @@
   <div>
     <el-form>
       <el-form-item label="Server Main Port">
-        <el-input v-model="portServerComm"></el-input>
+        <el-input v-model="serverMainPort"></el-input>
       </el-form-item>
       <el-form-item label="Server Poll Port">
-        <el-input v-model="portServerPoll"></el-input>
+        <el-input v-model="serverPollPort"></el-input>
       </el-form-item>
       <el-form-item label="Export Main Port">
-        <el-input v-model="portExportComm"></el-input>
+        <el-input v-model="exportMainPort"></el-input>
       </el-form-item>
       <el-form-item label="Export Poll Port">
-        <el-input v-model="portExportPoll"></el-input>
+        <el-input v-model="exportPollPort"></el-input>
       </el-form-item>
 
       <el-button @click="testSendRequest">Confirm</el-button>
