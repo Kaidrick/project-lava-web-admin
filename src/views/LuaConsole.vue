@@ -10,6 +10,8 @@
               v-model="luaDebugString"
               placeholder="Enter Lua code to be executed in selected environment here."></el-input>
     <el-button @click="sendDebugString">Send</el-button>
+
+    <el-input type="textarea" v-model="currentResult"></el-input>
   </div>
 </template>
 
@@ -22,6 +24,8 @@
       return {
         debugEnvironment: 0,  // default to 0, in mission environment
 
+        currentResult: '',
+
         luaDebugString: 'trigger.action.outText("Hello from Project Lava Web Console!", 10)',
       }
     },
@@ -32,6 +36,8 @@
           luaString: this.luaDebugString,
           level: this.debugEnvironment,
           timeStamp: new Date(),
+        }).then(res => {
+          this.currentResult = res.data;
         })
       }
     },
