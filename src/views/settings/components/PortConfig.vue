@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <el-container v-loading="true">
     <el-form>
       <el-form-item label="Server Main Port">
         <el-input v-model="serverMainPort"></el-input>
@@ -17,11 +17,31 @@
       <el-button @click="testSendRequest">Confirm</el-button>
       <el-button @click="testPostRequest">Cancel</el-button>
     </el-form>
-  </div>
+    
+    <el-form>
+      <el-form-item label="Server Main Port">
+        <el-input v-model="portConfig.serverMainPort"></el-input>
+      </el-form-item>
+      <el-form-item label="Server Poll Port">
+        <el-input v-model="portConfig.serverPollPort"></el-input>
+      </el-form-item>
+      <el-form-item label="Export Main Port">
+        <el-input v-model="portConfig.exportMainPort"></el-input>
+      </el-form-item>
+      <el-form-item label="Export Poll Port">
+        <el-input v-model="portConfig.exportPollPort"></el-input>
+      </el-form-item>
+
+      <el-button @click="testSendRequest">Confirm</el-button>
+      <el-button @click="testPostRequest">Cancel</el-button>
+    </el-form>
+  </el-container>
 </template>
 
 <script>
-  export default {
+import connectionService, {PortConfig} from "@/services/ConnectionService";
+
+export default {
     name: "PortConfig",
 
     props: {
@@ -34,16 +54,18 @@
         serverPollPort: '',
         exportMainPort: '',
         exportPollPort: '',
+
+        portConfig: new PortConfig()
       }
     },
 
     mounted() {
-
+      this.portConfig = connectionService.getDataPortConfig();  // try synchronized request?
     },
 
     methods: {
       testSendRequest() {
-        this.$http.get('/api/config/get').then(res => {
+        connectionService.getDataPortConfig().then(res => {
           console.log(JSON.stringify(res));
         })
       },
