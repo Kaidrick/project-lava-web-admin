@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
@@ -27,11 +27,16 @@ const routes = [
     path: '/settings',
     name: 'Settings',
     component: () => import("../views/Settings")
+  },
+  {
+    path: "/i18n",
+    name: 'Localization',
+    component: () => import("../components/HelloI18n")
   }
-]
+];
 
 const router = new VueRouter({
   routes
-})
+});
 
 export default router

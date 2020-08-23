@@ -1,5 +1,17 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <el-container>
+    <el-main>
+      <div>
+        <span>About</span>
+      </div>
+    </el-main>
+  </el-container>
 </template>
+
+<script>
+
+</script>
+
+<style lang="scss" scoped>
+
+</style>

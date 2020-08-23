@@ -24,7 +24,7 @@ export default {
      * @param data PortConfig object
      */
     getDataPortConfig(data) {
-        http({
+        return http({
             method: 'get',
             url: '/api/config/get',
             data
@@ -32,7 +32,7 @@ export default {
     },
 
     setDataPortConfig(data) {
-        http({
+        return http({
             method: 'port',
             url: '/api/config/port',
             data
