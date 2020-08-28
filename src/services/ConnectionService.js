@@ -33,9 +33,16 @@ export default {
 
     setDataPortConfig(data) {
         return http({
-            method: 'port',
+            method: 'post',
             url: '/api/config/port',
             data
+        });
+    },
+
+    getBackendConnectionStatus() {
+        return http({
+            method: 'get',
+            url: '/api/status'
         });
     }
 
