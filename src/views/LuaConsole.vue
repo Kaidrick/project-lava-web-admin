@@ -5,7 +5,9 @@
         <log-panel/>
       </el-col>
       <el-col :span="6">
-        <server-info-panel></server-info-panel>
+        <keep-alive>
+          <server-info-panel></server-info-panel>
+        </keep-alive>
       </el-col>
     </el-row>
 

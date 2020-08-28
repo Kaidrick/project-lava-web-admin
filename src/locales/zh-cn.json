@@ -1,3 +1,13 @@
 {
-  "message": "测试国际化 !!"
+  "message": "测试国际化",
+
+  "no data": "暂无日志数据",
+  "server_info": "服务器信息",
+  "panel_connection": "Lava面板连接状态",
+  "lava_backend_connection": "Lava后端连接状态",
+  "lava_backend_phase": "Lava后端运行状态",
+  "player_count": "服务器连接玩家数",
+  "mission_map_theater": "任务地图",
+  "local_time": "本地时间",
+  "mission_time": "DCS任务时间"
 }

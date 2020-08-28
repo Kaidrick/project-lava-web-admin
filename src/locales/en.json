@@ -1,5 +1,13 @@
 {
   "message": "hello i18n !!",
 
-  "no data": "No data available"
+  "no data": "No data available",
+  "server_info": "SERVER INFO",
+  "panel_connection": "LavaGUI Connection",
+  "lava_backend_connection": "Lava Backend Connection",
+  "lava_backend_phase": "Lava Backend Status",
+  "player_count": "Number of Connected Players",
+  "mission_map_theater": "Map Theater",
+  "local_time": "Local Time",
+  "mission_time": "DCS Mission Time"
 }

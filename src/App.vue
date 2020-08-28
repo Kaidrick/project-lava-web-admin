@@ -7,7 +7,10 @@
       <router-link to="/settings">Settings</router-link> |
       <router-link to="/i18n">Localization</router-link>
     </div>
-    <router-view/>
+
+    <keep-alive include="LuaConsole">
+      <router-view></router-view>
+    </keep-alive>
 
     <div>
       <p>{{ $t('message') }}</p>
