@@ -23,6 +23,10 @@
         <span class="detail-value">SOME TEST VALUE</span>
       </div>
       <div class="detail-name-value">
+        <span class="detail-name">{{ 'In Game Objects' }}</span>
+        <span class="detail-value">{{ objectCount }}</span>
+      </div>
+      <div class="detail-name-value">
         <span class="detail-name">{{ $t('mission_time') }}</span>
         <span class="detail-value">SOME TEST VALUE</span>
       </div>
@@ -50,6 +54,7 @@
         phaseCode: -1,
         timestamp: '',
         theater: '',  // should only be updated at first connection or at mission restart trigger
+        objectCount: 0
       }
     },
 
@@ -107,6 +112,7 @@
              this.timestamp = new Date(connectionStatus.timestamp).toLocaleTimeString();
              this.phaseCode = connectionStatus.phaseCode;
              this.theater = connectionStatus.theater;
+             this.objectCount = connectionStatus.objectCount;
 
            } else {  // WebGUI failed to detect backend
              this.webGuiStatus = 'Bad';
