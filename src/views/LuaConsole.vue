@@ -42,6 +42,7 @@
                 </el-radio-group>
               </div>
               <div class="lua-debug-command-button-wrapper">
+                <!-- send debug string button should only be available if operation phase is running -->
                 <el-button type="primary" plain size="small" @click="sendDebugString">Send</el-button>
                 <el-button type="warning" plain size="small">Clear</el-button>
               </div>
@@ -66,7 +67,9 @@
 
   export default {
     name: "LuaConsole",
-    components: {ServerInfoPanel, LogPanel},
+    components: {
+      ServerInfoPanel,
+      LogPanel},
     data() {
       return {
         activeName: '',

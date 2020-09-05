@@ -67,7 +67,7 @@ export default {
 
     mounted() {
       connectionService.getDataPortConfig().then(res => {
-        console.log(JSON.stringify(res));
+        console.log(res);
         this.portConfig = res.data;
         this.awaitData = false;
       });
@@ -76,7 +76,7 @@ export default {
     methods: {
       testSendRequest() {
         connectionService.getDataPortConfig().then(res => {
-          console.log(JSON.stringify(res));
+          console.log(res);
         })
       },
 
@@ -87,7 +87,7 @@ export default {
           exportMainPort: this.exportMainPort,
           exportPollPort: this.exportPollPort
         }).then(res => {
-          console.log(JSON.stringify(res))
+          console.log(res);
         });
       }
     }

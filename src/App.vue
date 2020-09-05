@@ -1,22 +1,8 @@
 <template>
   <div id="app">
     <el-container class="main-panel-container" style="border: 1px solid #eee">
-      <el-aside>
-        <div id="nav">
-          <router-link to="/">
-            <i class="el-icon-data-board">Dashboard</i>
-          </router-link> |
-          <router-link to="/about">
-            <i class="el-icon-files">About</i>
-          </router-link> |
-          <router-link to="/lua">
-            <i class="el-icon-s-operation">Lua Console</i>
-          </router-link> |
-          <router-link to="/settings">
-            <i class="el-icon-setting">Settings</i>
-          </router-link> |
-          <router-link to="/i18n">Localization</router-link>
-        </div>
+      <el-aside class="main-panel-side-menu">
+        <panel-nav-menu></panel-nav-menu>
       </el-aside>
 
       <el-container>
@@ -53,7 +39,9 @@
 </template>
 
 <script>
+  import PanelNavMenu from "@/views/PanelNavMenu";
   export default {
+    components: {PanelNavMenu},
     data() {
       return {
         LOCALE_NAMES: {
@@ -92,27 +80,31 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: #2c3e50;
+    color: whitesmoke;
 
-    ::v-deep button,
-    input,
-    select,
-    textarea {
-      font-family: inherit;
-      font-size: inherit;
-      line-height: inherit;
-      color: #2c3e50;
+    //::v-deep button,
+    //input,
+    //select,
+    //textarea {
+    //  font-family: inherit;
+    //  font-size: inherit;
+    //  line-height: inherit;
+    //  color: #2c3e50;
+    //}
+
+    a {
+      //color: aqua;
     }
 
-    /*background-color: #2c3e50;*/
-
-    ::v-deep div {
-      color: #eeeeee;
-      font-size: 48px;
-    }
+    background-color: #2c3e50;
 
     .main-panel-container {
       height: 100vh;
+
+      .main-panel-side-menu {
+        width: 180px !important;
+        height: 100%;
+      }
     }
   }
 
@@ -121,11 +113,14 @@
 
     a {
       font-weight: bold;
-      color: #2c3e50;
+      color: whitesmoke;
 
       &.router-link-exact-active {
         color: #42b983;
       }
+
+      flex: 1;
+      width: 100%;
     }
   }
 </style>

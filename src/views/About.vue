@@ -2,7 +2,7 @@
   <el-container>
     <el-main>
       <div>
-        <span>About</span>
+        <p>This is a web control panel for DCS: Project Lava backend application.</p>
       </div>
     </el-main>
   </el-container>
