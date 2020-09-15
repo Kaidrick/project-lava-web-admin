@@ -1,12 +1,19 @@
 <template>
   <div id="app">
-    <el-container class="main-panel-container" style="border: 1px solid #eee">
-      <el-aside class="main-panel-side-menu">
-        <panel-nav-menu></panel-nav-menu>
-      </el-aside>
 
-      <el-container>
-        <el-header style="text-align: right; font-size: 12px">
+    <web-port-config v-if="!configured"></web-port-config>
+
+    <div v-if="configured" class="side-panel-right">
+      <server-info-panel class="server-info-panel"
+                         v-show="show"></server-info-panel>
+      <el-button class="side-panel__show-hide-button" @click="show = !show">
+        <i class="el-icon-d-arrow-left"></i>
+      </el-button>
+    </div>
+
+    <el-container v-if="configured" class="main-panel-container">
+      <el-aside class="main-panel-side-menu" width="180px">
+        <panel-nav-menu>
           <el-dropdown @command="handleLocaleChangeCommand">
             <i class="el-icon-setting" style="margin-right: 15px"></i>
             <el-dropdown-menu slot="dropdown" >
@@ -17,31 +24,30 @@
               </el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
-          <div>
-            <div class="lang">
-              <el-select v-model="$i18n.locale">
-                <el-option v-for="(lang, index) in languages" :key="`lang${index}}`" :value="lang">
-                  {{ getFlags(lang) }}
-                </el-option>
-              </el-select>
-            </div>
-          </div>
-        </el-header>
+        </panel-nav-menu>
+      </el-aside>
 
-        <el-main>
-          <keep-alive include="LuaConsole">
-            <router-view></router-view>
-          </keep-alive>
-        </el-main>
-      </el-container>
+      <el-main class="main-panel-view">
+        <el-scrollbar style="height: 100%">
+          <router-view></router-view>
+        </el-scrollbar>
+
+      </el-main>
+
+
     </el-container>
   </div>
 </template>
 
 <script>
   import PanelNavMenu from "@/views/PanelNavMenu";
+  import ServerInfoPanel from "@/views/logging/ServerInfoPanel";
+  import WebPortConfig from "@/modules/system/components/WebPortConfig";
+
+  import { mapGetters, mapActions } from 'vuex';
+
   export default {
-    components: {PanelNavMenu},
+    components: {WebPortConfig, ServerInfoPanel, PanelNavMenu},
     data() {
       return {
         LOCALE_NAMES: {
@@ -51,11 +57,20 @@
           'jp': '日本語',
         },
 
-        languages: ['en', 'fr', 'zh-cn', 'jp']
+        languages: ['en', 'fr', 'zh-cn', 'jp'],
+
+        show: true,
+
       }
     },
 
+    computed: {
+      ...mapGetters('system', ['configured'])
+    },
+
     methods: {
+      ...mapActions('system', ['test']),
+
       getFlags(locale) {
         return this.LOCALE_NAMES[locale];
       },
@@ -63,49 +78,66 @@
       handleLocaleChangeCommand(command) {
         this.$i18n.locale = command;
         this.$message.success('Locale -> ' + command);
+      },
+
+      handleConfigWebOptions() {
+        // validate if input
       }
     }
   }
 </script>
 
 <style lang="scss">
+  @import "assets/style/base";
+
+  .side-panel-right {
+    background-color: #42b983;
+    position: absolute;
+    //top: 50%;
+    right: 0;
+    z-index: 255;
+    height: 60%;
+
+    .side-panel__show-hide-button {
+      height: 60px;
+      padding-left: 0;
+      padding-right: 0;
+      position: absolute;
+      left: -15px;
+      top: calc(50% - 30px);
+
+      .is-panel-hide {
+
+      }
+      .is-panel-show {
+
+      }
+    }
+
+    .server-info-panel {
+      .is-panel-hide {
+
+      }
+      .is-panel-show {
+
+      }
+    }
+  }
+
   html, body {
     height: 100%;
     margin: 0;
     padding: 0;
+    overflow: hidden;
   }
 
   #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-align: center;
     color: whitesmoke;
-
-    //::v-deep button,
-    //input,
-    //select,
-    //textarea {
-    //  font-family: inherit;
-    //  font-size: inherit;
-    //  line-height: inherit;
-    //  color: #2c3e50;
-    //}
-
-    a {
-      //color: aqua;
-    }
-
     background-color: #2c3e50;
-
-    .main-panel-container {
-      height: 100vh;
-
-      .main-panel-side-menu {
-        width: 180px !important;
-        height: 100%;
-      }
-    }
+    height: 100%;
   }
 
   #nav {

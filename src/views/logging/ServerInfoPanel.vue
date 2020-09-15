@@ -8,23 +8,23 @@
     <el-main class="server-info-detail">
       <div class="detail-name-value">
         <span class="detail-name">{{ $t('panel_connection') }}</span>
-        <span class="detail-value">{{ showWebGuiStatus }}</span>
+        <span class="detail-value">{{ status.webGuiStatus }}</span>
       </div>
       <div class="detail-name-value">
         <span class="detail-name">{{ $t('lava_backend_connection') }}</span>
-        <span class="detail-value">{{ showConnectionStatus }}</span>
+        <span class="detail-value">{{ status.connectionStatus }}</span>
       </div>
       <div class="detail-name-value">
         <span class="detail-name">{{ $t('lava_backend_phase') }}</span>
-        <span class="detail-value">{{ showBackendOperationPhase }}</span>
+        <span class="detail-value">{{ status.phaseCode }}</span>
       </div>
       <div class="detail-name-value">
         <span class="detail-name">{{ $t('player_count') }}</span>
-        <span class="detail-value">{{ playerCount }}</span>
+        <span class="detail-value">{{ status.playerCount  }}</span>
       </div>
       <div class="detail-name-value">
         <span class="detail-name">{{ 'In Game Objects' }}</span>
-        <span class="detail-value">{{ objectCount }}</span>
+        <span class="detail-value">{{ status.objectCount  }}</span>
       </div>
       <div class="detail-name-value">
         <span class="detail-name">{{ $t('mission_time') }}</span>
@@ -32,75 +32,23 @@
       </div>
       <div class="detail-name-value">
         <span class="detail-name">{{ $t('local_time') }}</span>
-        <span class="detail-value">{{ showCurrentLocalTime }}</span>
+        <span class="detail-value">{{ status.timestamp  }}</span>
       </div>
       <div class="detail-name-value">
         <span class="detail-name">{{ $t('mission_map_theater') }}</span>
-        <span class="detail-value">{{ $t(showTheaterName) }}</span>
+        <span class="detail-value">{{ $t(status.theater) }}</span>
       </div>
     </el-main>
   </el-container>
 </template>
 
 <script>
-  import connectionService from '@/services/ConnectionService';
+  import { mapGetters, mapActions } from "vuex";
   export default {
     name: "ServerInfoPanel",
 
-    data() {
-      return {
-        webGuiStatus: '',
-        connectionStatus: '',
-        phaseCode: -1,
-        timestamp: '',
-        theater: '',  // should only be updated at first connection or at mission restart trigger
-        objectCount: 0,
-        playerCount: 0
-      }
-    },
-
     computed: {
-      showConnectionStatus() {
-        return this.connectionStatus;
-      },
-
-      showCurrentLocalTime() {
-        return this.timestamp;
-      },
-
-      showWebGuiStatus() {
-        return this.webGuiStatus;
-      },
-
-      showBackendOperationPhase() {
-        switch (this.phaseCode) {
-          case 0:
-            return "PREPARING";
-          case 1:
-            return "LOADING";
-          case 2:
-            return "STOPPING";
-          case 3:
-            return "IDLE";
-          case 4:
-            return "RUNNING";
-          default:
-            return "UNKNOWN";
-        }
-      },
-
-      showTheaterName() {
-        return this.theater;
-      },
-
-      // infoItemName(ident) {
-      //   const width = window.innerWidth;
-      //   if (width > 1500) {
-      //     return (<div> + {ident} + </div>);
-      //   } else {
-      //     return "Bad";
-      //   }
-      // },
+      ...mapGetters(["status"])
     },
 
     activated() {
@@ -109,36 +57,11 @@
 
     mounted() {
       console.log("mounted");
-      setInterval(this.getConnectionStatus, 2000);
+      setInterval(this.loadBackendConnectionStatus, 2000);
     },
 
     methods: {
-      getConnectionStatus() {
-         connectionService.getBackendConnectionStatus().then(res => {
-           if (res.status === 200) {
-             const connectionStatus = res.data;
-             this.connectionStatus = connectionStatus.connected ? 'Connection OK' : 'Not connected';
-             this.webGuiStatus = 'Good';
-             this.timestamp = new Date(connectionStatus.timestamp).toLocaleTimeString();
-             this.phaseCode = connectionStatus.phaseCode;
-             this.theater = connectionStatus.theater;
-             this.objectCount = connectionStatus.objectCount;
-             this.playerCount = connectionStatus.playerCount;
-
-           } else {  // WebGUI failed to detect backend
-             this.webGuiStatus = 'Bad';
-           }
-
-           // if backend functionality is OK, query theater info and player count
-         }).catch(error => {
-           this.webGuiStatus = 'Bad';
-           if (error.response) {
-             // console.log(error.response.data);
-             // console.log(error.response.status);
-             // console.log(error.response.headers);
-           }
-         });
-      }
+      ...mapActions(["loadBackendConnectionStatus"])
     },
   }
 </script>
@@ -165,7 +88,7 @@
       }
 
       .detail-value {
-
+        overflow: hidden;
       }
     }
   }

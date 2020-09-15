@@ -1,11 +1,11 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
-import PanelNavMenu from "@/views/PanelNavMenu";
+import ServerInfoPanel from "@/store/modules/ServerInfoPanel";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-    modules: {
-        PanelNavMenu
-    }
+    modules: [
+        ServerInfoPanel
+    ]
 });

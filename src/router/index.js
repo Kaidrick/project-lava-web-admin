@@ -3,21 +3,28 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import LuaConsole from "../views/LuaConsole";
 
-Vue.use(VueRouter);
+class VueRouterEx extends VueRouter {
+  constructor(options) {
+    super(options);
+    this.routes = [];
+    this.moduleRoutes = new Map();  // module name - module paths pairs, used to map nav menus
+    const { addRoutes } = this.matcher;
+    const { routes } = options;
+    this.routes = routes;
+    this.matcher.addRoutes = (newRoutes) => {
+      this.routes.push(...newRoutes);
+      addRoutes(newRoutes);
+    };
+  }
+}
+
+Vue.use(VueRouterEx);
 
 const routes = [
   {
     path: '/',
     name: 'Dashboard',
     component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About')
   },
   {
     path: '/lua',
@@ -33,10 +40,18 @@ const routes = [
     path: "/i18n",
     name: 'Localization',
     component: () => import("../components/HelloI18n")
+  },
+  {
+    path: '/about',
+    name: 'About',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/About')
   }
 ];
 
-const router = new VueRouter({
+const router = new VueRouterEx({
   routes
 });
 

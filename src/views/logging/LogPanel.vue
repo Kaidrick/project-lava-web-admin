@@ -3,10 +3,10 @@
     <el-main>
       <el-scrollbar>
         <el-table class="log-table" :data="logData" height="600px" :show-header="false">
-          <el-table-column title="Time Stamp" prop="timestamp"></el-table-column>
-          <el-table-column title="Category" prop="category"></el-table-column>
-          <el-table-column title="Message" prop="message"></el-table-column>
-          <el-table-column title="Source" prop="source"></el-table-column>
+          <el-table-column show-overflow-tooltip title="Time Stamp" prop="timestamp"></el-table-column>
+          <el-table-column show-overflow-tooltip title="Category" prop="category" width="80px"></el-table-column>
+          <el-table-column show-overflow-tooltip title="Source" prop="source"></el-table-column>
+          <el-table-column show-overflow-tooltip title="Message" prop="message"></el-table-column>
           <div slot="empty">{{ $t('no data') }}</div>
         </el-table>
       </el-scrollbar>
@@ -30,8 +30,9 @@
 
     methods: {
       addTestData() {
+        const time = new Date();
         this.logData.push({
-          timestamp: new Date().toISOString(),
+          timestamp: `${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`,
           category: 'INFO',
           message: 'This is a test log message',
           source: 'some class name here maybe?'

@@ -1,4 +1,6 @@
 module.exports = {
+    publicPath: '',  // use relative path, for local viewing only
+
     devServer: {
         port: 3000,
         proxy: {
