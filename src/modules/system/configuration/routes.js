@@ -1,5 +1,5 @@
-import Configuration from "./components/ConnectionPortConfig";
+import SystemConfigView from "./views/SystemConfigView";
 
 export default [
-    { path: '/config', name: 'Configuration', component: Configuration }
+    { path: '/config', name: 'SystemConfigView', component: SystemConfigView }
 ]
