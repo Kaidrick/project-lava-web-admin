@@ -114,7 +114,7 @@
         console.log(typeof this.debugEnvironment);
 
         LuaDebugService.sendLuaDebugString({
-          luaString: this.luaDebugString,
+          luaString: this.editor.getValue(),
           level: this.debugEnvironment,
           timeStamp: new Date(),
         }).then(res => {
