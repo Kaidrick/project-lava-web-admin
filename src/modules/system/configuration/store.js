@@ -30,8 +30,8 @@ export default {
 
         // eslint-disable-next-line no-unused-vars
         initialize ({ dispatch }) {
-            console.info('Configuration Module initializing...')
-            console.info('Configuration Module initialized.')
+            console.info('Configuration Module initializing...');
+            console.info('Configuration Module initialized.');
         },
     }
 }
