@@ -9,26 +9,25 @@
 </template>
 
 <script>
-export default {
-  name: 'Home',
+  export default {
+    name: 'Home',
 
-  data() {
-    return {
-      image: "'../assets/green_bat.png'",
+    data() {
+      return {
+        image: "'../assets/green_bat.png'",
+      }
     }
   }
-}
 </script>
 
 <style lang="scss" scoped>
+  $imageSize: 200px;
 
-$imageSize: 200px;
-
-.lava-logo {
-  margin: 20px auto;
-  width: $imageSize;
-  height: $imageSize;
-  background: url("~@/assets/lava-logo.svg") center center no-repeat;
-  background-size: $imageSize auto;
-}
+  .lava-logo {
+    margin: 20px auto;
+    width: $imageSize;
+    height: $imageSize;
+    background: url("~@/assets/lava-logo.svg") center center no-repeat;
+    background-size: $imageSize auto;
+  }
 </style>

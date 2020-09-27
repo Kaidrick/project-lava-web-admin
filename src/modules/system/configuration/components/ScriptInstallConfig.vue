@@ -19,7 +19,7 @@
       return {
         branchName: '',
         dcsBranches: [],
-        isInstall: 'true',
+        isInstall: true,
       }
     },
 
