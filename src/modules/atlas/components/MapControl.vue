@@ -6,33 +6,35 @@
 </template>
 
 <script>
-  import * as PIXI from 'pixi.js'
+  import * as PIXI from 'pixi.js';
+  import test from '@/assets/eraser.png';
 
   export default {
     name: "MapControl",
 
     mounted() {
-      const app = new PIXI.Application({width: 512, height: 512});
+      const app = new PIXI.Application({ backgroundColor: 0x1099bb });
       this.$el.appendChild(app.view);
 
-      let message = new PIXI.Text("Banana Pixi!");
-      app.stage.addChild(message);
+      // create a new Sprite from an image path
+      const bunny = PIXI.Sprite.from(test);
 
-      const bunny = PIXI.Sprite.from('cat.png');
+      // center the sprite's anchor point
       bunny.anchor.set(0.5);
+
+      // move the sprite to the center of the screen
       bunny.x = app.screen.width / 2;
       bunny.y = app.screen.height / 2;
 
       app.stage.addChild(bunny);
 
-      let rectangle = new PIXI.Graphics();
-      rectangle.lineStyle(4, 0xFF3300, 1);
-      rectangle.beginFill(0x66CCFF);
-      rectangle.drawRect(0, 0, 64, 64);
-      rectangle.endFill();
-      rectangle.x = 170;
-      rectangle.y = 170;
-      app.stage.addChild(rectangle);
+      // Listen for animate update
+      app.ticker.add((delta) => {
+        // just for fun, let's rotate mr rabbit a little
+        // delta is 1 if running at 100% performance
+        // creates frame-independent transformation
+        bunny.rotation += 1 * delta;
+      });
 
       app.renderer.backgroundColor = 0xd8d8d8;
     }
