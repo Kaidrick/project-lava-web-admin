@@ -3,6 +3,7 @@ import Router from '@/router';
 
 import siteModule from '@/modules/site';
 import Configuration from "./configuration";
+import MapControl from "@/modules/atlas/";
 
 export default {
     namespaced: true,
@@ -36,6 +37,7 @@ export default {
             console.info('System initialized.');
             dispatch('initializeModule', siteModule);
             dispatch('initializeModule', Configuration);
+            dispatch('initializeModule', MapControl);
         },
         initializeModule ({ dispatch }, module) {
             Store.registerModule(module.name, module.store);
