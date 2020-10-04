@@ -1,44 +1,36 @@
 <template>
   <div>
     <h3>DCS Map Test Page</h3>
-    <div></div>
+    <map-box ref="map"></map-box>
+    <el-button @click="$refs.map.refresh()">Refresh</el-button>
+<!--    <pixi-renderer>-->
+<!--      <pixi-container x="200" :y="400"-->
+<!--                      @pointerdown="scaleObject">-->
+<!--        <pixi-sprite :x="0" :y="0" image-path="./cat.png"></pixi-sprite>-->
+<!--      </pixi-container>-->
+<!--    </pixi-renderer>-->
   </div>
 </template>
 
 <script>
-  import * as PIXI from 'pixi.js';
-  import test from '@/assets/eraser.png';
+// import test from '@/assets/eraser.png';
 
-  export default {
-    name: "MapControl",
+  import MapBox from "@/modules/atlas/components/MapBox";
+  // import PixiRenderer from "@/modules/atlas/components/PixiRenderer";
+  // import PixiContainer from "@/modules/atlas/components/PixiContainer";
+  // import PixiSprite from "@/modules/atlas/components/PixiSprite";
 
-    mounted() {
-      const app = new PIXI.Application({ backgroundColor: 0x1099bb });
-      this.$el.appendChild(app.view);
+export default {
+  name: "MapControl",
+  components: {
+    // PixiSprite, PixiContainer, PixiRenderer,
+    MapBox
+  },
 
-      // create a new Sprite from an image path
-      const bunny = PIXI.Sprite.from(test);
+  methods: {
 
-      // center the sprite's anchor point
-      bunny.anchor.set(0.5);
-
-      // move the sprite to the center of the screen
-      bunny.x = app.screen.width / 2;
-      bunny.y = app.screen.height / 2;
-
-      app.stage.addChild(bunny);
-
-      // Listen for animate update
-      app.ticker.add((delta) => {
-        // just for fun, let's rotate mr rabbit a little
-        // delta is 1 if running at 100% performance
-        // creates frame-independent transformation
-        bunny.rotation += 1 * delta;
-      });
-
-      app.renderer.backgroundColor = 0xd8d8d8;
-    }
   }
+}
 </script>
 
 <style scoped>
