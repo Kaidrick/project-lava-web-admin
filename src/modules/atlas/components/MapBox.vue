@@ -1,7 +1,8 @@
 <script>
   import * as PIXI from 'pixi.js';
   import { TileMetaData } from "@/modules/atlas/TileMetaData";
-  import test from './cat.png';
+  import grid from '@/assets/default_grid_256.png';
+  import AtlasMap from "../../../services/atlas/AtlasMap";
 
   export default {
     name: "MapBox",
@@ -13,8 +14,9 @@
 
     data() {
       return {
-        viewWidth: 1500,
-        viewHeight: 900,
+        viewWidth: 1280,
+        viewHeight: 720,
+        tileSize: 256,
 
         app: '',
         testTile: new PIXI.Sprite(),
@@ -34,85 +36,63 @@
         tiles: [],
 
         timeout: '',
+
+        x: 0,
+        y: 0,
+        level: 100,
+        theater: 'Nevada',
       }
     },
 
     created() {
       this.app = new PIXI.Application({
-        width: this.viewWidth, height: this.viewHeight, backgroundColor: 0x1099bb, transparent: true
+        width: this.viewWidth, height: this.viewHeight, backgroundColor: 0xffffff, transparent: true
       })
     },
 
     mounted() {
       this.$el.appendChild(this.app.view);
 
-      let tileData = [
-        // 255, 0, 0, 255,      0, 255, 0, 255,      0, 0, 255, 255,      255, 255, 255, 255,
-      ];
-
-      for (let i = 0; i < 256 * 256; i++) {
-        tileData.push(Math.floor(Math.random() * 255));
-        tileData.push(Math.floor(Math.random() * 255));
-        tileData.push(Math.floor(Math.random() * 255));
-        tileData.push(100);
-      }
-
-      let texture = PIXI.Texture.fromBuffer(new Float32Array(tileData), 256, 256);
-
-      this.testTile = new PIXI.Sprite(texture);
+      // the leftmost and topmost tile that is in the view
+      this.x = 8;
+      this.y = 8;
+      this.level = 20;
 
       // calculate how many tiles need to be added to the stage
       const rows = Math.ceil(this.viewWidth / 256);
       const cols = Math.ceil(this.viewHeight / 256);
 
-      for (let i = 0; i < rows; i++) {
-        for (let j = 0; j < cols; j++) {
-          const t = // new PIXI.Sprite(texture);
-          PIXI.Sprite.from(test)
-          t.width = 256;
-          t.height = 256;
-          t.interactive = true;
-          // t.anchor.set(0.5);
-          t.x = 256 * i;
-          t.y = 256 * j;
-          this.tiles.push(t);
+      console.log(rows, cols);
+
+      for (let i = -1; i <= rows; i++) {
+        for (let j = -1; j <= cols; j++) {
+            AtlasMap.getMapTile(this.theater, this.level, this.x + j, this.y + i).then(res => {
+                const data = "data:image/png;base64," + Buffer.from(res.data, 'binary').toString('base64');
+                const t = PIXI.Sprite.from(data);
+                t.width = 256;
+                t.height = 256;
+                t.interactive = true;
+                // t.anchor.set(0.5);
+                t.on('pointerdown', this.onDragStart)
+                    .on('pointerup', this.onDragEnd)
+                    .on('pointerupoutside', this.onDragEnd)
+                    .on('pointermove', this.onDragMove);
+
+                t.x = 256 * i;
+                t.y = 256 * j;
+                this.tiles.push(t);
+
+                this.app.stage.addChild(t)
+            }).finally();
         }
       }
-
-
-
-
-      this.testTile.interactive = true;
-      this.testTile.anchor.set(0.5);
-
-      this.testTile.on('pointerdown', this.onDragStart)
-          .on('pointerup', this.onDragEnd)
-          .on('pointerupoutside', this.onDragEnd)
-          .on('pointermove', this.onDragMove);
-
-
-      // this.testTile.on('pointerdown', event => {
-      //   this.$message.info(event.data.originalEvent.layerX + ', ' + event.data.originalEvent.layerY);
-      //
-      //   console.log(
-      //       this.app.renderer.plugins.interaction.mouse.originalEvent.layerX + ', ' +
-      //       this.app.renderer.plugins.interaction.mouse.originalEvent.layerY);
-      // })
-
-      this.app.stage.addChild(this.testTile);
 
       this.tiles.forEach(t => {
         t.on('pointerdown', this.onDragStart)
             .on('pointerup', this.onDragEnd)
             .on('pointerupoutside', this.onDragEnd)
             // .on('pointermove', this.onDragMove);
-      })
-
-      this.tiles.forEach(t => this.app.stage.addChild(t));
-
-
-      this.testTile.x = 128;
-      this.testTile.y = 128;
+      });
     },
 
     methods: {
@@ -157,72 +137,107 @@
        */
       onDragMove(any) {
         if (this.dragging) {
-          // console.log(any.data.originalEvent);
+          // eslint-disable-next-line no-unused-vars
           let { movementX, movementY } = any.data.originalEvent;
 
-          this.testTile.x += movementX * 1;
-          this.testTile.y += movementY * 1;
-
-          this.tiles.forEach(t => t.x += movementX);  // apply transition to each tile
-          this.tiles.forEach(t => t.y += movementY);
+          this.tiles.forEach(t => t.x += movementX / 20);  // apply transition to each tile
+          this.tiles.forEach(t => t.y += movementY / 20);
 
           const leftCheck = Math.min(...this.tiles.map(t => t.x));
           const topCheck = Math.min(...this.tiles.map(t => t.y));
+          const rightCheck = Math.max(...this.tiles.map(t => t.x));
+          const bottomCheck = Math.max(...this.tiles.map(t => t.y));
 
-          this.tiles.filter(t => !this.checkInView(t)).forEach(t => {
+          const spanWidth = Math.ceil(this.viewWidth / 256) + 2;
+          const spanHeight = Math.ceil(this.viewHeight / 256) + 2;
 
-            // move the sprites not in view to the other side of the view instead of removing them
-            t.x +=
-            this.app.stage.removeChild(t);
-          });  // remove sprites that are not in the view
+          // const memX = this.x;
+          // const memY = this.y;
 
-          this.tiles = this.tiles.filter(this.checkInView);  // update tiles to only keep what is in view
-
-
-          if (leftCheck > 0) {
-            // this.$message.info("add new tile to the left starting at " + leftCheck + ',' + topCheck);
-            for (let i = 0; i < Math.ceil(this.viewHeight / 256); i++) {
-              const t = PIXI.Sprite.from(test)
-              t.width = 256;
-              t.height = 256;
-              t.interactive = true;
-              t.on('pointerdown', this.onDragStart)
-                  .on('pointerup', this.onDragEnd)
-                  .on('pointerupoutside', this.onDragEnd)
-              // t.anchor.set(0.5);
-              t.x = leftCheck - t.width;
-              t.y = topCheck + 256 * i;
-              this.tiles.push(t);
-              this.app.stage.addChild(t);
-            }
+          if (leftCheck < -512 && topCheck < -512) {
+              this.$message.warning("potential problem")
           }
 
-          if (topCheck > 0) {
-            // this.$message.info("add new tile to the top");
-            for (let i = 0; i < Math.ceil(this.viewWidth / 256); i++) {
-              const t = PIXI.Sprite.from(test)
-              t.width = 256;
-              t.height = 256;
-              t.interactive = true;
-              t.on('pointerdown', this.onDragStart)
-                  .on('pointerup', this.onDragEnd)
-                  .on('pointerupoutside', this.onDragEnd)
-              // t.anchor.set(0.5);
-              t.x = leftCheck + 256 * i;
-              t.y = topCheck - t.height;
-              this.tiles.push(t);
-              this.app.stage.addChild(t);
-            }
+          if (leftCheck < -512) {  // move the leftmost column to the right and replace texture
+              // y one step to the right
+              this.y++;
+
+              // start to replace texture from the top most tile
+              let track = -1;
+
+              // tiles need to be sorted by y in ascending order
+              this.app.stage.children.filter(t => t.x === leftCheck).sort((a, b) => a.y - b.y).forEach(
+                  t => {
+                      t.x += spanWidth * 256;  // move to right most position
+                      t.texture = PIXI.Texture.from(grid);
+
+                      // since we are moving the left most column, we need to calculate x, y for the right most one
+                      AtlasMap.getMapTile(this.theater, this.level, this.x + track++, this.y + spanWidth - 2).then(res => {
+                          const data = "data:image/png;base64," + Buffer.from(res.data, 'binary')
+                              .toString('base64');
+                          t.texture = PIXI.Texture.from(data);
+                      }).finally();
+                  }
+              );
           }
 
-          // check the tile with smallest y value
-          // if y > 0, add new tile
+          if (rightCheck > this.viewWidth + this.tileSize) {
+              this.y--;
 
+              let track = -1;
 
+              this.app.stage.children.filter(t => t.x === rightCheck).sort((a, b) => a.y - b.y).forEach(
+                  t => {
+                      t.x -= spanWidth * 256;
+                      t.texture = PIXI.Texture.from(grid);
 
-          // const newPosition = this.data.getLocalPosition(this.testTile.parent);
-          // this.testTile.x = newPosition.x;
-          // this.testTile.y = newPosition.y;
+                      AtlasMap.getMapTile(this.theater, this.level, this.x + track++, this.y - 1).then(res => {
+                          const data = "data:image/png;base64," + Buffer.from(res.data, 'binary')
+                              .toString('base64');
+                          t.texture = PIXI.Texture.from(data);
+                      })
+                  }
+              )
+          }
+
+          if (topCheck < - 512) {  // move the topmost row to the bottom and replace texture
+            this.x++;
+
+            let track = -1;
+
+            this.app.stage.children.filter(t => t.y === topCheck).sort((a, b) => a.x - b.x).forEach(
+                t => {
+                    t.y += spanHeight * 256;
+                    t.texture = PIXI.Texture.from(grid);
+
+                    AtlasMap.getMapTile(this.theater, this.level, this.x + spanHeight - 2, this.y + track++).then(res => {
+                        const data = "data:image/png;base64," + Buffer.from(res.data, 'binary')
+                            .toString('base64');
+                        t.texture = PIXI.Texture.from(data);
+                    }).finally();
+                }
+            )
+          }
+
+          if (bottomCheck > this.viewHeight + this.tileSize) {
+            this.x--;
+
+              // eslint-disable-next-line no-unused-vars
+            let track = -1;
+
+            this.app.stage.children.filter(t => t.y === bottomCheck).sort((a, b) => a.x - b.x).forEach(
+                t => {
+                    t.y -= spanHeight * 256;
+                    t.texture = PIXI.Texture.from(grid);
+
+                    AtlasMap.getMapTile(this.theater, this.level, this.x - 1, this.y + track++).then(res => {
+                        const data = "data:image/png;base64," + Buffer.from(res.data, 'binary')
+                            .toString('base64');
+                        t.texture = PIXI.Texture.from(data);
+                    }).finally();
+                }
+            )
+          }
         }
       },
 
@@ -243,35 +258,9 @@
           tileData.push(255);
         }
 
-        this.testTile.texture = PIXI.Texture.fromBuffer(new Uint8Array(tileData), 256, 256);
-
         this.tiles.map(t => {
           t.texture = PIXI.Texture.fromBuffer(new Uint8Array(tileData), 256, 256)
         })
-
-
-        // // create a new Sprite from an image path
-        // const bunny = PIXI.Sprite.from(test);
-        //
-        // // center the sprite's anchor point
-        // bunny.anchor.set(0.5);
-        //
-        // // move the sprite to the center of the screen
-        // bunny.x = this.app.screen.width / 2;
-        // bunny.y = this.app.screen.height / 2;
-        //
-        // this.app.stage.addChild(bunny);
-        //
-        // // Listen for animate update
-        // this.app.ticker.add((delta) => {
-        //   // just for fun, let's rotate mr rabbit a little
-        //   // delta is 1 if running at 100% performance
-        //   // creates frame-independent transformation
-        //   bunny.rotation += 1 * delta;
-        //   bunny.scale.x = 0.999 * delta;
-        // });
-        //
-        // this.app.renderer.backgroundColor = 0xd8d8d8;
       },
 
       // eslint-disable-next-line no-unused-vars
@@ -306,6 +295,27 @@
 
         return x >= leftLimit && x <= rightLimit && y >= topLimit && y <= bottomLimit;
       },
+
+      newMapTileByLevelXY(theater, level, x, y, placementX, placementY) {
+          AtlasMap.getMapTile(this.theater, this.level, x, y).then(res => {
+              const data = "data:image/png;base64," + Buffer.from(res.data, 'binary').toString('base64');
+              const t = PIXI.Sprite.from(data);
+              t.width = 256;
+              t.height = 256;
+              t.interactive = true;
+              // t.anchor.set(0.5);
+              t.on('pointerdown', this.onDragStart)
+                  .on('pointerup', this.onDragEnd)
+                  .on('pointerupoutside', this.onDragEnd)
+                  .on('pointermove', this.onDragMove);
+
+              t.x = placementX;
+              t.y = placementY;
+              this.tiles.push(t);
+
+              this.app.stage.addChild(t)
+          }).finally();
+      }
     }
   }
 </script>

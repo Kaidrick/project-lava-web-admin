@@ -3,12 +3,6 @@
     <h3>DCS Map Test Page</h3>
     <map-box ref="map"></map-box>
     <el-button @click="$refs.map.refresh()">Refresh</el-button>
-<!--    <pixi-renderer>-->
-<!--      <pixi-container x="200" :y="400"-->
-<!--                      @pointerdown="scaleObject">-->
-<!--        <pixi-sprite :x="0" :y="0" image-path="./cat.png"></pixi-sprite>-->
-<!--      </pixi-container>-->
-<!--    </pixi-renderer>-->
   </div>
 </template>
 
