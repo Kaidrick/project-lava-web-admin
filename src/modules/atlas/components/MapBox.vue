@@ -1,7 +1,7 @@
 <script>
   import * as PIXI from 'pixi.js';
   import { TileMetaData } from "@/modules/atlas/TileMetaData";
-  import grid from '@/assets/default_grid_256.png';
+  import grid from '@/assets/fill_grid_256.png';
   import AtlasMap from "../../../services/atlas/AtlasMap";
 
   export default {
