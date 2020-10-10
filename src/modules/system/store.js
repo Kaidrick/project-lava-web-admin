@@ -4,6 +4,7 @@ import Router from '@/router';
 import siteModule from '@/modules/site';
 import Configuration from "./configuration";
 import MapControl from "@/modules/atlas/";
+import dashboardModule from '@/modules/dashboard';
 
 export default {
     namespaced: true,
@@ -38,6 +39,7 @@ export default {
             dispatch('initializeModule', siteModule);
             dispatch('initializeModule', Configuration);
             dispatch('initializeModule', MapControl);
+            dispatch('initializeModule', dashboardModule);
         },
         initializeModule ({ dispatch }, module) {
             Store.registerModule(module.name, module.store);
