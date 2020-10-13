@@ -16,15 +16,15 @@
         </el-dropdown>
       </div>
       <div class="block">
-        <el-dropdown>
+        <el-dropdown @command="handleControlServer">
           <span class="title">
             <el-image :src="require('@/assets/server_control.png')" fit="contain"></el-image>
             <span>Control Server</span>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>RESTART</el-dropdown-item>
-            <el-dropdown-item>SHUTDOWN</el-dropdown-item>
-            <el-dropdown-item>SCHEDULE</el-dropdown-item>
+            <el-dropdown-item :command="0">RESTART</el-dropdown-item>
+            <el-dropdown-item :command="1">SHUTDOWN</el-dropdown-item>
+            <el-dropdown-item :command="2">SCHEDULE</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -47,8 +47,37 @@
 </template>
 
 <script>
+  // eslint-disable-next-line no-unused-vars
+  import {mapGetters, mapActions} from 'vuex';
+  import Control from "../mixins";
   export default {
-    name: "Operation"
+    name: "Operation",
+
+    computed: {
+      ...mapGetters('dashboard', ['ok'])
+    },
+
+    data() {
+      return {
+
+      }
+    },
+
+    mixins: [Control],
+
+    methods: {
+      handleControlServer(command) {
+        switch (command) {
+          case 0:
+            this.restartServer("ok good");
+            break;
+          case 1:
+            break;
+          case 2:
+            break;
+        }
+      }
+    }
   }
 </script>
 
