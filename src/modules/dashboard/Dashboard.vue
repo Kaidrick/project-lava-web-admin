@@ -3,24 +3,19 @@
         <el-row :gutter="10">
             <el-col class="block" :span="8">
                 <div class="block-content">
-                    <Telemetry></Telemetry>
+                    <telemetry></telemetry>
                 </div>
             </el-col>
             <el-col class="block" :span="16">
                 <div class="block-content">
-                    <PlayerList></PlayerList>
+                    <player-list></player-list>
                 </div>
             </el-col>
         </el-row>
-        <el-row>
+        <el-row :gutter="10">
             <el-col class="block" :span="8">
                 <div class="block-content">
-                    <h2>Operation</h2>
-                    <div>Broadcast</div>
-                    <el-input type="textarea"></el-input>
-                    <div>Controls</div>
-                    <el-button>Restart</el-button>
-                    <el-button>Stop</el-button>
+                    <operation></operation>
                 </div>
             </el-col>
         </el-row>
@@ -30,9 +25,10 @@
 <script>
     import Telemetry from "./components/Telemetry";
     import PlayerList from "./components/PlayerList";
+    import Operation from "@/modules/dashboard/components/Operation";
     export default {
         name: "Dashboard",
-        components: {PlayerList, Telemetry}
+        components: {Operation, PlayerList, Telemetry}
     }
 </script>
 
@@ -40,7 +36,7 @@
     @import "src/assets/style/color-scheme";
 
     .el-row {
-        margin-bottom: 20px;
+        margin-bottom: 10px;
         &:last-child {
             margin-bottom: 0;
         }

@@ -10,6 +10,10 @@
 
 #app {
 
+  span {
+    color: whitesmoke;
+  }
+
   .main-panel-container {
     height: 100vh;
 
@@ -223,4 +227,17 @@
       }
     }
   }
+}
+
+.el-popper {
+  background: $primary_dark !important;
+
+  border: 1px solid whitesmoke !important;
+  border-radius: 0 !important;
+
+  .el-dropdown-menu__item {
+    color: whitesmoke;
+    font-family: sans-serif;
+  }
+
 }
