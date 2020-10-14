@@ -49,7 +49,7 @@
 <script>
   // eslint-disable-next-line no-unused-vars
   import {mapGetters, mapActions} from 'vuex';
-  import Control from "../mixins";
+  import {Control} from "../mixins";
   export default {
     name: "Operation",
 
@@ -69,6 +69,7 @@
       handleControlServer(command) {
         switch (command) {
           case 0:
+            this.$message.info("what")
             this.restartServer("ok good");
             break;
           case 1:

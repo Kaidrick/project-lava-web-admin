@@ -14,6 +14,7 @@
                     <el-button>Edit</el-button>
                 </template>
             </el-table-column>
+          <span slot="empty">No data</span>
         </el-table>
     </div>
 </template>
