@@ -14,6 +14,12 @@
             <el-input v-model="formData.reason" prop="reason"></el-input>
           </el-form-item>
         </el-form>
+        <div slot="footer" class="button-wrapper">
+          <el-popconfirm :title="`Confirm ${controlTypeName}?`" confirmButtonText="YES" cancelButtonText="NO">
+            <el-button slot="reference">Confirm</el-button>
+          </el-popconfirm>
+          <el-button @click="close">Cancel</el-button>
+        </div>
       </div>
     </div>
   </el-dialog>
@@ -22,10 +28,6 @@
 <script>
   export default {
     name: "ServerControlDialog",
-
-    props: {
-      controlType: -1
-    },
 
     computed: {
       controlTypeName() {
@@ -47,8 +49,9 @@
         formData: {
           reason: '',
           restartType: 0,
-          time: this.formatDate(new Date(), "yyyy")
+          time: new Date()
         },
+        controlType: 0,
         dialogVisible: false
       }
     },
@@ -60,8 +63,9 @@
       },
 
       close(callback) {
-        for (const data in Object.getOwnPropertyNames(this.formData)) {
-          this.formData[data] = null;
+        for (let [key, value] of Object.entries(this.formData)) {
+          console.log(`${key}: ${value}`);
+          this.formData[key] = null;
         }
 
         callback();
@@ -71,5 +75,11 @@
 </script>
 
 <style lang="scss" scoped>
-
+  .server-control-wrapper {
+    .control-detail-wrapper {
+      .button-wrapper {
+        display: flex;
+      }
+    }
+  }
 </style>

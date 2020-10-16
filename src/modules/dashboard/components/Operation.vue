@@ -70,7 +70,7 @@
 
     methods: {
       handleControlServer(command) {
-        this.$refs["serverControlDialog"].show(command);
+        this.$refs.serverControlDialog.show(command);
       }
     }
   }
