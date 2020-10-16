@@ -10,7 +10,7 @@
 
 #app {
 
-  span {
+  span, div {
     color: whitesmoke;
   }
 
@@ -225,6 +225,19 @@
       &:hover {
         background-color: #42b983;
       }
+    }
+  }
+
+  .el-dialog {
+    background-color: $primary_dark;
+    color: whitesmoke;
+
+    .el-dialog__header {
+
+    }
+
+    .el-dialog__body {
+
     }
   }
 }

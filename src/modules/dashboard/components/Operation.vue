@@ -43,6 +43,8 @@
         </el-dropdown>
       </div>
     </div>
+
+    <server-control-dialog ref="serverControlDialog"></server-control-dialog>
   </div>
 </template>
 
@@ -50,9 +52,10 @@
   // eslint-disable-next-line no-unused-vars
   import {mapGetters, mapActions} from 'vuex';
   import {Control} from "../mixins";
+  import ServerControlDialog from "@/modules/dashboard/components/ServerControlDialog";
   export default {
     name: "Operation",
-
+    components: {ServerControlDialog},
     computed: {
       ...mapGetters('dashboard', ['ok'])
     },
@@ -67,16 +70,7 @@
 
     methods: {
       handleControlServer(command) {
-        switch (command) {
-          case 0:
-            this.$message.info("what")
-            this.restartServer("ok good");
-            break;
-          case 1:
-            break;
-          case 2:
-            break;
-        }
+        this.$refs["serverControlDialog"].show(command);
       }
     }
   }
