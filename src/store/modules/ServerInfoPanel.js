@@ -22,7 +22,7 @@ const actions = {
     loadBackendConnectionStatus(context) {
         ConnectionService.getBackendConnectionStatus().then(response =>
         {
-            const status = response.data;
+            const status = response.data.data;
             context.commit('setWebGuiStatus', 'OK');
             context.commit('setConnectionStatus', status.connected);
             context.commit('setPhaseCode', mapPhaseCode(status.phaseCode));

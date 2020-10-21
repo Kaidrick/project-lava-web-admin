@@ -8,243 +8,239 @@
   text-align: center;
 }
 
-#app {
+span, div {
+  color: whitesmoke;
+}
 
-  span, div {
+.main-panel-container {
+  height: 100vh;
+
+  border: 1px solid #eee;
+
+  .main-panel-side-menu {
+    height: 100%;
+  }
+
+  .main-panel-view {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.el-textarea {
+  margin: auto;
+  .el-textarea__inner {
+
     color: whitesmoke;
-  }
-
-  .main-panel-container {
-    height: 100vh;
-
-    border: 1px solid #eee;
-
-    .main-panel-side-menu {
-      height: 100%;
-    }
-
-    .main-panel-view {
-      margin: 0;
-      padding: 0;
-    }
-  }
-
-  .el-textarea {
-    margin: auto;
-    .el-textarea__inner {
-
-      color: whitesmoke;
-      background-color: $primary_light;
-      border: 1px solid $secondary_light;
-      border-radius: 0;
-      //min-height: 600px;
-      //height: 600px;
-    }
-  }
-
-  .el-input {
-    .el-input__inner {
-      color: whitesmoke;
-      background-color: $primary_light;
-      border: 0;
-      border-radius: 0;
-    }
-  }
-
-  .el-scrollbar {
-    ::-webkit-scrollbar {
-      width: 0;
-      background: transparent; /* make scrollbar transparent */
-    }
-
-    .el-scrollbar__wrap {
-      overflow-x: hidden;
-      margin: 0 !important;
-    }
-
-    &:hover,
-    &:active,
-    &:focus {
-      .el-scrollbar__bar {
-        opacity: 1;
-        transition: opacity 340ms ease-out;
-
-        //background-color: whitesmoke;
-        //.el-scrollbar__thumb {
-        //  background-color: $primary_dark;
-        //}
-      }
-    }
-
-    overflow: hidden;
-  }
-
-  .el-collapse {
-    border-top: 1px solid $accent;
-    border-bottom: 1px solid $accent;
-
-    .el-collapse-item {
-
-      div[role="tab"] {
-        .el-collapse-item__header {
-          border-bottom: 1px solid $accent;
-          background: $primary_light;
-          color: whitesmoke;
-
-          span {
-
-          }
-
-        }
-      }
-
-      div[role="tabpanel"] {
-        background: $primary_light;
-      }
-
-      .el-collapse-item__wrap {
-        .el-collapse-item__content {
-
-        }
-      }
-    }
-  }
-
-  .el-button {
-    border: 1px solid #f7b500;
+    background-color: $primary_light;
+    border: 1px solid $secondary_light;
     border-radius: 0;
-    background-color: #f7b500 ;
+    //min-height: 600px;
+    //height: 600px;
+  }
+}
 
-    margin-right: 5px;
+.el-input {
+  .el-input__inner {
+    color: whitesmoke;
+    background-color: $primary_light;
+    border: 0;
+    border-radius: 0;
+  }
+}
 
-    &:last-of-type {
-      margin-right: 0;
+.el-scrollbar {
+  ::-webkit-scrollbar {
+    width: 0;
+    background: transparent; /* make scrollbar transparent */
+  }
+
+  .el-scrollbar__wrap {
+    overflow-x: hidden;
+    margin: 0 !important;
+  }
+
+  &:hover,
+  &:active,
+  &:focus {
+    .el-scrollbar__bar {
+      opacity: 1;
+      transition: opacity 340ms ease-out;
+
+      //background-color: whitesmoke;
+      //.el-scrollbar__thumb {
+      //  background-color: $primary_dark;
+      //}
     }
+  }
+
+  overflow: hidden;
+}
+
+.el-collapse {
+  border-top: 1px solid $accent;
+  border-bottom: 1px solid $accent;
+
+  .el-collapse-item {
+
+    div[role="tab"] {
+      .el-collapse-item__header {
+        border-bottom: 1px solid $accent;
+        background: $primary_light;
+        color: whitesmoke;
+
+        span {
+
+        }
+
+      }
+    }
+
+    div[role="tabpanel"] {
+      background: $primary_light;
+    }
+
+    .el-collapse-item__wrap {
+      .el-collapse-item__content {
+
+      }
+    }
+  }
+}
+
+.el-button {
+  border: none;
+  border-radius: 0;
+  background-color: #f7b500 ;
+
+  margin-right: 5px;
+
+  &:last-of-type {
+    margin-right: 0;
+  }
+
+  &:hover {
+    opacity: 0.85;
+  }
+
+  &:active {
+    opacity: 0.6;
+  }
+
+  &.el-button--default {
+    background-color: $accent;
+    border-radius: 0;
+    border: none;
 
     &:hover {
-      opacity: 0.85;
-    }
-
-    &:active {
-      opacity: 0.6;
-    }
-
-    &.el-button--default {
       background-color: $accent;
-
-      &:hover {
-        span {
-          color: whitesmoke;
-        }
-      }
-
-      span {
-        color: whitesmoke;
-      }
-    }
-
-    &.el-button--primary {
-      background-color: $accent;
-
-      &:hover {
-        span {
-          color: whitesmoke;
-        }
-      }
-
-      span {
-        color: whitesmoke;
-      }
-    }
-
-    &.el-button--warning {
-      background-color: $accent;
-
-      &:hover {
-        span {
-          color: whitesmoke;
-        }
-      }
-
       span {
         color: whitesmoke;
       }
     }
   }
 
-  .el-radio {
-    border: 1px solid #f7b500;
-    border-radius: 0;
+  &.el-button--primary {
+    background-color: $accent;
 
-    color: whitesmoke;
-
-    &.is-checked {
-
-      .el-radio__inner {
-        border-color: #f7b500;
-        background: #f7b500;
+    &:hover {
+      span {
+        color: whitesmoke;
       }
+    }
 
-      .el-radio__label {
-        color: #f7b500;
-      }
+    span {
+      color: whitesmoke;
     }
   }
 
-  .el-table {
-    background: $primary_light;
-    .el-table__body-wrapper {
+  &.el-button--warning {
+    background-color: $accent;
 
-      .el-table__body {
-        width: 100% !important;
+    &:hover {
+      span {
+        color: whitesmoke;
+      }
+    }
 
-        .el-table__row {
+    span {
+      color: whitesmoke;
+    }
+  }
+}
 
-          background: $primary;
+.el-radio {
+  border: 1px solid #f7b500;
+  border-radius: 0;
 
-          * {
-            transition: none;
-          }
+  color: whitesmoke;
 
-          &:hover {
+  &.is-checked {
+
+    .el-radio__inner {
+      border-color: #f7b500;
+      background: #f7b500;
+    }
+
+    .el-radio__label {
+      color: #f7b500;
+    }
+  }
+}
+
+.el-table {
+  background: $primary_light;
+  .el-table__body-wrapper {
+
+    .el-table__body {
+      width: 100% !important;
+
+      .el-table__row {
+
+        background: $primary;
+
+        * {
+          transition: none;
+        }
+
+        &:hover {
+          background: $accent;
+
+          td, div {
             background: $accent;
-
-            td, div {
-              background: $accent;
-            }
           }
         }
       }
     }
   }
+}
 
-  .el-form {
-    .el-form-item {
-      label {
-        color: whitesmoke;
-      }
+.el-form {
+  .el-form-item {
+    label {
+      color: whitesmoke;
     }
   }
+}
 
-  .el-menu-vertical {
-    ::v-deep .el-menu-item {
-      &:hover {
-        background-color: #42b983;
-      }
+.el-menu-vertical {
+  ::v-deep .el-menu-item {
+    &:hover {
+      background-color: #42b983;
     }
   }
+}
 
-  .el-dialog {
-    background-color: $primary_dark;
-    color: whitesmoke;
+.el-dialog {
+  background-color: $primary_dark;
+  color: whitesmoke;
 
-    .el-dialog__header {
+  .el-dialog__header {
 
-    }
+  }
 
-    .el-dialog__body {
+  .el-dialog__body {
 
-    }
   }
 }
 

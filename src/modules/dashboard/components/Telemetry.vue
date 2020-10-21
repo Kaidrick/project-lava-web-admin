@@ -128,7 +128,7 @@
 
             this.timer = setInterval(() => {
                 LuaMemoryUsage.getLuaStateTelemetry().then(res => {
-                    res.data.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+                    res.data.data.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
                     this.option.xAxis[0].data = res.data.map(t => t.timestamp);
                     this.option.series.find(s => s.name === 'Mission').data = res.data.map(t => t.missionStateLuaMemory);
                     this.option.series.find(s => s.name === 'Hook').data = res.data.map(t => t.hookStateLuaMemory);

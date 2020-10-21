@@ -1,5 +1,9 @@
 <template>
-  <el-dialog :visible.sync="dialogVisible" :before-close="close" :title="controlTypeName">
+  <el-dialog :visible.sync="dialogVisible"
+             :before-close="close"
+             append-to-body
+             destroy-on-close
+             :title="controlTypeName">
     <div class="server-control-wrapper">
       <div class="control-detail-wrapper">
         <el-form :model="formData">

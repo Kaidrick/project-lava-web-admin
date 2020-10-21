@@ -18,13 +18,13 @@ export default {
     actions: {
         getLuaStateTelemetry(context) {
             LuaMemoryUsage.getLuaStateTelemetry().then(res => {
-                context.commit('setTelemetryData', res.data);
+                context.commit('setTelemetryData', res.data.data);
             })
         },
 
         getPlayerList(context) {
             DisciplineService.getPlayerList().then(res => {
-                context.commit('setPlayerData', res.data);
+                context.commit('setPlayerData', res.data.data);
             })
         },
 

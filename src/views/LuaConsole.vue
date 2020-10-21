@@ -118,7 +118,7 @@
           level: this.debugEnvironment,
           timeStamp: new Date(),
         }).then(res => {
-          this.currentResult = res.data;
+          this.currentResult = res.data.data;
         });
       },
 

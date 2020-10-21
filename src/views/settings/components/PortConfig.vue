@@ -68,7 +68,7 @@ export default {
     mounted() {
       connectionService.getDataPortConfig().then(res => {
         console.log(res);
-        this.portConfig = res.data;
+        this.portConfig = res.data.data;
         this.awaitData = false;
       });
     },

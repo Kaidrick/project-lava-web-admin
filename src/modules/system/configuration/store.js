@@ -24,7 +24,7 @@ export default {
         getDcsPortConfiguration(context) {
             context.commit('setIsLoading', true);
             connectionService.getDataPortConfig().then(res => {
-                context.commit('setDcsPort', res.data);
+                context.commit('setDcsPort', res.data.data);
             }).finally(() => context.commit('setIsLoading', false))
         },
 

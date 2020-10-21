@@ -3,13 +3,9 @@
 
     <web-port-config v-if="!configured"></web-port-config>
 
-    <div v-if="configured" class="side-panel-right">
-      <server-info-panel class="server-info-panel"
-                         v-show="show"></server-info-panel>
-      <el-button class="side-panel__show-hide-button" @click="show = !show">
-        <i class="el-icon-d-arrow-left"></i>
-      </el-button>
-    </div>
+    <side-dock-panel :visible="configured">
+      <server-info-panel></server-info-panel>
+    </side-dock-panel>
 
     <el-container v-if="configured" class="main-panel-container">
       <el-aside class="main-panel-side-menu" width="180px">
@@ -31,7 +27,6 @@
         <el-scrollbar style="height: 100%">
           <router-view></router-view>
         </el-scrollbar>
-
       </el-main>
 
 
@@ -41,13 +36,15 @@
 
 <script>
   import PanelNavMenu from "@/views/PanelNavMenu";
-  import ServerInfoPanel from "@/views/logging/ServerInfoPanel";
   import WebPortConfig from "@/modules/system/components/WebPortConfig";
 
   import { mapGetters, mapActions } from 'vuex';
+  import SideDockPanel from "@/components/SideDockPanel";
+  import ServerInfoPanel from "@/views/logging/ServerInfoPanel";
 
   export default {
-    components: {WebPortConfig, ServerInfoPanel, PanelNavMenu},
+    // eslint-disable-next-line vue/no-unused-components
+    components: {ServerInfoPanel, SideDockPanel, WebPortConfig, PanelNavMenu},
     data() {
       return {
         LOCALE_NAMES: {
@@ -58,9 +55,6 @@
         },
 
         languages: ['en', 'fr', 'zh-cn', 'jp'],
-
-        show: true,
-
       }
     },
 
@@ -89,40 +83,6 @@
 
 <style lang="scss">
   @import "assets/style/base";
-
-  .side-panel-right {
-    background-color: #42b983;
-    position: absolute;
-    //top: 50%;
-    right: 0;
-    z-index: 255;
-    height: 60%;
-
-    .side-panel__show-hide-button {
-      height: 60px;
-      padding-left: 0;
-      padding-right: 0;
-      position: absolute;
-      left: -15px;
-      top: calc(50% - 30px);
-
-      .is-panel-hide {
-
-      }
-      .is-panel-show {
-
-      }
-    }
-
-    .server-info-panel {
-      .is-panel-hide {
-
-      }
-      .is-panel-show {
-
-      }
-    }
-  }
 
   html, body {
     height: 100%;

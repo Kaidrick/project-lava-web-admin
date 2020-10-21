@@ -31,14 +31,14 @@
 
     mounted() {
       ScriptInjection.getDcsWritePathBranches().then(res => {
-        this.dcsBranches = res.data;
+        this.dcsBranches = res.data.data;
       })
     },
 
     methods: {
       handleBranchSelectionChange(change) {
         ScriptInjection.isBranchConfigured(change).then(res => {
-          this.isInstall = !res.data;
+          this.isInstall = !res.data.data;
         })
       },
 
