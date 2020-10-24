@@ -1,9 +1,9 @@
 <template>
   <div class="operation-wrapper">
-    <span>Operation</span>
+    <div class="operation-header" style="height: 20px">OPERATION</div>
     <div class="operation-container">
       <div class="block">
-        <el-dropdown>
+        <el-dropdown placement="top">
           <span class="title">
             <el-image :src="require('@/assets/broadcast.png')" fit="contain"></el-image>
             <span>Broadcast Message</span>
@@ -16,7 +16,7 @@
         </el-dropdown>
       </div>
       <div class="block">
-        <el-dropdown @command="handleControlServer">
+        <el-dropdown placement="top" @command="handleControlServer">
           <span class="title">
             <el-image :src="require('@/assets/server_control.png')" fit="contain"></el-image>
             <span>Control Server</span>
@@ -29,7 +29,7 @@
         </el-dropdown>
       </div>
       <div class="block">
-        <el-dropdown>
+        <el-dropdown placement="top">
           <span class="title">
             <el-image :src="require('@/assets/slot_block.png')" fit="contain"></el-image>
             <span>Manage Playable Slot</span>
@@ -42,9 +42,8 @@
           </el-dropdown-menu>
         </el-dropdown>
       </div>
+      <server-control-dialog ref="serverControlDialog"></server-control-dialog>
     </div>
-
-    <server-control-dialog ref="serverControlDialog"></server-control-dialog>
   </div>
 </template>
 
@@ -80,13 +79,21 @@
   @import "src/assets/style/color-scheme";
 
   .operation-wrapper {
+    //display: flex;
+    padding: 20px;
+
+    .operation-header {
+      font-weight: 900;
+    }
+
     .operation-container {
       display: flex;
-      justify-content: space-between;
+      //justify-content: space-between;
 
       .block {
-        width: 140px;
-        height: 60px;
+        //width: 140px;
+        //height: 60px;
+        display: inline-block;
 
         ::v-deep .el-dropdown {
           height: 100%;
@@ -97,14 +104,14 @@
             display: flex;
 
             span {
-              width: 80px;
+              //width: 80px;
               margin: auto auto;
               text-align: center;
             }
 
             .el-image {
-              height: 48px;
-              width: 48px;
+              height: 36px;
+              width: 36px;
               padding: 5px;
               margin: auto auto;
             }

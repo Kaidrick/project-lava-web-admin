@@ -120,11 +120,11 @@ span, div {
   }
 
   &:hover {
-    opacity: 0.85;
+    background-color: lighten($accent, 10);
   }
 
   &:active {
-    opacity: 0.6;
+    background-color: lighten($accent, 10);
   }
 
   &.el-button--default {
@@ -133,7 +133,14 @@ span, div {
     border: none;
 
     &:hover {
-      background-color: $accent;
+      background-color: lighten($accent, 10);
+      span {
+        color: whitesmoke;
+      }
+    }
+
+    &:active {
+      background-color: lighten($accent, 10);
       span {
         color: whitesmoke;
       }
@@ -188,32 +195,33 @@ span, div {
   }
 }
 
-.el-table {
-  background: $primary_light;
-  .el-table__body-wrapper {
-
-    .el-table__body {
-      width: 100% !important;
-
-      .el-table__row {
-
-        background: $primary;
-
-        * {
-          transition: none;
-        }
-
-        &:hover {
-          background: $accent;
-
-          td, div {
-            background: $accent;
-          }
-        }
-      }
-    }
-  }
-}
+@import "table-style";
+//.el-table {
+//  background: $primary_light;
+//  .el-table__body-wrapper {
+//
+//    .el-table__body {
+//      width: 100% !important;
+//
+//      .el-table__row {
+//
+//        background: $primary;
+//
+//        * {
+//          transition: none;
+//        }
+//
+//        &:hover {
+//          background: $accent;
+//
+//          td, div {
+//            background: $accent;
+//          }
+//        }
+//      }
+//    }
+//  }
+//}
 
 .el-form {
   .el-form-item {

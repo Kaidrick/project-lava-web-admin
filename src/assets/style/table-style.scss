@@ -1,0 +1,112 @@
+@import "color-scheme";
+
+$universalBackgroundColor: #ffffff;
+$headerColor: #333333;
+$headerFontSize: 16px;
+$headerFontWeight: 900;
+
+$contentTextColor: #333333;
+$contentFontSize: 16px;
+
+$rowHoverColor: #f5f5f5;
+$rowStripeColor: #f5f5f5;
+
+$headerHeight: 36px;
+$rowHeight: 44px;
+
+$bodyButtonColor: white;
+$bodyButtonBackgroundColor: white;
+
+.el-table {
+  &__header-wrapper {
+    .has-gutter {
+      tr > th.gutter {
+        //display: table !important;
+        background-color: #f7b500;
+      }
+    }
+  }
+
+  .el-table__fixed-right, .el-table__fixed {
+    background-color: $universalBackgroundColor !important;
+  }
+
+  .el-table__fixed, .el-table__fixed-right {
+    height: $headerHeight;
+  }
+
+  .el-table__header-wrapper, .el-table__fixed, .el-table__fixed-right {
+    .el-table__header {
+      height: $headerHeight;
+    }
+    thead {
+      tr {
+        th {
+          padding: 0;
+          font-size: $headerFontSize;
+          font-weight: $headerFontWeight;
+          color: $contentTextColor;
+          height: $headerHeight;
+
+          background-color: $primary_light;
+
+          div {
+
+          }
+        }
+      }
+    }
+  }
+
+  .el-table__body-wrapper, .el-table__fixed-body-wrapper {
+    .el-table__body {
+      .el-table__row {
+        font-size: $contentFontSize !important;
+        height: $rowHeight !important;
+
+        background-color: $primary_light;
+
+        td {
+          padding: 0;
+
+          div {
+
+          }
+        }
+      }
+
+      .el-table__row--striped {
+        background-color: $rowStripeColor;
+
+        &:hover > td {
+          background-color: $rowHoverColor;
+        }
+      }
+    }
+
+    .el-table__body .el-table__row.hover-row td {
+      background-color: $primary !important;
+    }
+  }
+
+  .el-table__body-wrapper::-webkit-scrollbar {
+    /*width: 0;宽度为0隐藏*/
+    width: 6px;
+    z-index: 999;
+    height: 6px;
+    border-radius: 0;
+  }
+  .el-table__body-wrapper::-webkit-scrollbar-thumb {
+    border-radius: 0;
+    height: 6px;
+    background: #ba3232;
+    z-index: 999;
+  }
+  .el-table__body-wrapper::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 0;
+    background: rgba(0,0,0,0.4);
+    height: 6px;
+    z-index: 999;
+  }
+}

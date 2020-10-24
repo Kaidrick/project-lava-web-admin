@@ -1,5 +1,8 @@
 <template>
   <div class="side-dock-panel-wrapper">
+    <div class="side-dock-panel-mask"
+         v-show="show"
+         @click="show = !show" />
     <div v-if="visible" class="side-panel-right" :class="{'pop': show}">
       <slot></slot>
       <operation></operation>
@@ -30,6 +33,25 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "src/assets/style/color-scheme";
+
+  .side-dock-panel-wrapper {
+    height: 100%;
+    width: 100%;
+
+    position: absolute;
+
+    .side-dock-panel-mask {
+      //background-color: $primary_dark;
+      background: transparent;
+      height: 100%;
+      width: 100%;
+      z-index: 254;
+      position: absolute;
+      opacity: 0.4;
+    }
+  }
+
   .side-panel-right {
     background-color: #42b983;
     position: absolute;
@@ -40,10 +62,6 @@
     width: 400px;
 
     transition: all .2s ease-in-out;
-
-    .el-button {
-      background-color: #00bb00;
-    }
 
     .side-panel__show-hide-button {
       height: 100%;
@@ -57,11 +75,23 @@
 
       &.side-panel__show-hide-button.el-button--default {
         background-color: #42b983;
+
+        &:hover {
+          background-color: lighten(#42b983, 5);
+        }
+
+        &:active {
+          background-color: lighten(#42b983, 15);
+        }
       }
     }
 
     &.pop {
       transform: translateX(-400px);
+
+      div, section {
+        padding-right: 30px;
+      }
     }
   }
 </style>
