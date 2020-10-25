@@ -12,6 +12,8 @@ import system from '@/modules/system';
 
 Vue.config.productionTip = false;
 
+axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? '' : '/api';
+
 Vue.use(ElementUI);
 Vue.use(VueAxios, axios);
 

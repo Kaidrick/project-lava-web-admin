@@ -4,28 +4,28 @@ export default {
     getDcsWritePathBranches() {
         return http({
             method: 'get',
-            url: '/api/config/script/branch',
+            url: '/config/script/branch',
         });
     },
 
     isBranchConfigured(branchName) {
         return http({
             method: 'post',
-            url: `/api/config/script/branch/${branchName}`
+            url: `/config/script/branch/${branchName}`
         })
     },
 
     installDcsScriptToBranch(branchName) {
         return http({
             method: 'get',
-            url: `/api/config/script/install/${branchName}`
+            url: `/config/script/install/${branchName}`
         })
     },
 
     uninstallDcsScriptFromBranch(branchName) {
         return http({
             method: 'get',
-            url: `/api/config/script/uninstall/${branchName}`
+            url: `/config/script/uninstall/${branchName}`
         })
     }
 }

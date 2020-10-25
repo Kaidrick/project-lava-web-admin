@@ -15,7 +15,7 @@ export default {
     getLuaStateTelemetry() {
       return http({
           method: 'get',
-          url: 'api/telemetry/all'
+          url: 'telemetry/all'
       })
     }
 }

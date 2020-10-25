@@ -81,7 +81,7 @@ export default {
       },
 
       testPostRequest() {
-        this.$http.post('/api/config/port', {
+        this.$http.post('/config/port', {
           serverMainPort: this.serverMainPort,
           serverPollPort: this.serverPollPort,
           exportMainPort: this.exportMainPort,

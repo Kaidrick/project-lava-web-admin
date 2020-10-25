@@ -1,5 +1,9 @@
 module.exports = {
-    publicPath: '',  // use relative path, for local viewing only
+    // publicPath: process.env.NODE_ENV === 'production'
+    //     ? '/lava/'
+    //     : '/',
+
+    publicPath: './',
 
     devServer: {
         port: 3000,

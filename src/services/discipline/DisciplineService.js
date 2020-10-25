@@ -6,7 +6,7 @@ export default {
     getPlayerList(data) {
         return http({
             method: 'get',
-            url: '/api/player/list',
+            url: '/player/list',
             data
         });
     },

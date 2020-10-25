@@ -13,9 +13,16 @@
             </el-col>
         </el-row>
         <el-row :gutter="10">
-            <el-col class="block" :span="8">
+            <el-col class="block" :span="24">
                 <div class="block-content">
-                    <operation></operation>
+                    <system-log></system-log>
+                </div>
+            </el-col>
+        </el-row>
+        <el-row :gutter="10">
+            <el-col class="block" :span="24">
+                <div class="block-content">
+
                 </div>
             </el-col>
         </el-row>
@@ -25,10 +32,11 @@
 <script>
     import Telemetry from "./components/Telemetry";
     import PlayerList from "./components/PlayerList";
-    import Operation from "@/modules/dashboard/components/Operation";
+    import SystemLog from "./components/SystemLog";
+
     export default {
         name: "Dashboard",
-        components: {Operation, PlayerList, Telemetry}
+        components: {SystemLog, PlayerList, Telemetry}
     }
 </script>
 

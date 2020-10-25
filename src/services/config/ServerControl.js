@@ -4,7 +4,7 @@ export default {
     commandServerRestart(data) {
         return http({
             method: 'post',
-            url: '/api/config/server/restart',
+            url: '/config/server/restart',
             data
         });
     }

@@ -129,10 +129,10 @@
             this.timer = setInterval(() => {
                 LuaMemoryUsage.getLuaStateTelemetry().then(res => {
                     res.data.data.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
-                    this.option.xAxis[0].data = res.data.map(t => t.timestamp);
-                    this.option.series.find(s => s.name === 'Mission').data = res.data.map(t => t.missionStateLuaMemory);
-                    this.option.series.find(s => s.name === 'Hook').data = res.data.map(t => t.hookStateLuaMemory);
-                    this.option.series.find(s => s.name === 'Export').data = res.data.map(t => t.exportStateLuaMemory);
+                    this.option.xAxis[0].data = res.data.data.map(t => t.timestamp);
+                    this.option.series.find(s => s.name === 'Mission').data = res.data.data.map(t => t.missionStateLuaMemory);
+                    this.option.series.find(s => s.name === 'Hook').data = res.data.data.map(t => t.hookStateLuaMemory);
+                    this.option.series.find(s => s.name === 'Export').data = res.data.data.map(t => t.exportStateLuaMemory);
 
                     chart.setOption(this.option);
                 })

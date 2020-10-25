@@ -6,7 +6,7 @@ export default {
     getMapTile(theater, level, x, y) {
         return http({
             method: 'get',
-            url: `api/atlas/${theater}/${level}/${x}/${y}`,
+            url: `atlas/${theater}/${level}/${x}/${y}`,
             responseType: 'arraybuffer'
         });
     }
