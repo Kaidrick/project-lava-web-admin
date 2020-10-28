@@ -30,7 +30,7 @@
             const option = {
                 color: ['#c23531', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'],
                 title: {
-                    text: 'Resource Telemetry',
+                    // text: 'Resource Telemetry',
                     textStyle: {
                         color: "#ffffff"
                     }
@@ -154,7 +154,7 @@
 <style lang="scss" scoped>
     .telemetry-wrapper {
         .chart {
-            height: 20em;
+            height: 30vh;
         }
     }
 </style>

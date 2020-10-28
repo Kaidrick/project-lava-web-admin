@@ -1,8 +1,9 @@
 <template>
     <div class="player-list-wrapper">
       <span>Connected Players</span>
-      <el-table height="300" :data="playerData">
-        <el-table-column label="Player Name" prop="name"></el-table-column>
+      <el-table height="300"
+                :data="playerData">
+        <el-table-column label="Player Name" prop="name" fixed></el-table-column>
         <el-table-column label="Net ID" prop="id"></el-table-column>
         <el-table-column label="UCID" prop="ucid"></el-table-column>
         <el-table-column label="I.P. Address" prop="ipaddr"></el-table-column>
@@ -12,7 +13,7 @@
           </template>
         </el-table-column>
         <el-table-column label="Client Language" prop="lang"></el-table-column>
-        <el-table-column label="Operation">
+        <el-table-column label="Operation" fixed="right">
           <template slot-scope="scope">
             <el-button @click="console.log(scope.row);">Edit</el-button>
           </template>

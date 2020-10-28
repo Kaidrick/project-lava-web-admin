@@ -18,23 +18,27 @@ $bodyButtonColor: white;
 $bodyButtonBackgroundColor: white;
 
 .el-table {
-  &__header-wrapper {
-    .has-gutter {
-      tr > th.gutter {
-        //display: table !important;
-        background-color: #f7b500;
-      }
-    }
-  }
 
-  .el-table__fixed-right, .el-table__fixed {
-    background-color: $universalBackgroundColor !important;
+  th.gutter {   /*解决el-table加了gutter后 边框出现白边*/
+    display: table-cell!important;
   }
-
-  .el-table__fixed, .el-table__fixed-right {
-    height: $headerHeight;
-  }
-
+  //&__header-wrapper {
+  //  .has-gutter {
+  //    tr > th.gutter {
+  //      //display: table !important;
+  //      background-color: #f7b500;
+  //    }
+  //  }
+  //}
+  //
+  //.el-table__fixed-right, .el-table__fixed {
+  //  background-color: $universalBackgroundColor !important;
+  //}
+  //
+  //.el-table__fixed, .el-table__fixed-right {
+  //  height: $headerHeight;
+  //}
+  //
   .el-table__header-wrapper, .el-table__fixed, .el-table__fixed-right {
     .el-table__header {
       height: $headerHeight;
@@ -49,6 +53,7 @@ $bodyButtonBackgroundColor: white;
           height: $headerHeight;
 
           background-color: $primary_light;
+          border-bottom: 0;
 
           div {
 
@@ -59,33 +64,37 @@ $bodyButtonBackgroundColor: white;
   }
 
   .el-table__body-wrapper, .el-table__fixed-body-wrapper {
+    .el-table__empty-block {
+      background-color: $primary_dark;
+    }
+
     .el-table__body {
       .el-table__row {
-        font-size: $contentFontSize !important;
-        height: $rowHeight !important;
+        //font-size: $contentFontSize !important;
+        //height: $rowHeight !important;
 
         background-color: $primary_light;
 
-        td {
-          padding: 0;
-
-          div {
-
-          }
-        }
+        //td {
+        //  padding: 0;
+        //
+        //  div {
+        //
+        //  }
+        //}
       }
 
-      .el-table__row--striped {
-        background-color: $rowStripeColor;
-
-        &:hover > td {
-          background-color: $rowHoverColor;
-        }
+      .el-table__row:hover td {
+        background: $primary !important;
       }
-    }
 
-    .el-table__body .el-table__row.hover-row td {
-      background-color: $primary !important;
+      //.el-table__row--striped {
+      //  background-color: $rowStripeColor;
+      //
+      //  &:hover > td {
+      //    background-color: $rowHoverColor;
+      //  }
+      //}
     }
   }
 
@@ -110,3 +119,7 @@ $bodyButtonBackgroundColor: white;
     z-index: 999;
   }
 }
+
+//.el-table tbody tr:hover>td {
+//  background-color: #9c0000 !important
+//}

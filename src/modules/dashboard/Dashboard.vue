@@ -43,6 +43,10 @@
 <style lang="scss" scoped>
     @import "src/assets/style/color-scheme";
 
+    div >>> .el-table th{
+      display: table-cell!important;
+    }
+
     .el-row {
         margin-bottom: 10px;
         &:last-child {
@@ -52,7 +56,7 @@
 
     .dashboard-wrapper {
         background-color: transparent;
-        padding: 10px;
+        padding: 10px 40px 10px 10px;
 
         .block {
             .block-content {
