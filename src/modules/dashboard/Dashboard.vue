@@ -43,12 +43,9 @@
 <style lang="scss" scoped>
     @import "src/assets/style/color-scheme";
 
-    div >>> .el-table th{
-      display: table-cell!important;
-    }
-
     .el-row {
         margin-bottom: 10px;
+
         &:last-child {
             margin-bottom: 0;
         }
@@ -59,9 +56,11 @@
         padding: 10px 40px 10px 10px;
 
         .block {
+
             .block-content {
                 padding: 20px;
                 background-color: $primary;
+
             }
         }
     }

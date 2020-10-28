@@ -1,5 +1,6 @@
 <template>
     <div class="telemetry-wrapper">
+        <span>DCS Lua Memory Usage</span>
         <div class="chart" ref="luaMem"></div>
         <div>
             <div v-for="(data, index) in telemetryData" :key="index">{{ data }}</div>
@@ -46,7 +47,7 @@
                 },
                 legend: {
                     data: ['Mission', 'Hook', 'Export'],
-                    padding: [40, 10, 80, 10],
+                    // padding: [40, 10, 80, 10],
                     textStyle: {
                         color: '#ffffff'
                     }
@@ -153,8 +154,11 @@
 
 <style lang="scss" scoped>
     .telemetry-wrapper {
+        height: 420px;
+        min-height: 400px;
         .chart {
-            height: 30vh;
+            margin: 2%;
+            height: 75%;
         }
     }
 </style>
