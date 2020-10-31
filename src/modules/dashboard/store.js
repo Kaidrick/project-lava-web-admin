@@ -2,22 +2,30 @@ import LuaMemoryUsage from "../../services/telemetry/LuaMemoryUsage";
 import DisciplineService from "../../services/discipline/DisciplineService";
 import SystemLogService from "@/services/logging/SystemLogService";
 
+const orderNetId = (a, b) => a - b;
+
 export default {
     namespaced: true,
     state: {
         telemetryData: [],
         playerData: [],
-        systemLogData: []
+        systemLogData: [],
+
+        playerTableExpandedRows: [],
     },
     getters: {
         telemetryData: state => state.telemetryData,
         playerData: state => state.playerData,
-        systemLogData: state => state.systemLogData
+        systemLogData: state => state.systemLogData,
+
+        playerTableExpandedRows: state => state.playerTableExpandedRows
     },
     mutations: {
         setTelemetryData: (state, telemetry) => state.telemetryData = telemetry,
         setPlayerData: (state, player) => state.playerData = player,
-        setSystemLogData: (state, log) => state.systemLogData = log
+        setSystemLogData: (state, log) => state.systemLogData = log,
+
+        setPlayerTableExpandedRows: (state, rows) => state.playerTableExpandedRows = rows
     },
     actions: {
         getLuaStateTelemetry(context) {
@@ -27,8 +35,8 @@ export default {
         },
 
         getPlayerList(context) {
-            DisciplineService.getPlayerList().then(res => {
-                context.commit('setPlayerData', res.data.data);
+            return DisciplineService.getPlayerList().then(res => {
+                context.commit('setPlayerData', res.data.data.sort(orderNetId));
             })
         },
 

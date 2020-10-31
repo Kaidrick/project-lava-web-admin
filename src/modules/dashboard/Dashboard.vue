@@ -19,13 +19,6 @@
                 </div>
             </el-col>
         </el-row>
-        <el-row :gutter="10">
-            <el-col class="block" :span="24">
-                <div class="block-content">
-
-                </div>
-            </el-col>
-        </el-row>
     </div>
 </template>
 

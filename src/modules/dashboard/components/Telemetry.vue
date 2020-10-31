@@ -1,8 +1,8 @@
 <template>
-    <div class="telemetry-wrapper">
-        <span>DCS Lua Memory Usage</span>
+    <div class="dashboard-block-wrapper">
+        <div class="block-title">DCS Lua Memory Usage</div>
         <div class="chart" ref="luaMem"></div>
-        <div>
+        <div class="block-content">
             <div v-for="(data, index) in telemetryData" :key="index">{{ data }}</div>
             <div>Lava System Dispatcher</div>
             <div>#TaskCount</div>
@@ -153,9 +153,8 @@
 </script>
 
 <style lang="scss" scoped>
-    .telemetry-wrapper {
-        height: 420px;
-        min-height: 400px;
+    .dashboard-block-wrapper {
+
         .chart {
             margin: 2%;
             height: 75%;

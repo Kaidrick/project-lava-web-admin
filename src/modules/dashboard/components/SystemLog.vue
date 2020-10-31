@@ -1,5 +1,6 @@
 <template>
-    <div class="system-log-list-wrapper">
+    <div class="dashboard-block-wrapper">
+      <div class="block-title">System Logs</div>
         <el-table :data="systemLogData"
                   height="300px"
                   :row-class-name="tableRowClass">

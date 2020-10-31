@@ -42,8 +42,23 @@
           </el-dropdown-menu>
         </el-dropdown>
       </div>
+      <div class="block">
+        <el-dropdown placement="top">
+          <span class="title">
+            <el-image :src="require('@/assets/slot_block.png')" fit="contain"></el-image>
+            <span>Side Balancer</span>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>AUTO</el-dropdown-item>
+            <el-dropdown-item>SITUATIONAL</el-dropdown-item>
+            <el-dropdown-item>MANUAL</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
+
       <server-control-dialog ref="serverControlDialog"></server-control-dialog>
     </div>
+
   </div>
 </template>
 
@@ -88,7 +103,8 @@
 
     .operation-container {
       display: flex;
-      //justify-content: space-between;
+      flex-wrap: wrap;
+      justify-content: space-between;
 
       .block {
         //width: 140px;

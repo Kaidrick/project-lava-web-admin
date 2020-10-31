@@ -1,4 +1,5 @@
 @import 'color-scheme';
+@import 'dashboard-block';
 
 .dark {
   background-color: #35495e;
@@ -15,7 +16,7 @@ span, div {
 .main-panel-container {
   height: 100vh;
 
-  border: 1px solid #eee;
+  //border: 1px solid #eee;
 
   .main-panel-side-menu {
     height: 100%;
@@ -108,12 +109,12 @@ span, div {
   }
 }
 
-.el-button {
+.el-button, .el-button:focus {
   border: none;
   border-radius: 0;
   background-color: #f7b500 ;
 
-  margin-right: 5px;
+  //margin-right: 5px;
 
   &:last-of-type {
     margin-right: 0;
@@ -127,20 +128,38 @@ span, div {
     background-color: lighten($accent, 10);
   }
 
-  &.el-button--default {
+  &.el-button--default, &.el-button--text {
     background-color: $accent;
     border-radius: 0;
     border: none;
 
     &:hover {
-      background-color: lighten($accent, 10);
+      background-color: lighten($accent, 5);
       span {
         color: whitesmoke;
       }
     }
 
     &:active {
-      background-color: lighten($accent, 10);
+      background-color: lighten($accent, 20);
+      span {
+        color: whitesmoke;
+      }
+    }
+  }
+
+  &.el-button--text {
+    background-color: transparent;
+    padding: 0;
+    &:hover {
+      background-color: transparent;
+      span {
+        color: whitesmoke;
+      }
+    }
+
+    &:active {
+      background-color: transparent;
       span {
         color: whitesmoke;
       }
@@ -191,6 +210,38 @@ span, div {
 
     .el-radio__label {
       color: #f7b500;
+    }
+  }
+}
+
+.el-message {
+  border-radius: 0 !important;
+  background-color: $primary_dark !important;
+  border: 1px solid $primary_light !important;
+
+  .el-message__icon {
+    display: none;
+  }
+  .el-message__content {
+    color: whitesmoke !important;
+    width: 100%;
+
+    &::before {
+      width: 6px;
+      height: 100%;
+      background-color: #d8d8d8;
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  }
+}
+
+.el-message--info {
+  .el-message__content {
+    &::before {
+      background-color: #42b983;
     }
   }
 }

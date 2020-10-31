@@ -19,6 +19,8 @@ $bodyButtonBackgroundColor: white;
 
 .el-table {
 
+  background-color: $primary_dark !important;
+
   th.gutter {   /*解决el-table加了gutter后 边框出现白边*/
     display: table-cell!important;
   }
@@ -53,7 +55,7 @@ $bodyButtonBackgroundColor: white;
           height: $headerHeight;
 
           background-color: $primary_light;
-          border-bottom: 0;
+          border-bottom: 1px solid whitesmoke;
 
           div {
 
@@ -64,11 +66,15 @@ $bodyButtonBackgroundColor: white;
   }
 
   .el-table__body-wrapper, .el-table__fixed-body-wrapper {
+    //display: contents;
+
     .el-table__empty-block {
       background-color: $primary_dark;
     }
 
     .el-table__body {
+      width: 100% !important;
+
       .el-table__row {
         //font-size: $contentFontSize !important;
         //height: $rowHeight !important;
@@ -88,6 +94,20 @@ $bodyButtonBackgroundColor: white;
         background: $primary !important;
       }
 
+      tr {
+        background: $primary;
+
+        .el-table__expanded-cell {
+          background: $primary;
+        }
+
+        transition: none;
+
+        &:hover {
+          background: $primary;
+        }
+      }
+
       //.el-table__row--striped {
       //  background-color: $rowStripeColor;
       //
@@ -104,17 +124,18 @@ $bodyButtonBackgroundColor: white;
     z-index: 999;
     height: 6px;
     border-radius: 0;
+    background: $primary_dark;
   }
   .el-table__body-wrapper::-webkit-scrollbar-thumb {
     border-radius: 0;
     height: 6px;
-    background: #ba3232;
+    background: $primary_dark;
     z-index: 999;
   }
   .el-table__body-wrapper::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
     border-radius: 0;
-    background: rgba(0,0,0,0.4);
+    background: $primary;
     height: 6px;
     z-index: 999;
   }
