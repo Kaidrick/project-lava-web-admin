@@ -46,7 +46,7 @@
 
     .dashboard-wrapper {
         background-color: transparent;
-        padding: 10px 40px 10px 10px;
+        //padding: 10px 40px 10px 10px;
 
         .block {
 

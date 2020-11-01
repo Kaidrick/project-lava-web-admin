@@ -39,6 +39,13 @@ export default {
         });
     },
 
+    resetDataPortConfig() {
+        return http({
+            method: 'get',
+            url: '/config/port_reset',
+        })
+    },
+
     getBackendConnectionStatus() {
         return http({
             method: 'get',

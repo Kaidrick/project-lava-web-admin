@@ -17,15 +17,39 @@ export default {
         isLoading: state => state.isLoading,
     },
     mutations: {
-        setIsLoading: (state, isLoading) => state.isLoading = isLoading,
         setDcsPort: (state, dcsPort) => state.dcsPort = dcsPort,
     },
     actions: {
         getDcsPortConfiguration(context) {
-            context.commit('setIsLoading', true);
-            connectionService.getDataPortConfig().then(res => {
+            return connectionService.getDataPortConfig().then(res => {
                 context.commit('setDcsPort', res.data.data);
-            }).finally(() => context.commit('setIsLoading', false))
+            });
+        },
+
+        setDcsPortConfiguration(context) {
+            let {serverMainPort, serverPollPort, exportMainPort, exportPollPort} = context.state.dcsPort;
+            return connectionService.setDataPortConfig({
+                serverMainPort,
+                serverPollPort,
+                exportMainPort,
+                exportPollPort
+            }).then(res => {
+                if (res.data.success) {
+                    context.commit('setDcsPort', res.data.data);
+                }
+
+                return res;
+            })
+        },
+
+        resetDefaultPortConfiguration(context) {
+            return connectionService.resetDataPortConfig().then(res => {
+                if (res.data.success) {
+                    context.commit('setDcsPort', res.data.data);
+                }
+
+                return res;
+            })
         },
 
         // eslint-disable-next-line no-unused-vars

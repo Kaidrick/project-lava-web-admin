@@ -23,7 +23,7 @@ span, div {
   }
 
   .main-panel-view {
-    margin: 0;
+    margin: 10px 40px 10px 10px;
     padding: 0;
   }
 }
@@ -59,6 +59,10 @@ span, div {
   .el-scrollbar__wrap {
     overflow-x: hidden;
     margin: 0 !important;
+
+    .el-scrollbar__view {
+      overflow-x: hidden;
+    }
   }
 
   &:hover,
@@ -126,6 +130,10 @@ span, div {
 
   &:active {
     background-color: lighten($accent, 10);
+  }
+
+  &.is-disabled {
+    background-color: $primary_dark !important;
   }
 
   &.el-button--default, &.el-button--text {
@@ -314,4 +322,24 @@ span, div {
     font-family: sans-serif;
   }
 
+}
+
+.sp-10 {
+  width: 100%;
+  height: 10px;
+}
+
+.common-wrapper {
+  .title-wrapper {
+    .title {
+      font-weight: bold;
+    }
+
+    margin-bottom: 10px;
+  }
+  .content-wrapper {
+    .content {
+
+    }
+  }
 }
