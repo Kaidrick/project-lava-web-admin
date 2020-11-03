@@ -27,6 +27,7 @@
 
       validateAndPush() {
         this.test();
+        this.$wsConnect("http://localhost:8080/gs-guide-websocket");
         // this.$router.push({name: 'Dashboard', path: '/'})
         this.$message.success("set web port success!")
       }

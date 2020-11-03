@@ -39,6 +39,9 @@
         <span class="detail-value">{{ $t(status.theater) }}</span>
       </div>
     </el-main>
+    <el-footer>
+      <el-button @click="handleTestSendMessage">WTF?</el-button>
+    </el-footer>
   </el-container>
 </template>
 
@@ -46,6 +49,12 @@
   import { mapGetters, mapActions } from "vuex";
   export default {
     name: "ServerInfoPanel",
+
+    data() {
+      return {
+        websocket: null
+      }
+    },
 
     computed: {
       ...mapGetters(["status"])
@@ -61,8 +70,12 @@
     },
 
     methods: {
-      ...mapActions(["loadBackendConnectionStatus"])
-    },
+      ...mapActions(["loadBackendConnectionStatus"]),
+
+      handleTestSendMessage() {
+        this.$wsSend("bad idea!");
+      }
+    }
   }
 </script>
 

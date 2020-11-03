@@ -11,6 +11,10 @@ export default {
             exportMainPort: 0,
             exportPollPort: 0
         },
+
+        websocket: null,
+        connected: false,
+
     },
     getters: {
         dcsPort: state => state.dcsPort,
@@ -51,6 +55,8 @@ export default {
                 return res;
             })
         },
+
+
 
         // eslint-disable-next-line no-unused-vars
         initialize ({ dispatch }) {

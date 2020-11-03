@@ -9,6 +9,7 @@ import i18n from './i18n';
 import store from './store';
 
 import system from '@/modules/system';
+import websocket from "@/modules/system/websocket";
 
 Vue.config.productionTip = false;
 
@@ -16,6 +17,7 @@ axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? '' : '/api';
 
 Vue.use(ElementUI);
 Vue.use(VueAxios, axios);
+Vue.use(websocket);
 
 store.registerModule('system', system.store)
 router.addRoutes(system.routes);

@@ -1,102 +1,103 @@
 <template>
-  <el-container class="config-options-wrapper" v-loading="awaitData">
-    <el-main>
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form v-model="portConfig">
-            <el-form-item label="Server Main Port">
-              <el-input v-model="portConfig.serverMainPort"></el-input>
-            </el-form-item>
-            <el-form-item label="Server Poll Port">
-              <el-input v-model="portConfig.serverPollPort"></el-input>
-            </el-form-item>
-            <el-form-item label="Export Main Port">
-              <el-input v-model="portConfig.exportMainPort"></el-input>
-            </el-form-item>
-            <el-form-item label="Export Poll Port">
-              <el-input v-model="portConfig.exportPollPort"></el-input>
-            </el-form-item>
-          </el-form>
-        </el-col>
-        <el-col :span="12">
-          <el-form v-model="portConfig">
-            <el-form-item label="Server Main Port">
-              <el-input v-model="portConfig.serverMainPort"></el-input>
-            </el-form-item>
-            <el-form-item label="Server Poll Port">
-              <el-input v-model="portConfig.serverPollPort"></el-input>
-            </el-form-item>
-            <el-form-item label="Export Main Port">
-              <el-input v-model="portConfig.exportMainPort"></el-input>
-            </el-form-item>
-            <el-form-item label="Export Poll Port">
-              <el-input v-model="portConfig.exportPollPort"></el-input>
-            </el-form-item>
-          </el-form>
-        </el-col>
-      </el-row>
-    </el-main>
-    <el-footer>
-      <el-row>
-        <!--        <el-footer>-->
-        <el-button @click="testSendRequest">Confirm</el-button>
-        <el-button @click="testPostRequest">Cancel</el-button>
-        <!--        </el-footer>-->
-      </el-row>
-    </el-footer>
-  </el-container>
+  <div>
+    <div id="main-content" class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <form class="form-inline">
+            <div class="form-group">
+              <label for="connect">WebSocket connection:</label>
+              <button id="connect" class="btn btn-default" type="submit" :disabled="connected == true" @click.prevent="connect">Connect</button>
+              <button id="disconnect" class="btn btn-default" type="submit" :disabled="connected == false" @click.prevent="disconnect">Disconnect
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-6">
+          <form class="form-inline">
+            <div class="form-group">
+              <label for="name">What is your name?</label>
+              <input type="text" id="name" class="form-control" v-model="send_message" placeholder="Your name here...">
+            </div>
+            <button id="send" class="btn btn-default" type="submit" @click.prevent="send">Send</button>
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <table id="conversation" class="table table-striped">
+            <thead>
+            <tr>
+              <th>Greetings</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="item in received_messages" :key="item">
+              <td>{{ item }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import connectionService, {PortConfig} from "@/services/ConnectionService";
+import SockJS from "sockjs-client";
+import Stomp from "webstomp-client";
 
 export default {
-    name: "PortConfig",
-
-    props: {
-
-    },
-
-    data() {
-      return {
-        awaitData: true,
-
-        portConfig: new PortConfig()
+  name: "PortConfig",
+  data() {
+    return {
+      received_messages: [],
+      send_message: null,
+      connected: false
+    };
+  },
+  methods: {
+    send() {
+      console.log("Send message:" + this.send_message);
+      if (this.stompClient && this.stompClient.connected) {
+        const msg = { name: this.send_message };
+        this.stompClient.send("/app/hello", JSON.stringify(msg), {});
       }
     },
-
-    mounted() {
-      connectionService.getDataPortConfig().then(res => {
-        console.log(res);
-        this.portConfig = res.data.data;
-        this.awaitData = false;
-      });
+    connect() {
+      this.socket = new SockJS("http://localhost:8080/gs-guide-websocket");
+      this.stompClient = Stomp.over(this.socket);
+      this.stompClient.connect(
+          {},
+          frame => {
+            this.connected = true;
+            console.log(frame);
+            this.stompClient.subscribe("/topic/greetings", tick => {
+              console.log(tick);
+              this.received_messages.push(JSON.parse(tick.body).content);
+            });
+          },
+          error => {
+            console.log(error);
+            this.connected = false;
+          }
+      );
     },
-
-    methods: {
-      testSendRequest() {
-        connectionService.getDataPortConfig().then(res => {
-          console.log(res);
-        })
-      },
-
-      testPostRequest() {
-        this.$http.post('/config/port', {
-          serverMainPort: this.serverMainPort,
-          serverPollPort: this.serverPollPort,
-          exportMainPort: this.exportMainPort,
-          exportPollPort: this.exportPollPort
-        }).then(res => {
-          console.log(res);
-        });
+    disconnect() {
+      if (this.stompClient) {
+        this.stompClient.disconnect();
       }
+      this.connected = false;
+    },
+    tickleConnection() {
+      this.connected ? this.disconnect() : this.connect();
     }
+  },
+  mounted() {
+    // this.connect();
   }
+};
 </script>
 
 <style scoped>
-  .config-options-wrapper {
-    /*margin: 20px;*/
-    /*padding: 20px;*/
-  }
+
 </style>
