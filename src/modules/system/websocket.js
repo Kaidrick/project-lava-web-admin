@@ -7,7 +7,14 @@ let stompClient, socket;
 let connected = false;
 let received_messages = [];
 
-function connect(url) {
+let type = "topic";
+let topicName = "greetings";
+let requestPrefix = "app";
+let exchangeName = "frontend.exchange";
+
+let stompEndpointUrl = "http://localhost:8080/lava-ws";
+
+function connect(url=stompEndpointUrl) {
     socket = new SockJS(url);
     stompClient = Stomp.over(socket);
     stompClient.connect(
@@ -16,8 +23,8 @@ function connect(url) {
             connected = true;
             console.log("connected")
             console.log(frame);
-            stompClient.subscribe("/topic/greetings", tick => {
-                console.log(tick);
+            stompClient.subscribe(`/${type}/${topicName}`, tick => {
+                console.log(tick, "tick");
                 received_messages.push(JSON.parse(tick.body).content);
             });
         },
@@ -28,12 +35,21 @@ function connect(url) {
     );
 }
 
+/**
+ * Returns a Subscription
+ * @param topic the topic to be subscribed to
+ * @param callback function to be called
+ * @returns {*} the Subscription object, which contains a string id
+ */
+function subscribe(topic, callback) {
+    return stompClient.subscribe(topic, callback)
+}
+
 function send(message) {
     console.log("Send message:" + message);
     if (stompClient && stompClient.connected) {
-        console.log("inside ok")
         const msg = { name: message };
-        stompClient.send("/app/hello", JSON.stringify(msg), {});
+        stompClient.send(`/${requestPrefix}/${exchangeName}`, JSON.stringify(msg), {});
     }
 }
 
@@ -53,12 +69,15 @@ export default {
         //         console.log("Websocket");
         //     }
         // });
+        console.log(options);
 
         Vue.prototype.$wsConnect = connect
 
         Vue.prototype.$wsSend = send
 
         Vue.prototype.$wsDisconnect = disconnect
+
+        Vue.prototype.$wsSubscribe = subscribe
     }
 
 }

@@ -10,6 +10,7 @@ import store from './store';
 
 import system from '@/modules/system';
 import websocket from "@/modules/system/websocket";
+// import {option as websocketOption} from './websocket.config';
 
 Vue.config.productionTip = false;
 

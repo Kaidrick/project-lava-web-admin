@@ -27,9 +27,9 @@
 
       validateAndPush() {
         this.test();
-        this.$wsConnect("http://localhost:8080/gs-guide-websocket");
+        this.$wsConnect("http://localhost:8080/lava-ws");
         // this.$router.push({name: 'Dashboard', path: '/'})
-        this.$message.success("set web port success!")
+        this.$message.success("Set web port success!")
       }
     }
   }
