@@ -8,13 +8,15 @@ let connected = false;
 let received_messages = [];
 
 let type = "topic";
-let topicName = "greetings";
+let topicName = "frontend.bus";
+
 let requestPrefix = "app";
 let exchangeName = "frontend.exchange";
 
 let stompEndpointUrl = "http://localhost:8080/lava-ws";
 
-function connect(url=stompEndpointUrl) {
+// eslint-disable-next-line no-unused-vars
+function connect(url=stompEndpointUrl, successCallback, failCallback) {
     socket = new SockJS(url);
     stompClient = Stomp.over(socket);
     stompClient.connect(
@@ -24,13 +26,17 @@ function connect(url=stompEndpointUrl) {
             console.log("connected")
             console.log(frame);
             stompClient.subscribe(`/${type}/${topicName}`, tick => {
-                console.log(tick, "tick");
+                // console.log(tick, "frame");
                 received_messages.push(JSON.parse(tick.body).content);
             });
+
+            successCallback && successCallback();
         },
         error => {
-            console.log(error);
+            console.log("ws connection error: " + error);
             connected = false;
+
+            failCallback && failCallback();
         }
     );
 }
@@ -46,10 +52,11 @@ function subscribe(topic, callback) {
 }
 
 function send(message) {
-    console.log("Send message:" + message);
     if (stompClient && stompClient.connected) {
         const msg = { name: message };
-        stompClient.send(`/${requestPrefix}/${exchangeName}`, JSON.stringify(msg), {});
+        stompClient.send(`/${requestPrefix}/${exchangeName}`, JSON.stringify(msg), {
+            // header
+        });
     }
 }
 

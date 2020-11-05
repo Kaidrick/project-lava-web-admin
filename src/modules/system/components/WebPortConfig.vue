@@ -26,10 +26,17 @@
       ...mapActions('system', ["test"]),
 
       validateAndPush() {
-        this.test();
-        this.$wsConnect("http://localhost:8080/lava-ws");
+        this.$wsConnect("http://localhost:8080/lava-ws",
+            () => {
+              this.$message.success("Websocket connection established");
+              this.test();
+            },
+            () => {
+              this.$message.error("Failed to connect to backend websocket")
+            }
+        );
         // this.$router.push({name: 'Dashboard', path: '/'})
-        this.$message.success("Set web port success!")
+
       }
     }
   }
