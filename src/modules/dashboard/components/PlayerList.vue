@@ -39,28 +39,31 @@
                 <div>Slot Unit: $placeholder id$, $placeholder unit name$</div>
               </div>
               <div class="operation-button-wrapper">
-                <el-button size="mini">Notice</el-button>
-                <el-button size="mini">Alias</el-button>
-                <el-button size="mini">Force Slot</el-button>
-                <el-button size="mini">Destroy</el-button>
-                <el-button size="mini">Kick</el-button>
-                <el-button size="mini">Ban</el-button>
+                <el-button v-for="(action, index) in disciplinaryActions"
+                           size="mini"
+                           @click="$refs.discActionDetail.show(action.type, data)"
+                           :key="index">
+                  {{ action.name }}
+                </el-button>
               </div>
             </div>
           </el-collapse-transition>
-
         </div>
       </el-scrollbar>
+
+      <disciplinary-action-detail ref="discActionDetail"></disciplinary-action-detail>
+
     </div>
 </template>
 
 <script>
     import {mapActions, mapGetters, mapMutations} from 'vuex';
+    import DisciplinaryActionDetail from "./DisciplinaryActionDetail";
 
     export default {
         name: "PlayerList",
-
-        computed: {
+      components: {DisciplinaryActionDetail},
+      computed: {
             ...mapGetters('dashboard', ['playerData'])
         },
 
@@ -68,12 +71,13 @@
           return {
               timer: null,
 
+            disciplinaryActions: [],
+
             tableData: [],  // view array generated from player data map
 
             playerDataMap: [],
 
             selectedRowUcid: '',
-
 
             currentSelection: '',  // ucid
 
@@ -85,11 +89,18 @@
           // when this view is mounted, send a request to get a initial rednering of the player list
           // player data are maintained in an map with player ucid as key, and thus the data can be
           // immediately accessed by ucid when a update is detected
+          this.getDisciplineCategories().then(res => {
+            if (res.data.success) {
+              console.log(res.data.data);
+              this.disciplinaryActions = res.data.data;
+            }
+          });
+
 
           this.getPlayerList()  // data is already in the state
               .then(() => {
                 this.tableData = this.playerData;
-              })
+              });
 
           // FIXME: can do update but cannot replace table data
           // FIXME: replace the table data and then expand previously expanded rows
@@ -107,7 +118,7 @@
         },
 
         methods: {
-            ...mapActions('dashboard', ['getPlayerList']),
+            ...mapActions('dashboard', ['getPlayerList', 'getDisciplineCategories']),
             ...mapMutations('dashboard', ['setPlayerTableExpandedRows']),
 
           // eslint-disable-next-line no-unused-vars

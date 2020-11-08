@@ -21,12 +21,16 @@
         <div>DCS Version</div>
         <div>DCS.2.5.6</div>
       </div>
+      <div>
+        WS Connected: {{ websocketConnected }}
+      </div>
       <slot></slot>
     </el-menu>
   </div>
 </template>
 
 <script>
+  import {mapGetters} from 'vuex';
   export default {
     name: "PanelNavMenu",
 
@@ -37,6 +41,10 @@
         routeNamePathMap: new Map(),
         selectedMenu: 0
       }
+    },
+
+    computed: {
+      ...mapGetters('system', ["websocketConnected"])
     },
 
     mounted() {

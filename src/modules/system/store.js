@@ -14,15 +14,19 @@ export default {
             port: 8080
         },
 
-        configured: false
+        configured: false,
+
+        websocketConnected: false
     },
     getters: {
         webConfig: state => state.webConfig,
-        configured: state => state.configured
+        configured: state => state.configured,
+        websocketConnected: state => state.websocketConnected,
     },
     mutations: {
         setWebConfig: (state, webConfig) => state.webConfig = webConfig,
-        setConfigured: (state, configured) => state.configured = configured
+        setConfigured: (state, configured) => state.configured = configured,
+        setWebsocketConnected: (state, websocketConnected) => state.websocketConnected = websocketConnected
     },
     actions: {
         // eslint-disable-next-line no-unused-vars
@@ -30,6 +34,10 @@ export default {
             console.log("test");
 
             context.commit('setConfigured', true);
+        },
+
+        switchWebSocketConnected(context, boolean) {
+            context.commit('setWebsocketConnected', boolean)
         },
 
         // eslint-disable-next-line no-unused-vars

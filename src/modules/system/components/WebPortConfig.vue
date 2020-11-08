@@ -31,8 +31,8 @@
               this.$message.success("Websocket connection established");
               this.test();
             },
-            () => {
-              this.$message.error("Failed to connect to backend websocket")
+            error => {
+              this.$message.error("Disconnected from backend websocket:" + error);
             }
         );
         // this.$router.push({name: 'Dashboard', path: '/'})

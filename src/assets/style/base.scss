@@ -299,8 +299,13 @@ span, div {
 }
 
 .el-dialog {
-  background-color: $primary_dark;
+  background-color: $primary_dark !important;
   color: whitesmoke;
+
+  .el-dialog__title {
+    color: whitesmoke;
+    font-weight: bold;
+  }
 
   .el-dialog__header {
 

@@ -36,7 +36,7 @@
       </div>
       <div class="detail-name-value">
         <span class="detail-name">{{ $t('mission_map_theater') }}</span>
-        <span class="detail-value">{{ $t(status.theater) }}</span>
+        <span class="detail-value">{{ status.theater }}</span>
       </div>
     </el-main>
     <el-footer>

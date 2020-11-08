@@ -1,14 +1,19 @@
 <template>
     <div class="dashboard-block-wrapper">
       <div class="block-title">System Logs</div>
-        <el-table :data="systemLogData"
-                  height="300px"
-                  :row-class-name="tableRowClass">
-          <el-table-column label="Time" prop="time"></el-table-column>
-          <el-table-column label="Level" width="90px" prop="logLevel"></el-table-column>
-          <el-table-column label="Message" prop="message"></el-table-column>
-          <el-table-column label="Source" prop="source"></el-table-column>
-        </el-table>
+<!--        <el-table :data="systemLogData"-->
+<!--                  height="800px">-->
+<!--          <el-table-column label="Time" prop="time"></el-table-column>-->
+<!--          <el-table-column label="Level" width="90px" prop="logLevel"></el-table-column>-->
+<!--          <el-table-column label="Message" prop="message"></el-table-column>-->
+<!--          <el-table-column label="Source" prop="source"></el-table-column>-->
+<!--        </el-table>-->
+
+        <div class="infinite-list" v-infinite-scroll="load" infinite-scroll-distance="-20" style="overflow:auto;height: 400px">
+            <div v-for="(entry, index) in systemLogData" :key="index" class="infinite-list-item">
+                {{ entry.time }}
+            </div>
+        </div>
     </div>
 </template>
 
@@ -17,20 +22,36 @@
     export default {
         name: "SystemLog",
 
+        data() {
+            return {
+                count: 0,
+
+                pageObject: {
+                    currentPageNo: 1,
+                    pageSize: 30
+                }
+            }
+        },
+
       computed: {
           ...mapGetters('dashboard', ['systemLogData']),
       },
 
       methods: {
-          ...mapActions('dashboard', ['getSystemLogList']),
+          ...mapActions('dashboard', ['getSystemLogList', 'getMoreSystemList']),
 
         tableRowClass({row}) {
           return 'log-level-' + row.logLevel.toLowerCase();
-        }
+        },
+
+          load () {
+              this.pageObject.currentPageNo++;
+              this.getMoreSystemList(this.pageObject);
+          }
       },
 
       mounted() {
-          this.getSystemLogList();
+          this.getSystemLogList(this.pageObject);
       }
     }
 </script>
