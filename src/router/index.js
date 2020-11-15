@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+// import Home from '../views/Home.vue'
 import LuaConsole from "../views/LuaConsole";
 
 class VueRouterEx extends VueRouter {
@@ -21,11 +21,11 @@ class VueRouterEx extends VueRouter {
 Vue.use(VueRouterEx);
 
 const routes = [
-  {
-    path: '/',
-    name: 'Dashboard',
-    component: Home
-  },
+  // {
+  //   path: '/',
+  //   name: 'Dashboard',
+  //   component: Home
+  // },
   {
     path: '/lua',
     name: 'LuaConsole',

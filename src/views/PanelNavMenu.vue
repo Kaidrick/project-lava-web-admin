@@ -1,7 +1,7 @@
 <template>
   <div class="nav-menu-wrapper">
     <el-menu
-        default-active="0"
+        :default-active="String(selectedMenu)"
         class="nav-menu-vertical"
         text-color="#fff"
         @select="handleMenuSelect"
@@ -44,16 +44,18 @@
     },
 
     computed: {
-      ...mapGetters('system', ["websocketConnected"])
+      ...mapGetters('system', ["websocketConnected"]),
     },
 
     mounted() {
       this.$router.options.routes.forEach(r => {
-        console.log(r);
+        // console.log(r);
         let { name, path } = r;
         this.navMenus.push(name);
         this.routeNamePathMap.set(name, path);
       });
+      console.log(this.routeNamePathMap, "route name map");
+      this.selectedMenu = Array.from(this.routeNamePathMap.keys()).indexOf(this.$route.name);
     },
 
     methods: {
