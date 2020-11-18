@@ -5,6 +5,7 @@ import siteModule from '@/modules/site';
 import Configuration from "./configuration";
 import MapControl from "@/modules/atlas/";
 import dashboardModule from '@/modules/dashboard';
+import AddonManager from "@/modules/addons";
 
 export default {
     namespaced: true,
@@ -48,6 +49,7 @@ export default {
             dispatch('initializeModule', Configuration);
             dispatch('initializeModule', MapControl);
             dispatch('initializeModule', dashboardModule);
+            dispatch('initializeModule', AddonManager);
         },
         initializeModule ({ dispatch }, module) {
             Store.registerModule(module.name, module.store);
