@@ -28,6 +28,18 @@ span, div {
   }
 }
 
+.el-loading-mask {
+  background-color: transparentize($primary_dark, 0.05) !important;
+
+  .el-loading-spinner {
+    .circular {
+      circle {
+        stroke: #42b983;
+      }
+    }
+  }
+}
+
 .el-textarea {
   margin: auto;
   .el-textarea__inner {
@@ -47,6 +59,35 @@ span, div {
     background-color: $primary_light;
     border: 0;
     border-radius: 0;
+  }
+
+  .el-input-group__append {
+    background-color: $primary;
+    border: none;
+    border-radius: 0;
+  }
+}
+
+.el-tabs {
+  .el-tabs__header {
+
+    padding: 0 10px;
+
+    .el-tabs__nav-wrap::after {
+      background-color: $primary_dark;
+    }
+
+    .el-tabs__active-bar {
+      background-color: #f7b500;
+    }
+
+    .el-tabs__item {
+      color: whitesmoke;
+
+      &.is-active {
+        color: #f7b500;
+      }
+    }
   }
 }
 

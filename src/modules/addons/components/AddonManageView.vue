@@ -5,7 +5,9 @@
                custom-class="addon-dialog"
                destroy-on-close>
         <div slot="title">{{ plugin.name }} ({{plugin.ident}})</div>
-        <iframe class="view-frame" :src="src"></iframe>
+      <div class="iframe-wrapper" v-loading="isLoading">
+        <iframe ref="customViewFrame" class="view-frame" :src="src"></iframe>
+      </div>
     </el-dialog>
 </template>
 
@@ -17,12 +19,27 @@
             return {
                 dialogVisible: false,
                 plugin: {},
-                src: ''
+                src: '',
+
+              isLoading: false
             }
         },
 
-        methods: {
+      mounted() {
+
+      },
+
+      methods: {
             show(plugin) {
+              this.isLoading = true;
+
+              this.$nextTick(() => {
+                console.log(this.$refs.customViewFrame);
+                this.$refs.customViewFrame.addEventListener('load', () => {
+                  this.isLoading = false;
+                })
+              })
+
                 this.$message.success(plugin.name + ", " + plugin.ident);
                 this.plugin = plugin;
                 this.src = `http://localhost:8080/view/${this.plugin.ident}`;
@@ -57,11 +74,19 @@
                 display: flex;
                 flex-direction: column;
                 flex: 1;
+
+              .iframe-wrapper {
+                display: flex;
+                flex: 1;
+                height: calc(100% - 160px);
+
                 .view-frame {
-                    border: none;
-                    width: 100%;
-                    flex: 1;
+                  border: none;
+                  width: 100%;
+                  flex: 1;
                 }
+              }
+
             }
         }
     }

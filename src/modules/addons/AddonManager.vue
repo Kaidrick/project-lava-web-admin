@@ -5,9 +5,8 @@
                      v-for="(plugin, index) in pluginList"
                      :key="index" @click.native="handleAddonCardOpen(plugin)">
                 <div>{{ plugin.name }}</div>
-                <div>{{ plugin.name }}</div>
-                <div>{{ plugin.name }}</div>
-                <div>{{ plugin.name }}</div>
+                <div>{{ plugin.ident }}</div>
+                <div>{{ plugin.description }}</div>
             </el-card>
         </div>
         <addon-manage-view ref="addonManageView"></addon-manage-view>
@@ -15,6 +14,7 @@
 </template>
 
 <script>
+    import AddonService from "@/services/addons/AddonService";
     import AddonManageView from "./components/AddonManageView";
     export default {
         name: "AddonManager",
@@ -26,13 +26,13 @@
         },
 
         mounted() {
-            for (let i = 0; i < 10; i++) {
-                this.pluginList.push({
-                    name: 'Navigation Data Provider',
-                    ident: 'moe.ofs.addon-NavData-1.0-SNAPSHOT',
-                    description: 'Test Entry for Navigation Data Provider plugin.'
-                });
-            }
+            AddonService.getAddonList().then(res => {
+              if (res.data.success) {
+                this.pluginList = res.data.data.sort((a, b) => a.id - b.id);
+              } else {
+                this.$message.error("Unable to get addon list");
+              }
+            })
         },
 
         methods: {
@@ -51,6 +51,7 @@
             flex-wrap: wrap;
 
             .addon-card {
+              min-width: 240px;
                 width: 24%;
                 max-height: 400px;
                 background-color: #42b983;
