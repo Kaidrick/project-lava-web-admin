@@ -54,6 +54,11 @@
                     <el-radio :label="2" border>Export</el-radio>
                   </el-tooltip>
                 </div>
+                <div>
+                  <el-tooltip class="item" effect="light" content="Execute in Export State" placement="right">
+                    <el-radio :label="3" border>Mission Trigger</el-radio>
+                  </el-tooltip>
+                </div>
               </div>
             </el-radio-group>
           </div>
