@@ -6,6 +6,7 @@ import Configuration from "./configuration";
 import MapControl from "@/modules/atlas/";
 import dashboardModule from '@/modules/dashboard';
 import AddonManager from "@/modules/addons";
+import LuaDebugger from "@/modules/luaconsole";
 
 export default {
     namespaced: true,
@@ -50,6 +51,7 @@ export default {
             dispatch('initializeModule', MapControl);
             dispatch('initializeModule', dashboardModule);
             dispatch('initializeModule', AddonManager);
+            dispatch('initializeModule', LuaDebugger);
         },
         initializeModule ({ dispatch }, module) {
             Store.registerModule(module.name, module.store);
