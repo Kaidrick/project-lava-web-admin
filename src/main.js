@@ -10,6 +10,7 @@ import store from './store';
 
 import system from '@/modules/system';
 import websocket from "@/modules/system/websocket";
+import util from "@/util";
 // import {option as websocketOption} from './websocket.config';
 
 Vue.config.productionTip = false;
@@ -19,6 +20,7 @@ axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? '' : '/api';
 Vue.use(ElementUI);
 Vue.use(VueAxios, axios);
 Vue.use(websocket);
+Vue.use(util);
 
 store.registerModule('system', system.store)
 router.addRoutes(system.routes);

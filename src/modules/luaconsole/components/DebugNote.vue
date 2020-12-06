@@ -2,7 +2,7 @@
   <div class="debug-note-wrapper">
     <div class="command">
       <div class="note-index">In [{{ index }}]: </div>
-      <lua-editor class="note-display" :is-editor="false" :src="code" :read-only="true"></lua-editor>
+      <lua-editor class="note-display" :is-editor="false" :src="noteData.code" :read-only="true"></lua-editor>
     </div>
     <div v-if="response" class="response">
       <div class="note-index">Out [{{ index }}]: </div>
@@ -19,15 +19,13 @@
 
 <script>
   import LuaEditor from "@/modules/luaconsole/components/LuaEditor";
+  import LuaDebugService from "../../../services/LuaDebugService";
   export default {
     name: "DebugNote",
     components: {LuaEditor},
     computed: {
       code() {
         return this.noteData.code;
-      },
-      response() {
-        return this.noteData.response;
       },
       index() {
         return this.noteData.index;
@@ -38,25 +36,42 @@
       noteData: {},
     },
 
-    mounted() {
+    data() {
+      return {
+        response: ''
+      }
+    },
 
+    mounted() {
+      console.log(this.noteData.code);
+      LuaDebugService.sendLuaDebugString({
+        luaString: this.noteData.code,
+        level: this.noteData.type,
+        timeStamp: new Date(),
+      }).then(res => {
+        this.response = res.data.data;
+      });
     },
 
     methods: {
-
+      getResponse() {
+        return this.response;
+      }
     }
   }
 </script>
 
 <style lang="scss" scoped>
+  @import 'src/assets/style/color-scheme';
   .debug-note-wrapper {
     padding: 10px;
     margin: 10px 10px 20px 10px;
 
     &:hover {
-      border: 1px solid #42b983;
-      padding: 9px 9px 9px 4px;
-      border-left: 6px solid #42b983;
+      /*border: 1px solid #42b983;*/
+      /*padding: 9px 9px 9px 4px;*/
+      /*border-left: 6px solid #42b983;*/
+      background-color: darken($primary_light, 12);
     }
 
     &:hover::before{

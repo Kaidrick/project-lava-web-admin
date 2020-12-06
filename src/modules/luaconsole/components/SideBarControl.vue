@@ -83,12 +83,7 @@
       }
     }
 
-    .lua-debug-sidebar-control__send-button::after {
-      content: "";
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      filter: invert(100%);
+    .lua-debug-sidebar-control__send-button {
       background: url("~@/assets/lua_102040.png") center center no-repeat;
       background-size: 48px auto;
     }

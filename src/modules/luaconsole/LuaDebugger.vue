@@ -5,14 +5,15 @@
                   :class="{'selected': selectedNoteIndex === index}"
                   v-for="(command, index) in commands"
                   @click.native="selectDebugNote(index)"
+                  ref="debugNote"
                   :key="index"
                   :note-data="command">
         <div slot="operation" class="debug-note-operation" v-if="selectedNoteIndex === index">
           <el-tag class="debug-env-type-tag">
             {{ getDebugTypeName(command.type) }}
           </el-tag>
-          <el-button size="mini">COPY IN</el-button>
-          <el-button size="mini">COPY OUT</el-button>
+          <el-button size="mini" @click="$clipboard(command.code)">COPY IN</el-button>
+          <el-button size="mini" @click="$clipboard($refs['debugNote'][index].getResponse())">COPY OUT</el-button>
           <el-button size="mini">COPY ALL</el-button>
           <el-button size="mini" @click="deleteSelection(index)">DELETE NOTE</el-button>
         </div>
@@ -46,7 +47,7 @@ export default {
       1: 'Hook',
       2: 'Export',
       3: 'Trigger'
-    }
+    };
 
     return {
       commands: [],
@@ -68,8 +69,7 @@ export default {
         type: debugType,
         index: ++this.nextId,
         code: command,
-        response: '{"name":"test name", "number": 123, "bad guys":[123,234,345]}',
-      }
+      };
 
       this.commands.push(note);
 
@@ -87,13 +87,13 @@ export default {
       console.log(event, "event");
       if(event.target.className === 'lua-note-book-wrapper' ||
           event.target.className.includes('lua-debugger-wrapper')) {
-        this.$message.success('outside click')
+        this.$message.success('outside click');
         this.selectedNoteIndex = undefined;
       }
     },
 
     deleteSelection(index) {
-      this.$message.success('delete index -> ' + index)
+      this.$message.success('delete index -> ' + index);
       this.commands.splice(index, 1);
       this.selectedNoteIndex = undefined;
     },
@@ -121,7 +121,10 @@ export default {
   .lua-note-book-wrapper {
     .debug-note {
       &.selected {
-        background-color: darken($primary_light, 12);
+
+        border: 1px solid #42b983;
+        padding: 9px 9px 9px 4px;
+        border-left: 6px solid #42b983;
       }
 
       .debug-note-operation {
