@@ -8,7 +8,7 @@
       <div class="control-detail-wrapper">
         <el-form :model="formData">
           <el-form-item label="Type">
-            <el-select v-model="formData.restartType" prop="restartType">
+            <el-select v-model="formData.resetType" prop="resetType">
               <el-option label="DCS Server Only" :value="0"></el-option>
               <el-option label="Lava Backend Only" :value="1"></el-option>
               <el-option label="DCS Server and Lava Backend" :value="2"></el-option>
@@ -19,7 +19,10 @@
           </el-form-item>
         </el-form>
         <div slot="footer" class="button-wrapper">
-          <el-popconfirm :title="`Confirm ${controlTypeName}?`" confirmButtonText="YES" cancelButtonText="NO">
+          <el-popconfirm :title="`Confirm ${controlTypeName}?`"
+                         confirmButtonText="YES"
+                         cancelButtonText="NO"
+                         @onConfirm="confirm">
             <el-button slot="reference">Confirm</el-button>
           </el-popconfirm>
           <el-button @click="close">Cancel</el-button>
@@ -30,6 +33,7 @@
 </template>
 
 <script>
+  import ServerControl from "../../../services/config/ServerControl";
   export default {
     name: "ServerControlDialog",
 
@@ -52,7 +56,7 @@
       return {
         formData: {
           reason: '',
-          restartType: 0,
+          resetType: 0,
           time: new Date()
         },
         controlType: 0,
@@ -66,14 +70,32 @@
         this.dialogVisible = true;
       },
 
-      close(callback) {
+      confirm() {
+        this.$message.success("confirmed");
+        ServerControl.commandServerRestart({
+          restartTime: new Date(),
+          reason: this.formData.reason,
+          resetType: this.formData.resetType})
+                .then(res => {
+                  if (res.success && res.data.data) {
+                    this.$message.success("Success!")
+                  } else {
+                    this.$message.error(res.data.msg);
+                  }
+                })
+      },
+
+      close() {
+
+        this.dialogVisible = false;
+
         for (let [key, value] of Object.entries(this.formData)) {
           console.log(`${key}: ${value}`);
           this.formData[key] = null;
         }
+      },
 
-        callback();
-      }
+
     }
   }
 </script>

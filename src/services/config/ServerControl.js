@@ -1,11 +1,13 @@
 import http from 'axios';
 
 export default {
-    commandServerRestart(data) {
+    commandServerRestart({restartTime, reason, resetType}) {
         return http({
             method: 'post',
-            url: '/config/server/restart',
-            data
+            url: '/server/control/reload_mission',
+            data: {
+                restartTime, reason, resetType
+            }
         });
     }
 }
