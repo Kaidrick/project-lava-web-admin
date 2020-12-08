@@ -5,10 +5,16 @@
 
 @import 'color-scheme';
 
+
+
 ::v-deep .cm-s-darcula {
   font-family: Consolas, Menlo, Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, serif;
 
-  //height: auto;
+  height: auto;
+
+  .CodeMirror-scroll {
+    min-height: 300px;
+  }
 
   span.cm-meta {
     color: #BBB529;

@@ -1,6 +1,6 @@
 <template>
   <div class="editor-wrapper">
-    <div ref="editor" :class="{'note-mode': !this.isEditor}"></div>
+    <div ref="editor" :class="{'note-mode': !this.isEditor, 'expanded': this.panelExpanded}"></div>
     <!--    <div class="cm-s-darcula" ref="hold"></div>-->
   </div>
 </template>
@@ -27,6 +27,11 @@ export default {
     },
 
     isEditor: {
+      type: Boolean,
+      default: false
+    },
+
+    panelExpanded: {
       type: Boolean,
       default: false
     }
@@ -81,6 +86,14 @@ export default {
 
     focus() {
       this.editor.focus();
+    },
+
+    expand() {
+
+    },
+
+    collapse() {
+
     }
   }
 }
@@ -93,6 +106,21 @@ export default {
 ::v-deep .note-mode {
   .CodeMirror {
     height: auto;
+
+    .CodeMirror-scroll {
+      min-height: auto;
+    }
+  }
+}
+
+::v-deep .expanded {
+  .CodeMirror {
+    height: auto;
+
+    .CodeMirror-scroll {
+      min-height: 300px;
+      max-height: 600px;
+    }
   }
 }
 

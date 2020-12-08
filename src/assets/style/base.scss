@@ -250,15 +250,20 @@ span, div {
 
   color: whitesmoke;
 
+  &.is-bordered {
+    border-radius: 0 !important;
+    border: 1px solid #f7b500 !important;
+  }
+
   &.is-checked {
 
     .el-radio__inner {
-      border-color: #f7b500;
-      background: #f7b500;
+      border-color: #f7b500 !important;
+      background: #f7b500 !important;
     }
 
     .el-radio__label {
-      color: #f7b500;
+      color: #f7b500 !important;
     }
   }
 }

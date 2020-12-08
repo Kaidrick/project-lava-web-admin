@@ -15,6 +15,7 @@
         </div>
       </div>
     </el-radio-group>
+    <el-button @click="handlePanelCollapse">{{ isCollapsed ? 'EXPAND' : 'COLLAPSE' }} PANEL</el-button>
   </div>
 </template>
 
@@ -48,7 +49,9 @@
 
       return {
         debugType: 0,
-        envList
+        envList,
+
+        isCollapsed: false
       }
     },
 
@@ -60,6 +63,11 @@
       clearDebugCommand() {
         this.$emit('clear-command');
       },
+
+      handlePanelCollapse() {
+        this.isCollapsed = !this.isCollapsed;
+        this.$emit('panel-collapsed', this.isCollapsed)
+      }
     }
   }
 </script>
@@ -90,6 +98,14 @@
     .lua-debug-sidebar-control__clear-button {
       background: url("~@/assets/eraser.png") center center no-repeat;
       background-size: 48px auto;
+    }
+
+    .lua-debug-sidebar-control__radio-group {
+      margin-top: 5px;
+
+      div {
+        margin-bottom: 5px;
+      }
     }
   }
 </style>

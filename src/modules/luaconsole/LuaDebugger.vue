@@ -24,10 +24,11 @@
                   class="lua-editor__editor-frame"
                   ref="luaEditor"
                   :read-only="false"
-                  :is-editor="true"></lua-editor>
+                  :is-editor="true" :panel-expanded="isEditorPanelExpanded"></lua-editor>
       <side-bar-control class="lua-editor__editor-control"
                         @send-command="sendDebugRequest"
-                        @clear-command="clear" />
+                        @clear-command="clear"
+                        @panel-collapsed="collapsePanel" />
     </div>
   </div>
 </template>
@@ -54,6 +55,8 @@ export default {
       nextId: 0,
       debugTypeNameMapping,
       selectedNoteIndex: undefined,
+
+      isEditorPanelExpanded: false
     }
   },
 
@@ -81,6 +84,10 @@ export default {
     clear() {
       this.commands.splice(0, this.commands.length);
       this.selectedNoteIndex = undefined;
+    },
+
+    collapsePanel(isExpanded) {
+      this.isEditorPanelExpanded = isExpanded;
     },
 
     clearSelection(event) {
