@@ -16,7 +16,7 @@
         </div>
       </div>
     </el-radio-group>
-    <el-button @click="handlePanelCollapse">{{ isCollapsed ? 'EXPAND' : 'COLLAPSE' }} PANEL</el-button>
+    <el-button style="width: 100%; overflow: hidden; text-overflow: ellipsis" size="small" @click="handlePanelCollapse">{{ isCollapsed ? 'EXPAND' : 'COMPACT' }}</el-button>
   </div>
 </template>
 
@@ -121,6 +121,10 @@
 
       div {
         margin-bottom: 5px;
+
+        .el-radio {
+          width: 100%;
+        }
       }
     }
   }

@@ -43,7 +43,7 @@
     },
 
     mounted() {
-      console.log(this.noteData.code);
+      // console.log(this.noteData.code);
       LuaDebugService.sendLuaDebugString({
         luaString: this.noteData.code,
         level: this.noteData.type,

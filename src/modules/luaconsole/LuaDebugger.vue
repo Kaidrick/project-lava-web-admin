@@ -14,7 +14,8 @@
           </el-tag>
           <el-button size="mini" @click="$clipboard(command.code)">COPY IN</el-button>
           <el-button size="mini" @click="$clipboard($refs['debugNote'][index].getResponse())">COPY OUT</el-button>
-          <el-button size="mini">COPY ALL</el-button>
+          <el-button size="mini" @click="runDebugRequest(command.code)">RUN</el-button>
+          <el-button size="mini" @click="$refs.luaEditor.setValue(command.code)">COPY TO EDITOR</el-button>
           <el-button size="mini" @click="deleteSelection(index)">DELETE NOTE</el-button>
         </div>
       </debug-note>
@@ -37,7 +38,7 @@
 import LuaEditor from "./components/LuaEditor";
 import SideBarControl from "./components/SideBarControl";
 import DebugNote from "@/modules/luaconsole/components/DebugNote";
-import { mapGetters } from 'vuex';
+import {mapGetters} from 'vuex';
 
 
 export default {
@@ -78,6 +79,20 @@ export default {
         type: this.debugEnvType,
         index: ++this.nextId,
         code: command,
+      };
+
+      this.commands.push(note);
+
+      this.$nextTick(() => {
+        this.$refs.luaEditor.focus();
+      })
+    },
+
+    runDebugRequest(luaString) {
+      const note = {
+        type: this.debugEnvType,
+        index: ++this.nextId,
+        code: luaString,
       };
 
       this.commands.push(note);
@@ -169,6 +184,7 @@ export default {
     }
 
     .lua-editor__editor-control {
+      margin-left: 10px;
       width: 150px;
     }
   }
