@@ -6,7 +6,8 @@
     <el-button class="lua-debug-sidebar-control__clear-button"
                size="small"
                @click="clearDebugCommand">CLEAR</el-button>
-    <el-radio-group class="lua-debug-sidebar-control__radio-group" v-model="debugType">
+    <el-radio-group class="lua-debug-sidebar-control__radio-group"
+                    v-model="debugEnvType">
       <div class="lua-debug-sidebar-control__radio-group__radio-button-wrapper">
         <div v-for="(env, index) in envList" :key="index">
           <el-tooltip class="item" effect="dark" :content="env.desc" placement="right">
@@ -20,6 +21,8 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex';
+
   export default {
     name: "SideBarControl",
 
@@ -55,6 +58,17 @@
       }
     },
 
+    computed: {
+      debugEnvType: {
+        get () {
+          return this.$store.state['debugger'].debugEnvType;
+        },
+        set (value) {
+          this.$store.dispatch('debugger/changeDebugEnvType', value);
+        }
+      }
+    },
+
     methods: {
       sendDebugCommand() {
         this.$emit('send-command', this.debugType);
@@ -67,7 +81,9 @@
       handlePanelCollapse() {
         this.isCollapsed = !this.isCollapsed;
         this.$emit('panel-collapsed', this.isCollapsed)
-      }
+      },
+
+      ...mapActions('debugger', ['changeDebugEnvType'])
     }
   }
 </script>

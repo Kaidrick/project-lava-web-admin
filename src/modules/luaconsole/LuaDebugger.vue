@@ -37,6 +37,8 @@
 import LuaEditor from "./components/LuaEditor";
 import SideBarControl from "./components/SideBarControl";
 import DebugNote from "@/modules/luaconsole/components/DebugNote";
+import { mapGetters } from 'vuex';
+
 
 export default {
   name: "LuaDebugger",
@@ -60,16 +62,20 @@ export default {
     }
   },
 
+  computed: {
+    ...mapGetters('debugger', ['debugEnvType'])
+  },
+
   mounted() {
 
   },
 
   methods: {
-    sendDebugRequest(debugType) {
+    sendDebugRequest() {
       const command = this.$refs.luaEditor.getValue();
 
       const note = {
-        type: debugType,
+        type: this.debugEnvType,
         index: ++this.nextId,
         code: command,
       };
@@ -154,7 +160,7 @@ export default {
   }
 
   .lua-editor {
-    margin: 0 10px 10px 10px;
+    margin: 10px 10px 10px 10px;
     display: flex;
     flex-direction: row;
 
