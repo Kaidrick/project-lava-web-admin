@@ -46,12 +46,12 @@
         <el-dropdown placement="top">
           <span class="title">
             <el-image :src="require('@/assets/slot_block.png')" fit="contain"></el-image>
-            <span>Side Balancer</span>
+            <span>Server Gateway</span>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>AUTO</el-dropdown-item>
-            <el-dropdown-item>SITUATIONAL</el-dropdown-item>
-            <el-dropdown-item>MANUAL</el-dropdown-item>
+            <el-dropdown-item>PUBLIC</el-dropdown-item>
+            <el-dropdown-item>RESTRICTED</el-dropdown-item>
+            <el-dropdown-item>MAINTENANCE</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>

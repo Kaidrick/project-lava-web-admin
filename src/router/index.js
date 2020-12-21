@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 // import Home from '../views/Home.vue'
-import LuaConsole from "../views/LuaConsole";
+// import LuaConsole from "../views/LuaConsole";
 
 class VueRouterEx extends VueRouter {
   constructor(options) {
@@ -26,16 +26,16 @@ const routes = [
   //   name: 'Dashboard',
   //   component: Home
   // },
-  {
-    path: '/lua',
-    name: 'LuaConsole',
-    component: LuaConsole
-  },
-  {
-    path: '/settings',
-    name: 'Settings',
-    component: () => import("../views/Settings")
-  },
+  // {
+  //   path: '/lua',
+  //   name: 'LuaConsole',
+  //   component: LuaConsole
+  // },
+  // {
+  //   path: '/settings',
+  //   name: 'Settings',
+  //   component: () => import("../views/Settings")
+  // },
   {
     path: "/i18n",
     name: 'Localization',
