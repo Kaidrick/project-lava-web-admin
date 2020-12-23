@@ -3,15 +3,16 @@
     <div class="operation-header" style="height: 20px">OPERATION</div>
     <div class="operation-container">
       <div class="block">
-        <el-dropdown placement="top">
+        <el-dropdown placement="top" @command="handleBroadcastMessage">
           <span class="title">
             <el-image :src="require('@/assets/broadcast.png')" fit="contain"></el-image>
             <span>Broadcast Message</span>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>ALL</el-dropdown-item>
-            <el-dropdown-item>BLUE</el-dropdown-item>
-            <el-dropdown-item>RED</el-dropdown-item>
+            <el-dropdown-item :command="0">ALL</el-dropdown-item>
+            <el-dropdown-item :command="1">BLUE</el-dropdown-item>
+            <el-dropdown-item :command="2">RED</el-dropdown-item>
+            <el-dropdown-item :command="3">NEUTRAL</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -57,6 +58,7 @@
       </div>
 
       <server-control-dialog ref="serverControlDialog"></server-control-dialog>
+      <server-trigger-message-dialog ref="serverMessageDialog"></server-trigger-message-dialog>
     </div>
 
   </div>
@@ -67,9 +69,10 @@
   import {mapGetters, mapActions} from 'vuex';
   import {Control} from "../mixins";
   import ServerControlDialog from "@/modules/dashboard/components/ServerControlDialog";
+  import ServerTriggerMessageDialog from "@/modules/dashboard/components/ServerTriggerMessageDialog";
   export default {
     name: "Operation",
-    components: {ServerControlDialog},
+    components: {ServerTriggerMessageDialog, ServerControlDialog},
     computed: {
       ...mapGetters('dashboard', ['ok'])
     },
@@ -85,6 +88,10 @@
     methods: {
       handleControlServer(command) {
         this.$refs.serverControlDialog.show(command);
+      },
+
+      handleBroadcastMessage(type) {
+        this.$refs.serverMessageDialog.show(type);
       }
     }
   }
