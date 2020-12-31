@@ -1,8 +1,11 @@
 <template>
-  <div>
+  <div class="atlas-map-control-wrapper">
     <h3>DCS Map Test Page</h3>
-    <map-box ref="map"></map-box>
+    <div class="map-box" id="mapbox" style="margin: 20px">
+      <map-box ref="map"></map-box>
+    </div>
     <el-button @click="$refs.map.refresh()">Refresh</el-button>
+    <el-button @click="$refs.map.changeSize()">Change Size Test</el-button>
   </div>
 </template>
 
@@ -27,6 +30,11 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import "src/assets/style/color-scheme";
 
+  .atlas-map-control-wrapper {
+    padding: 10px;
+    background-color: $primary;
+  }
 </style>

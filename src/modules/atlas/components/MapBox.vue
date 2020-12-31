@@ -46,56 +46,62 @@
 
     created() {
       this.app = new PIXI.Application({
-        width: this.viewWidth, height: this.viewHeight, backgroundColor: 0xffffff, transparent: true
+        width: this.viewWidth, height: this.viewHeight, backgroundColor: 0xffffff, transparent: true,
+        // resizeTo: document.getElementById("mapbox")
       })
     },
 
     mounted() {
       this.$el.appendChild(this.app.view);
 
-      // the leftmost and topmost tile that is in the view
-      this.x = 8;
-      this.y = 8;
-      this.level = 20;
-
-      // calculate how many tiles need to be added to the stage
-      const rows = Math.ceil(this.viewWidth / 256);
-      const cols = Math.ceil(this.viewHeight / 256);
-
-      console.log(rows, cols);
-
-      for (let i = -1; i <= rows; i++) {
-        for (let j = -1; j <= cols; j++) {
-            AtlasMap.getMapTile(this.theater, this.level, this.x + j, this.y + i).then(res => {
-                const data = "data:image/png;base64," + Buffer.from(res.data, 'binary').toString('base64');
-                const t = PIXI.Sprite.from(data);
-                t.width = 256;
-                t.height = 256;
-                t.interactive = true;
-                // t.anchor.set(0.5);
-                t.on('pointerdown', this.onDragStart)
-                    .on('pointerup', this.onDragEnd)
-                    .on('pointerupoutside', this.onDragEnd)
-                    .on('pointermove', this.onDragMove);
-
-                t.x = 256 * i;
-                t.y = 256 * j;
-                this.tiles.push(t);
-
-                this.app.stage.addChild(t)
-            }).finally();
-        }
-      }
-
-      this.tiles.forEach(t => {
-        t.on('pointerdown', this.onDragStart)
-            .on('pointerup', this.onDragEnd)
-            .on('pointerupoutside', this.onDragEnd)
-            // .on('pointermove', this.onDragMove);
-      });
+      this.mapInit();
     },
 
     methods: {
+      mapInit() {
+        // the leftmost and topmost tile that is in the view
+        this.x = 60;
+        this.y = 60;
+        this.level = 20;
+
+        // calculate how many tiles need to be added to the stage
+        const rows = Math.ceil(this.viewWidth / 256);
+        const cols = Math.ceil(this.viewHeight / 256);
+
+        console.log(rows, cols);
+
+        for (let i = -1; i <= rows; i++) {
+          for (let j = -1; j <= cols; j++) {
+            AtlasMap.getMapTile(this.theater, this.level, this.x + j, this.y + i).then(res => {
+              const data = "data:image/png;base64," + Buffer.from(res.data, 'binary').toString('base64');
+              const t = PIXI.Sprite.from(data);
+              t.width = 256;
+              t.height = 256;
+              t.interactive = true;
+              // t.anchor.set(0.5);
+              t.on('pointerdown', this.onDragStart)
+                  .on('pointerup', this.onDragEnd)
+                  .on('pointerupoutside', this.onDragEnd)
+                  .on('pointermove', this.onDragMove);
+
+              t.x = 256 * i;
+              t.y = 256 * j;
+              this.tiles.push(t);
+
+              this.app.stage.addChild(t)
+            }).finally();
+          }
+        }
+
+        this.tiles.forEach(t => {
+          t.on('pointerdown', this.onDragStart)
+              .on('pointerup', this.onDragEnd)
+              .on('pointerupoutside', this.onDragEnd)
+          // .on('pointermove', this.onDragMove);
+        });
+      },
+
+
       debounce(func, wait, immediate) {
         let timeout;
         return function() {
@@ -315,6 +321,23 @@
 
               this.app.stage.addChild(t)
           }).finally();
+      },
+
+      changeSize() {
+        this.viewHeight = 680;
+        this.viewWidth = 450;
+
+        this.app.view.height = 680;
+        this.app.view.width = 450;
+
+        this.tiles = [];
+
+        this.app.stage.children.forEach(s => this.app.stage.removeChild(s));
+
+        this.$el.appendChild(this.app.view);
+        this.mapInit();
+
+        // this.app.resize();
       }
     }
   }

@@ -1,7 +1,7 @@
 export default {
     namespaced: true,
     state: {
-        debugEnvType: 3
+        debugEnvType: 0
     },
     getters: {
         debugEnvType: state => state.debugEnvType
