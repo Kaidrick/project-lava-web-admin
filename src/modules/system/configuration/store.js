@@ -1,4 +1,5 @@
 import connectionService from "@/services/ConnectionService";
+import SystemNavMenu from "@/services/config/SystemNavMenu";
 
 export default {
     namespaced: true,
@@ -15,13 +16,18 @@ export default {
         websocket: null,
         connected: false,
 
+        navMenuList: [],
+
     },
     getters: {
         dcsPort: state => state.dcsPort,
         isLoading: state => state.isLoading,
+
+        navMenuList: state => state.navMenuList
     },
     mutations: {
         setDcsPort: (state, dcsPort) => state.dcsPort = dcsPort,
+        setNavMenuList: (state, navMenuList) => state.navMenuList = navMenuList
     },
     actions: {
         getDcsPortConfiguration(context) {
@@ -56,10 +62,23 @@ export default {
             })
         },
 
+        getNavMenus(context) {
+            return SystemNavMenu.getNavMenus().then(res => {
+                if (res.data.success) {
+                    context.commit('setNavMenuList', res.data.data);
+                }
+
+                return res;
+            });
+        },
+
+        addNavMenu(context, menuObject) {
+            return SystemNavMenu.addNavMenu(menuObject).then(res => res);
+        },
 
 
         // eslint-disable-next-line no-unused-vars
-        initialize ({ dispatch }) {
+        initialize({dispatch}) {
             console.info('Configuration Module initializing...');
             console.info('Configuration Module initialized.');
         },

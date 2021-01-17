@@ -344,6 +344,29 @@ span, div {
   }
 }
 
+.el-tree {
+  background: $primary_light !important;
+
+  .el-tree-node__content:hover {
+
+    background: transparentize(white, 0.95) !important;
+
+  }
+
+  .el-tree-node:focus > .el-tree-node__content {
+
+    background-color: #42b983 !important;
+
+  }
+
+}
+
+.el-tree--highlight-current .el-tree-node.is-current > .el-tree-node__content {
+
+  background-color:  $primary_light !important;
+
+}
+
 .el-dialog {
   background-color: $primary_dark !important;
   color: whitesmoke;

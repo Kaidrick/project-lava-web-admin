@@ -77,7 +77,7 @@
           reason: this.formData.reason,
           resetType: this.formData.resetType})
                 .then(res => {
-                  if (res.success && res.data.data) {
+                  if (res.data.success && res.data.data) {
                     this.$message.success("Success!")
                   } else {
                     this.$message.error(res.data.msg);

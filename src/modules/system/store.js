@@ -8,6 +8,8 @@ import dashboardModule from '@/modules/dashboard';
 import AddonManager from "@/modules/addons";
 import LuaDebugger from "@/modules/luaconsole";
 
+import router from "@/router";
+
 export default {
     namespaced: true,
     state: {
@@ -18,17 +20,21 @@ export default {
 
         configured: false,
 
-        websocketConnected: false
+        websocketConnected: false,
+
+        systemRouteMap: []
     },
     getters: {
         webConfig: state => state.webConfig,
         configured: state => state.configured,
         websocketConnected: state => state.websocketConnected,
+        systemRouteMap: state => state.systemRouteMap
     },
     mutations: {
         setWebConfig: (state, webConfig) => state.webConfig = webConfig,
         setConfigured: (state, configured) => state.configured = configured,
-        setWebsocketConnected: (state, websocketConnected) => state.websocketConnected = websocketConnected
+        setWebsocketConnected: (state, websocketConnected) => state.websocketConnected = websocketConnected,
+        setSystemRouteMap: (state, systemRouteMap) => state.systemRouteMap = systemRouteMap
     },
     actions: {
         // eslint-disable-next-line no-unused-vars
@@ -40,6 +46,15 @@ export default {
 
         switchWebSocketConnected(context, boolean) {
             context.commit('setWebsocketConnected', boolean)
+        },
+
+        freshSystemRouteMap(context) {
+            const map = new Map();
+            router.options.routes.forEach(r => {
+                let { name, path } = r;
+                map.set(name, path);
+            });
+            context.commit('setSystemRouteMap', map);
         },
 
         // eslint-disable-next-line no-unused-vars

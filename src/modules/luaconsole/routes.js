@@ -1,5 +1,5 @@
-import AddonManager from "./LuaDebugger";
+import LuaDebugger from "./LuaDebugger";
 
 export default [
-    { path: '/debugger', name: 'Lua Debugger', component: AddonManager },
+    { path: '/bingo/debugger', name: 'Lua Debugger', component: LuaDebugger },
 ]

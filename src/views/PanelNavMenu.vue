@@ -9,7 +9,7 @@
       <!-- TODO: what about nested submenu? -->
       <el-menu-item @click="handleMenuClick(routeName)"
                     :class="{'is-selected': index === selectedMenu}"
-                    v-for="(routeName, index) in navMenus"
+                    v-for="(routeName, index) in systemRouteMap.keys()"
                     :key="index" :index="String(index)">
         {{ $t(routeName) }}
       </el-menu-item>
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex';
+  import {mapGetters, mapActions} from 'vuex';
   export default {
     name: "PanelNavMenu",
 
@@ -38,29 +38,43 @@
       return {
         image: "'../assets/green_bat.png'",
         navMenus: [],
-        routeNamePathMap: new Map(),
+        // routeNamePathMap: new Map(),
         selectedMenu: 0
       }
     },
 
     computed: {
-      ...mapGetters('system', ["websocketConnected"]),
+      ...mapGetters('system', ["websocketConnected", "systemRouteMap"]),
     },
 
     mounted() {
-      this.$router.options.routes.forEach(r => {
-        // console.log(r);
-        let { name, path } = r;
-        this.navMenus.push(name);
-        this.routeNamePathMap.set(name, path);
-      });
-      console.log(this.routeNamePathMap, "route name map");
-      this.selectedMenu = Array.from(this.routeNamePathMap.keys()).indexOf(this.$route.name);
+      // this.$router.options.routes.forEach(r => {
+      //   // console.log(r);
+      //   let { name, path } = r;
+      //   this.navMenus.push(name);
+      //   this.routeNamePathMap.set(name, path);
+      // });
+      // console.log(this.routeNamePathMap, "route name map");
+
+      // update system routes array
+      this.freshSystemRouteMap();
+
+      // check path of each route and group by each root
+      // this.routeNamePathMap.forEach((k, v) => {
+      //   console.log(k, v)
+      //   console.log(k.split("/").splice(1));
+      // });
+
+      // this.selectedMenu = Array.from(this.routeNamePathMap.keys()).indexOf(this.$route.name);
+      this.selectedMenu = Array.from(this.systemRouteMap.keys()).indexOf(this.$route.name);
     },
 
     methods: {
+      ...mapActions('system', ['freshSystemRouteMap']),
+
       handleMenuClick(name) {
-        let path = this.routeNamePathMap.get(name).toString();
+        // let path = this.routeNamePathMap.get(name).toString();
+        let path = this.systemRouteMap.get(name).toString();
         // console.log(selectedMenu.$route.name, selectedMenu.$route.fullPath);
         this.$router.push({
           name, path
