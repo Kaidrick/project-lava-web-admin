@@ -9,10 +9,10 @@
         <el-form-item class="nav-menu-form__input-item" label="Menu Name" prop="name">
           <el-input v-model="navMenuForm.name"></el-input>
         </el-form-item>
-        <el-form-item class="nav-menu-form__input-item" label="Type" prop="isLeaf">
-          <el-switch v-model="navMenuForm.isLeaf" active-text="Leaf" inactive-text="Menu"></el-switch>
+        <el-form-item class="nav-menu-form__input-item" label="Type" prop="leaf">
+          <el-switch v-model="navMenuForm.leaf" active-text="Leaf" inactive-text="Menu"></el-switch>
         </el-form-item>
-        <el-form-item v-if="navMenuForm.isLeaf" class="nav-menu-form__input-item" label="Menu Path" prop="path">
+        <el-form-item v-if="navMenuForm.leaf" class="nav-menu-form__input-item" label="Menu Path" prop="path">
           <el-autocomplete
               class="nav-menu-form__autocomplete"
               popper-class="nav-menu-form__autocomplete-item"
@@ -32,7 +32,7 @@
         <el-form-item class="nav-menu-form__input-item" label="Parent Menu" prop="pid">
           <el-select v-model="navMenuForm.pid">
             <el-option label="N/A" :value="0">N/A</el-option>
-            <el-option v-for="(menu, index) in navMenuList.filter(m => !m.isLeaf)" :label="menu.name" :key="index" :value="menu.id"></el-option>
+            <el-option v-for="(menu, index) in navMenuList.filter(m => !m.leaf)" :label="menu.name" :key="index" :value="menu.id"></el-option>
           </el-select>
         </el-form-item>
         <el-button @click="submitForm">SUBMIT</el-button>
@@ -78,7 +78,7 @@ export default {
     },
 
     submitForm() {
-      if (!this.navMenuForm.isLeaf) {
+      if (!this.navMenuForm.leaf) {
         this.navMenuForm.path = undefined;
       }
       this.addNavMenu(this.navMenuForm).then(res => {

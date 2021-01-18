@@ -5,7 +5,7 @@
     <div>User Menu Settings</div>
     <el-button @click="testAddRoute">TEST ADD ROUTE</el-button>
     <el-tree :data="menus"
-             :props="{label: 'name', children: 'children', isLeaf: 'isLeaf'}"
+             :props="{label: 'name', children: 'children', leaf: 'leaf'}"
              :default-expand-all="true"
              empty-text="NO DATA">
 

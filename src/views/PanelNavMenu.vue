@@ -1,39 +1,44 @@
 <template>
   <div class="nav-menu-wrapper">
-    <el-menu
-        :default-active="String(selectedMenu)"
-        class="nav-menu-vertical"
-        text-color="#fff"
-        @select="handleMenuSelect"
-        active-text-color="#f7b500">
-      <!-- TODO: what about nested submenu? -->
-      <el-menu-item @click="handleMenuClick(routeName)"
-                    :class="{'is-selected': index === selectedMenu}"
-                    v-for="(routeName, index) in systemRouteMap.keys()"
-                    :key="index" :index="String(index)">
-        {{ $t(routeName) }}
-      </el-menu-item>
-      <!-- Lava icon and versions -->
-      <div class="lava-info-bar text-center">
-        <div class="lava-logo"/>
-        <div>Project Lava</div>
-        <div>v0.0.1 Alpha</div>
-        <div>DCS Version</div>
-        <div>DCS.2.5.6</div>
-      </div>
-      <div>
-        WS Connected: {{ websocketConnected }}
-      </div>
-      <slot></slot>
-    </el-menu>
+    <el-scrollbar style="height: 100%">
+      <el-menu ref="mainNavMenu"
+               :default-active="String(selectedMenu)"
+               class="nav-menu-vertical"
+               text-color="#fff"
+               @select="handleMenuSelect"
+               active-text-color="#f7b500">
+        <!-- TODO: what about nested submenu? -->
+        <el-menu-item @click="handleMenuClick(routeName)"
+                      :class="{'is-selected': index === selectedMenu}"
+                      v-for="(routeName, index) in systemRouteMap.keys()"
+                      :key="index" :index="String(index)">
+          {{ $t(routeName) }}
+        </el-menu-item>
+        <!-- Lava icon and versions -->
+        <div class="lava-info-bar text-center">
+          <div class="lava-logo"/>
+          <div>Project Lava</div>
+          <div>v0.0.1 Alpha</div>
+          <div>DCS Version</div>
+          <div>DCS.2.5.6</div>
+        </div>
+        <div>
+          WS Connected: {{ websocketConnected }}
+        </div>
+        <slot></slot>
+      </el-menu>
+      <system-side-nav-menu :menus="navMenuList"></system-side-nav-menu>
+    </el-scrollbar>
+
   </div>
 </template>
 
 <script>
   import {mapGetters, mapActions} from 'vuex';
+  import SystemSideNavMenu from "@/views/SystemSideNavMenu";
   export default {
     name: "PanelNavMenu",
-
+    components: {SystemSideNavMenu},
     data() {
       return {
         image: "'../assets/green_bat.png'",
@@ -45,6 +50,7 @@
 
     computed: {
       ...mapGetters('system', ["websocketConnected", "systemRouteMap"]),
+      ...mapGetters('configuration', ["navMenuList"]),
     },
 
     mounted() {
@@ -59,6 +65,9 @@
       // update system routes array
       this.freshSystemRouteMap();
 
+      this.getNavMenus();
+      console.log(this.navMenuList);
+
       // check path of each route and group by each root
       // this.routeNamePathMap.forEach((k, v) => {
       //   console.log(k, v)
@@ -67,10 +76,13 @@
 
       // this.selectedMenu = Array.from(this.routeNamePathMap.keys()).indexOf(this.$route.name);
       this.selectedMenu = Array.from(this.systemRouteMap.keys()).indexOf(this.$route.name);
+
+      console.log(this.$refs.mainNavMenu);
     },
 
     methods: {
       ...mapActions('system', ['freshSystemRouteMap']),
+      ...mapActions('configuration', ['getNavMenus']),
 
       handleMenuClick(name) {
         // let path = this.routeNamePathMap.get(name).toString();
