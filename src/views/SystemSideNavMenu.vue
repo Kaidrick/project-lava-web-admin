@@ -11,7 +11,7 @@
 
     data() {
       return {
-        selectedMenu: 0
+        selectedMenu: -1
       }
     },
 
@@ -37,10 +37,10 @@
       const menuGen = arr => {
         const res = [];
 
-        for (const item of arr) {
+        for (const item of arr.sort((a, b) => a.menuOrder - b.menuOrder)) {
           if (Array.isArray(item.children) && item.children.length > 0) {
             res.push(
-                <el-submenu index={String(item.id)} key={item.id}>
+                <el-submenu index={String(item.id)} key={item.id} menuOrder={item.menuOrder}>
                   <template slot="title">
                     <span>{item.name}</span>
                   </template>
@@ -51,6 +51,7 @@
             res.push(
                 <el-menu-item index={String(item.id)}
                               key={item.id}
+                              menuOrder={item.menuOrder}
                               class={(item.id === this.selectedMenu) ? 'is-selected' : ''}
                               onClick={click => this.handleNavMenuClick(click, item)}>
                   <span>{item.name}</span>
@@ -58,14 +59,22 @@
             )
           }
         }
+
         return res;
+        // const sres = res.sort((a, b) => a.data.attrs.menuOrder - b.data.attrs.menuOrder);
+        // console.log(sres)
+        // return res.sort((a, b) => a.data.attrs.menuOrder - b.data.attrs.menuOrder);
       }
 
-      return <el-menu class="nav-menu-vertical"
-                      default-active={String(this.selectedMenu)}
+      const pass = <el-menu class="nav-menu-vertical"
+                      // default-active={String(this.selectedMenu)}
                       text-color="#fff">
         { menuGen(tree.listToTree(this.menus)) }
       </el-menu>
+
+      console.log(pass);
+
+      return pass;
     }
   }
 </script>

@@ -17,22 +17,22 @@ export default {
         });
     },
 
-    addNavMenu({name, path, pid, leaf}) {
+    addNavMenu({name, path, pid, leaf, menuOrder}) {
         return http({
             method: 'post',
             url: '/system/nav_menu/add',
             data: {
-                name, path, pid, leaf
+                name, path, pid, leaf, menuOrder
             }
         });
     },
 
-    deleteNavMenu({name, path, pid, leaf}) {
+    deleteNavMenu({name, path, pid, leaf, menuOrder}) {
         return http({
             method: 'post',
             url: '/system/nav_menu/add',
             data: {
-                name, path, pid, leaf
+                name, path, pid, leaf, menuOrder
             }
         });
     }

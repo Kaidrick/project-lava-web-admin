@@ -58,7 +58,7 @@
         this.isLoading = true;
 
         this.getNavMenus().then(res => {
-          this.menus = tree.listToTree(res.data.data);
+          this.menus = tree.listToTreeOrdered(res.data.data, (a, b) => a.menuOrder - b.menuOrder);
         }).finally(() => this.isLoading = false);
       }
     }
