@@ -37,10 +37,10 @@
       const menuGen = arr => {
         const res = [];
 
-        for (const item of arr.sort((a, b) => a.menuOrder - b.menuOrder)) {
+        for (const item of arr.sort((a, b) => a.ordinal - b.ordinal)) {
           if (Array.isArray(item.children) && item.children.length > 0) {
             res.push(
-                <el-submenu index={String(item.id)} key={item.id} menuOrder={item.menuOrder}>
+                <el-submenu index={String(item.id)} key={item.id} ordinal={item.ordinal}>
                   <template slot="title">
                     <span>{item.name}</span>
                   </template>
@@ -51,7 +51,7 @@
             res.push(
                 <el-menu-item index={String(item.id)}
                               key={item.id}
-                              menuOrder={item.menuOrder}
+                              ordinal={item.ordinal}
                               class={(item.id === this.selectedMenu) ? 'is-selected' : ''}
                               onClick={click => this.handleNavMenuClick(click, item)}>
                   <span>{item.name}</span>
@@ -61,9 +61,9 @@
         }
 
         return res;
-        // const sres = res.sort((a, b) => a.data.attrs.menuOrder - b.data.attrs.menuOrder);
+        // const sres = res.sort((a, b) => a.data.attrs.ordinal - b.data.attrs.ordinal);
         // console.log(sres)
-        // return res.sort((a, b) => a.data.attrs.menuOrder - b.data.attrs.menuOrder);
+        // return res.sort((a, b) => a.data.attrs.ordinal - b.data.attrs.ordinal);
       }
 
       const pass = <el-menu class="nav-menu-vertical"

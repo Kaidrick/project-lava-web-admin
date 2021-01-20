@@ -35,8 +35,8 @@
             <el-option v-for="(menu, index) in navMenuList.filter(m => !m.leaf)" :label="menu.name" :key="index" :value="menu.id"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item class="nav-menu-form__input-item" label="Menu Order" prop="menuOrder">
-          <el-input v-model="navMenuForm.menuOrder"></el-input>
+        <el-form-item class="nav-menu-form__input-item" label="Menu Order" prop="ordinal">
+          <el-input v-model="navMenuForm.ordinal"></el-input>
         </el-form-item>
         <el-button @click="submitForm">SUBMIT</el-button>
       </el-form>
