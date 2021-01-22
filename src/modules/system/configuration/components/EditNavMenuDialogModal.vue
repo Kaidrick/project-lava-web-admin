@@ -32,13 +32,13 @@
         <el-form-item class="nav-menu-form__input-item" label="Parent Menu" prop="pid">
           <el-select v-model="navMenuForm.pid">
             <el-option label="N/A" :value="0">N/A</el-option>
-            <el-option v-for="(menu, index) in navMenuList.filter(m => !m.leaf)" :label="menu.name" :key="index" :value="menu.id"></el-option>
+            <el-option v-for="(menu, index) in navMenuList" :label="menu.name" :key="index" :value="menu.id"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item class="nav-menu-form__input-item" label="Menu Order" prop="ordinal">
           <el-input v-model="navMenuForm.ordinal"></el-input>
         </el-form-item>
-        <el-button @click="submitForm">SUBMIT</el-button>
+        <el-button @click="submitForm">{{ navMenuForm.id ? 'UPDATE' : 'SUBMIT' }}</el-button>
       </el-form>
     </div>
   </el-dialog>
@@ -62,11 +62,16 @@ export default {
   },
 
   methods: {
-    ...mapActions('configuration', ['addNavMenu']),
+    ...mapActions('configuration', ['addNavMenu', 'updateNavMenu']),
 
     show(data) {
       if (data) {
-        return true
+        this.navMenuForm.id = data.id;
+        this.navMenuForm.leaf = data.leaf;
+        this.navMenuForm.name = data.name;
+        this.navMenuForm.ordinal = data.ordinal;
+        this.navMenuForm.path = data.path;
+        this.navMenuForm.pid = data.pid;
       }
 
       this.dialogVisible = true;
@@ -84,18 +89,35 @@ export default {
       if (!this.navMenuForm.leaf) {
         this.navMenuForm.path = undefined;
       }
-      this.addNavMenu(this.navMenuForm).then(res => {
-        if (res.data.success) {
-          this.$emit('submit')
 
-          this.handleDialogClose();
-        }
-      });
+      if (this.navMenuForm.id) {
+        this.updateNavMenu(this.navMenuForm).then(res => {
+          if (res.data.success) {
+            this.$emit('submit')
+
+            this.handleDialogClose();
+          }
+        });
+
+      } else {
+        this.addNavMenu(this.navMenuForm).then(res => {
+          if (res.data.success) {
+            this.$emit('submit')
+
+            this.handleDialogClose();
+          }
+        });
+
+      }
+
     },
 
     handleDialogClose() {
       this.dialogVisible = false;
       this.$refs.navMenuForm.resetFields();
+
+      // clear id separately
+      this.navMenuForm.id = null;
     }
   }
 }

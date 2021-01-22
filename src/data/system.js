@@ -3,7 +3,7 @@ export class NavMenu {
                 path = '',
                 pid = 0,
                 leaf = false,
-                id = -1,
+                id = null,
                 ordinal=0x7FFFFFFF) {
         this.name = name;
         this.path = path;

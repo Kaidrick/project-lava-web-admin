@@ -353,6 +353,14 @@ span, div {
 
   }
 
+  .el-tree-node.is-current > .el-tree-node__content {
+    background-color: #42b983;
+
+    &:hover {
+      background-color: transparentize(#42b983, 0.1) !important;
+    }
+  }
+
   .el-tree-node:focus > .el-tree-node__content {
 
     background-color: #42b983 !important;

@@ -76,6 +76,10 @@ export default {
             return SystemNavMenu.addNavMenu(menuObject).then(res => res);
         },
 
+        updateNavMenu(context, menuObject) {
+            return SystemNavMenu.updateNavMenu(menuObject).then(res => res);
+        },
+
 
         // eslint-disable-next-line no-unused-vars
         initialize({dispatch}) {
