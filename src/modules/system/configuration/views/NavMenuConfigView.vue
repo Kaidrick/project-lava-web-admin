@@ -32,7 +32,7 @@
       <el-button @click="$refs.editNavMenuDialog.show()">Add Menu</el-button>
       <el-button @click="$refs.editNavMenuDialog.show(currentSelectedNode)">Edit Menu</el-button>
       <el-button @click="testTreeData">Print Tree</el-button>
-      <el-button v-if="updateList.length > 0" @click="$message.success('confirm change')">Save</el-button>
+      <el-button v-if="updateIdSet.size > 0" @click="$message.success('confirm change')">Save</el-button>
     </div>
 
     <edit-nav-menu-dialog-modal ref="editNavMenuDialog" @submit="getNavMenuTree"></edit-nav-menu-dialog-modal>
@@ -54,12 +54,12 @@
         isLoading: false,
         currentSelectedNode: {},
 
-        updateList: [],
+        updateIdSet: new Set(),
       }
     },
 
     computed: {
-      ...mapGetters('configuration', ['navMenuList'])
+      ...mapGetters('configuration', ['navMenuList']),
     },
 
     mounted() {
@@ -137,8 +137,12 @@
             break;
         }
 
-        // after drop, find parent and re-arrange ordinal
+        // re-arrange parent's children list and modified ordinal by current order
+        // for each child, index of the child should be assigned to the ordinal of the child.
 
+        // after drop, find parent and re-arrange ordinal
+        this.updateIdSet.add(draggingNode.data.id);
+        this.$forceUpdate();
       },
       // eslint-disable-next-line no-unused-vars
       allowDrop(draggingNode, dropNode, type) {
