@@ -4,7 +4,7 @@ export default {
     getNavMenus(role) {  // TODO: role based
         return http({
             method: 'get',
-            url: '/system/nav_menu/list',
+            url: '/system/nav-menu/list',
             data: role
         });
     },
@@ -12,7 +12,7 @@ export default {
     getNavMenusAsTree(role) {  // TODO: role based
         return http({
             method: 'get',
-            url: '/system/nav_menu/tree',
+            url: '/system/nav-menu/tree',
             data: role
         });
     },
@@ -20,7 +20,7 @@ export default {
     addNavMenu({name, path, pid, leaf, ordinal}) {
         return http({
             method: 'post',
-            url: '/system/nav_menu/add',
+            url: '/system/nav-menu/add',
             data: {
                 name, path, pid, leaf, ordinal
             }
@@ -30,17 +30,25 @@ export default {
     updateNavMenu({id, name, path, pid, leaf, ordinal}) {
         return http({
             method: 'post',
-            url: '/system/nav_menu/update',
+            url: '/system/nav-menu/update',
             data: {
                 id, name, path, pid, leaf, ordinal
             }
         });
     },
 
+    updateNavMenus(menus) {
+        return http({
+            method: 'post',
+            url: '/system/nav-menu/batch-update',
+            data: menus
+        });
+    },
+
     deleteNavMenu({id, name, path, pid, leaf, ordinal}) {
         return http({
             method: 'post',
-            url: '/system/nav_menu/add',
+            url: '/system/nav-menu/add',
             data: {
                 id, name, path, pid, leaf, ordinal
             }

@@ -2,9 +2,10 @@
   <div class="nav-menu-config-view-wrapper mono-wrapper" v-loading="isLoading">
     <div class="nav-menu-config-view-title">User Menu Settings</div>
     <div class="sp-10"></div>
-<!--    <el-button @click="testAddRoute">TEST ADD ROUTE</el-button>-->
+    <!--    <el-button @click="testAddRoute">TEST ADD ROUTE</el-button>-->
     <div class="nav-menu-config-tree-display-wrapper">
       <el-tree :data="menus"
+               ref="navMenuTree"
                draggable
                @node-drag-start="handleDragStart"
                @node-drag-enter="handleDragEnter"
@@ -32,7 +33,9 @@
       <el-button @click="$refs.editNavMenuDialog.show()">Add Menu</el-button>
       <el-button @click="$refs.editNavMenuDialog.show(currentSelectedNode)">Edit Menu</el-button>
       <el-button @click="testTreeData">Print Tree</el-button>
-      <el-button v-if="updateIdSet.size > 0" @click="$message.success('confirm change')">Save</el-button>
+      <el-button v-if="updateIdSet.size > 0"
+                 @click="saveNodeUpdate">Save
+      </el-button>
     </div>
 
     <edit-nav-menu-dialog-modal ref="editNavMenuDialog" @submit="getNavMenuTree"></edit-nav-menu-dialog-modal>
@@ -41,150 +44,164 @@
 </template>
 
 <script>
-  import tree from "@/services/common/tree";
-  import { mapActions, mapGetters } from 'vuex';
-  import EditNavMenuDialogModal from "@/modules/system/configuration/components/EditNavMenuDialogModal";
-  export default {
-    name: "NavMenuConfigView",
-    components: {EditNavMenuDialogModal},
+import tree from "@/services/common/tree";
+import SystemNavMenu from "@/services/config/SystemNavMenu";
+import {mapActions, mapGetters} from 'vuex';
+import EditNavMenuDialogModal from "@/modules/system/configuration/components/EditNavMenuDialogModal";
 
-    data() {
-      return {
-        menus: [],
-        isLoading: false,
-        currentSelectedNode: {},
+export default {
+  name: "NavMenuConfigView",
+  components: {EditNavMenuDialogModal},
 
-        updateIdSet: new Set(),
-      }
-    },
+  data() {
+    return {
+      menus: [],
+      isLoading: false,
+      currentSelectedNode: {},
 
-    computed: {
-      ...mapGetters('configuration', ['navMenuList']),
-    },
+      updateIdSet: new Set(),
+    }
+  },
 
-    mounted() {
-      this.getNavMenuTree();
-    },
+  computed: {
+    ...mapGetters('configuration', ['navMenuList']),
+  },
 
-    methods: {
-      ...mapActions('configuration', ['getNavMenus', 'addNavMenu']),
-      ...mapActions('system', ['freshSystemRouteMap']),
+  mounted() {
+    this.getNavMenuTree();
+  },
 
-      testAddRoute() {
-        this.$router.addRoutes([
-            {
-              path: '/bingo/testAbout',
-              name: 'Test About',
-              component: () => import('@/views/About')
+  methods: {
+    ...mapActions('configuration', ['getNavMenus', 'addNavMenu']),
+    ...mapActions('system', ['freshSystemRouteMap']),
+
+    testAddRoute() {
+      this.$router.addRoutes([
+        {
+          path: '/bingo/testAbout',
+          name: 'Test About',
+          component: () => import('@/views/About')
         }]);
 
-        this.freshSystemRouteMap();
-      },
+      this.freshSystemRouteMap();
+    },
 
-      testTreeData() {
-        console.log(JSON.stringify(this.menus));
-      },
+    testTreeData() {
+      console.log(tree.treeToList(this.menus, true));
+    },
 
-      getNavMenuTree() {
-        this.isLoading = true;
+    getNavMenuTree() {
+      this.isLoading = true;
 
-        this.getNavMenus().then(res => {
-          this.menus = tree.listToTreeOrdered(res.data.data, (a, b) => a.ordinal - b.ordinal);
-        }).finally(() => this.isLoading = false);
-      },
+      this.getNavMenus().then(res => {
+        this.menus = tree.listToTreeOrdered(res.data.data, (a, b) => a.ordinal - b.ordinal);
+      }).finally(() => this.isLoading = false);
+    },
 
-      // eslint-disable-next-line no-unused-vars
-      handleNodeClick(data, node) {
-        // this.$message.success("click")
-        // console.log(data, node);
+    // eslint-disable-next-line no-unused-vars
+    handleNodeClick(data, node) {
+      // this.$message.success("click")
+      // console.log(data, node);
 
-        this.currentSelectedNode = data;
-      },
+      this.currentSelectedNode = data;
+    },
 
-      // eslint-disable-next-line no-unused-vars
-      handleDragStart(node, ev) {
-        console.log('drag start', node);
-      },
-      // eslint-disable-next-line no-unused-vars
-      handleDragEnter(draggingNode, dropNode, ev) {
-        console.log('tree drag enter: ', dropNode.label);
-      },
-      // eslint-disable-next-line no-unused-vars
-      handleDragLeave(draggingNode, dropNode, ev) {
-        console.log('tree drag leave: ', dropNode.label);
-      },
-      // eslint-disable-next-line no-unused-vars
-      handleDragOver(draggingNode, dropNode, ev) {
-        console.log('tree drag over: ', dropNode.label);
-      },
-      // eslint-disable-next-line no-unused-vars
-      handleDragEnd(draggingNode, dropNode, dropType, ev) {
-        console.log('tree drag end: ', dropNode && dropNode.label, dropType);
-      },
-      // eslint-disable-next-line no-unused-vars
-      handleDrop(draggingNode, dropNode, dropType, ev) {
-        switch (dropType) {
-          case 'inner':
-            draggingNode.data.pid = dropNode.data.id;
-            break;
-          case 'before':
-            draggingNode.data.pid = dropNode.data.pid;
-            break;
-          case 'after':
-            draggingNode.data.pid = dropNode.data.pid;
-            break;
-          default:
-            break;
-        }
-
-        // re-arrange parent's children list and modified ordinal by current order
-        // for each child, index of the child should be assigned to the ordinal of the child.
-
-        // after drop, find parent and re-arrange ordinal
-        this.updateIdSet.add(draggingNode.data.id);
-        this.$forceUpdate();
-      },
-      // eslint-disable-next-line no-unused-vars
-      allowDrop(draggingNode, dropNode, type) {
-        return true;
-      },
-      // eslint-disable-next-line no-unused-vars
-      allowDrag(draggingNode) {
-        return true;
+    // eslint-disable-next-line no-unused-vars
+    handleDragStart(node, ev) {
+      // console.log('drag start', node);
+    },
+    // eslint-disable-next-line no-unused-vars
+    handleDragEnter(draggingNode, dropNode, ev) {
+      // console.log('tree drag enter: ', dropNode.label);
+    },
+    // eslint-disable-next-line no-unused-vars
+    handleDragLeave(draggingNode, dropNode, ev) {
+      // console.log('tree drag leave: ', dropNode.label);
+    },
+    // eslint-disable-next-line no-unused-vars
+    handleDragOver(draggingNode, dropNode, ev) {
+      // console.log('tree drag over: ', dropNode.label);
+    },
+    // eslint-disable-next-line no-unused-vars
+    handleDragEnd(draggingNode, dropNode, dropType, ev) {
+      // console.log('tree drag end: ', dropNode && dropNode.label, dropType);
+    },
+    // eslint-disable-next-line no-unused-vars
+    handleDrop(draggingNode, dropNode, dropType, ev) {
+      let sortNode;
+      if (dropType === 'inner') {
+        draggingNode.data.pid = dropNode.data.id;
+        sortNode = dropNode.childNodes;
+      } else {
+        draggingNode.data.pid = dropNode.data.pid;
+        // iterate through parent's children of the drop node
+        sortNode = dropNode.parent.childNodes;
       }
+
+      // iterate through drop node children
+      sortNode.forEach((d, index) => {
+        // if ordinal is different from previous ordinal, add node pk id to set
+        if (d.data.ordinal !== index) {
+          d.data.ordinal = index;
+          this.updateIdSet.add(d.data.id);
+        }
+      })
+
+      this.updateIdSet.add(draggingNode.data.id);
+      this.$forceUpdate();
+    },
+    // eslint-disable-next-line no-unused-vars
+    allowDrop(draggingNode, dropNode, type) {
+      return !dropNode.data.leaf || type !== 'inner';
+    },
+    // eslint-disable-next-line no-unused-vars
+    allowDrag(draggingNode) {
+      return true;
+    },
+
+    saveNodeUpdate() {
+      SystemNavMenu.updateNavMenus(tree.treeToList(this.menus, true)
+          .filter(item => this.updateIdSet.has(item.id)))
+          .finally(() => {
+            this.$nextTick(() => {
+              this.updateIdSet.clear();
+              this.$forceUpdate();
+            })
+          });
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
-  .system-config-wrapper {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-  }
+.system-config-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
 
-  .nav-menu-config-view-wrapper {
-    .nav-menu-config-tree-display-wrapper {
-      margin: 10px;
+.nav-menu-config-view-wrapper {
+  .nav-menu-config-tree-display-wrapper {
+    margin: 10px;
 
-      .el-tree {
-        .nav-menu-config-item {
+    .el-tree {
+      .nav-menu-config-item {
 
-        }
       }
     }
-
-    .nav-menu-config-button-op-button-wrapper {
-      margin: 10px;
-    }
   }
 
-  //.current-selected {
-  //  color: #FFEF28;
-  //
-  //  * {
-  //    color: #FFEF28;
-  //  }
-  //}
+  .nav-menu-config-button-op-button-wrapper {
+    margin: 10px;
+  }
+}
+
+//.current-selected {
+//  color: #FFEF28;
+//
+//  * {
+//    color: #FFEF28;
+//  }
+//}
 </style>

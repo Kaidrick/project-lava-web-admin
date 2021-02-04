@@ -32,7 +32,7 @@
         <el-form-item class="nav-menu-form__input-item" label="Parent Menu" prop="pid">
           <el-select v-model="navMenuForm.pid">
             <el-option label="N/A" :value="0">N/A</el-option>
-            <el-option v-for="(menu, index) in navMenuList" :label="menu.name" :key="index" :value="menu.id"></el-option>
+            <el-option v-for="(menu, index) in navMenuList.filter(m => !m.leaf)" :label="menu.name" :key="index" :value="menu.id"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item class="nav-menu-form__input-item" label="Menu Order" prop="ordinal">
