@@ -16,7 +16,7 @@ let topicName = "frontend.bus";
 let requestPrefix = "app";
 let exchangeName = "frontend.exchange";
 
-let stompEndpointUrl = "http://localhost:8080/lava-ws";
+let stompEndpointUrl = "https://localhost:8080/lava-ws";
 
 // eslint-disable-next-line no-unused-vars
 function connect(url=stompEndpointUrl, successCallback, failCallback) {

@@ -26,7 +26,7 @@
       ...mapActions('system', ["test"]),
 
       validateAndPush() {
-        this.$wsConnect("http://localhost:8080/lava-ws",
+        this.$wsConnect("https://localhost:8080/lava-ws",  // FIXME: very bad
             () => {
               this.$message.success("Websocket connection established");
               this.test();
