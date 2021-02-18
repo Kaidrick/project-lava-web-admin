@@ -42,7 +42,9 @@
 
                 this.$message.success(plugin.name + ", " + plugin.ident);
                 this.plugin = plugin;
-                this.src = `http://localhost:8080/view/${this.plugin.ident}`;
+
+                // FIXME: very bad?
+                this.src = `https://localhost:8080/view/${this.plugin.ident}`;
               this.dialogVisible = true;
             },
 

@@ -1,6 +1,7 @@
 <script>
-  import tree from "@/services/common/tree";
-  export default {
+import tree from "@/services/common/tree";
+
+export default {
     name: "SystemSideNavMenu",
 
     props: {
@@ -66,15 +67,11 @@
         // return res.sort((a, b) => a.data.attrs.ordinal - b.data.attrs.ordinal);
       }
 
-      const pass = <el-menu class="nav-menu-vertical"
-                      // default-active={String(this.selectedMenu)}
+      return <el-menu class="nav-menu-vertical"
+          // default-active={String(this.selectedMenu)}
                       text-color="#fff">
-        { menuGen(tree.listToTree(this.menus)) }
-      </el-menu>
-
-      console.log(pass);
-
-      return pass;
+        {menuGen(tree.listToTree(this.menus))}
+      </el-menu>;
     }
   }
 </script>
@@ -98,6 +95,10 @@
     background-color: $primary_light;
   }
 
+  ::v-deep .el-menu-item:hover {
+    background-color: $primary_light !important;
+  }
+
   .nav-menu-wrapper {
     height: auto !important;
 
@@ -107,10 +108,6 @@
       border: 0;
 
       li {
-        &:hover {
-          background-color: $primary_light;
-        }
-
         &.is-selected {
 
           background-color: $primary_dark;
@@ -124,6 +121,10 @@
             right: 0;
             top: 0;
           }
+        }
+
+        ::v-deep .el-menu-item {
+          color: rebeccapurple;
         }
 
         background-color: $primary;

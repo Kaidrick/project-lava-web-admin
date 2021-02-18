@@ -22,19 +22,23 @@ export default {
 
         websocketConnected: false,
 
-        systemRouteMap: []
+        systemRouteMap: [],
+
+        dataServiceResource: ''
     },
     getters: {
         webConfig: state => state.webConfig,
         configured: state => state.configured,
         websocketConnected: state => state.websocketConnected,
-        systemRouteMap: state => state.systemRouteMap
+        systemRouteMap: state => state.systemRouteMap,
+        dataServiceResource: state => state.dataServiceResource
     },
     mutations: {
         setWebConfig: (state, webConfig) => state.webConfig = webConfig,
         setConfigured: (state, configured) => state.configured = configured,
         setWebsocketConnected: (state, websocketConnected) => state.websocketConnected = websocketConnected,
-        setSystemRouteMap: (state, systemRouteMap) => state.systemRouteMap = systemRouteMap
+        setSystemRouteMap: (state, systemRouteMap) => state.systemRouteMap = systemRouteMap,
+        setDataServiceResource: (state, dataServiceResource) => state.dataServiceResource = dataServiceResource
     },
     actions: {
         // eslint-disable-next-line no-unused-vars
@@ -46,6 +50,10 @@ export default {
 
         switchWebSocketConnected(context, boolean) {
             context.commit('setWebsocketConnected', boolean)
+        },
+
+        updateDataServiceResource(context, url) {
+            context.commit('setDataServiceResource', url);
         },
 
         freshSystemRouteMap(context) {
