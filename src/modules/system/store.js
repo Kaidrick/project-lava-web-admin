@@ -31,14 +31,20 @@ export default {
         configured: state => state.configured,
         websocketConnected: state => state.websocketConnected,
         systemRouteMap: state => state.systemRouteMap,
-        dataServiceResource: state => state.dataServiceResource
+        dataServiceResource: state => state.dataServiceResource,
+
+        accessToken: () => localStorage.getItem('access_token')
     },
     mutations: {
         setWebConfig: (state, webConfig) => state.webConfig = webConfig,
         setConfigured: (state, configured) => state.configured = configured,
         setWebsocketConnected: (state, websocketConnected) => state.websocketConnected = websocketConnected,
         setSystemRouteMap: (state, systemRouteMap) => state.systemRouteMap = systemRouteMap,
-        setDataServiceResource: (state, dataServiceResource) => state.dataServiceResource = dataServiceResource
+        setDataServiceResource: (state, dataServiceResource) => state.dataServiceResource = dataServiceResource,
+        setAccessToken: (state, token) => {
+
+            localStorage.setItem('access_token', token)
+        }
     },
     actions: {
         // eslint-disable-next-line no-unused-vars
@@ -46,6 +52,11 @@ export default {
             console.log("test");
 
             context.commit('setConfigured', true);
+        },
+
+        updateAccessToken(context, token) {
+            console.log(token, 'token')
+            context.commit('setAccessToken', token);
         },
 
         switchWebSocketConnected(context, boolean) {

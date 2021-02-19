@@ -29,6 +29,7 @@
 
 <script>
   import { mapGetters, mapActions } from "vuex";
+  import ConnectionService from "@/services/ConnectionService";
 
   export default {
     name: "WebPortConfig",
@@ -45,10 +46,16 @@
     },
 
     methods: {
-      ...mapActions('system', ["test", "updateDataServiceResource"]),
+      ...mapActions('system', ["test", "updateDataServiceResource", "updateAccessToken"]),
 
       validateAndPush() {
         this.updateDataServiceResource(`${this.webConfig.host}:${this.webConfig.port}`)
+
+        // use username and password to send a login request to given host and port
+        ConnectionService.requestWebLogin(this.username, this.password).then(res => {
+          console.log(res.data.data.accessToken, 'access token');
+          this.updateAccessToken(res.data.data.accessToken);
+        })
 
         // must be http
         this.$wsConnect(`https://${this.dataServiceResource}/lava-ws`,  // FIXME: very bad

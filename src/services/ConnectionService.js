@@ -1,4 +1,5 @@
 import http from 'axios';
+import qs from 'qs';
 
 export class PortConfig {
     constructor(serverMain, serverPoll, exportMain, exportPoll) {
@@ -51,6 +52,17 @@ export default {
             method: 'get',
             url: '/status'
         });
+    },
+
+    requestWebLogin(username, password) {
+        return http({
+            method: 'post',
+            url: '/token/get',
+            data: qs.stringify({
+                username: username,
+                password: password
+            })
+        })
     }
 
 }

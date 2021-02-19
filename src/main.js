@@ -12,10 +12,12 @@ import system from '@/modules/system';
 import websocket from "@/modules/system/websocket";
 import util from "@/util";
 // import {option as websocketOption} from './websocket.config';
+import interceptorSetup from './interceptors';
 
 Vue.config.productionTip = false;
 
 axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? '' : '/api';
+interceptorSetup();
 
 Vue.use(ElementUI);
 Vue.use(VueAxios, axios);
