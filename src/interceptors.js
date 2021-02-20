@@ -1,5 +1,8 @@
 import axios from 'axios';
 import store from '@/modules/system/store';
+import Vue from "vue";
+
+const vm = new Vue();
 
 export default function setup() {
     axios.interceptors.request.use(config => {
@@ -10,5 +13,9 @@ export default function setup() {
         return config
     }, error => { return Promise.reject(error)})
 
-    // TODO: response -> if not logged in, router push to login page
+    axios.interceptors.response.use(response => {
+        return response;
+    }, reject => {
+        vm.$message.error(`${reject.response.data.status}: ${reject.response.data.message}`);
+    })
 }

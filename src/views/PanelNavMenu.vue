@@ -27,6 +27,9 @@
 <!--        </div>-->
 <!--        <slot></slot>-->
 <!--      </el-menu>-->
+      <div>
+        <el-button @click="testLogout">LOGOUT</el-button>
+      </div>
       <system-side-nav-menu :menus="navMenuList"></system-side-nav-menu>
       <div class="lava-info-bar text-center">
         <div class="lava-logo"/>
@@ -93,6 +96,15 @@
     methods: {
       ...mapActions('system', ['freshSystemRouteMap']),
       ...mapActions('configuration', ['getNavMenus']),
+
+      testLogout() {
+        // request api
+
+        // if api call success, remove access token from local storage
+        localStorage.removeItem('access_token');
+
+        // finally set mask, clean store, or refresh page
+      },
 
       handleMenuClick(name) {
         // let path = this.routeNamePathMap.get(name).toString();

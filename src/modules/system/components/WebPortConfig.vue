@@ -42,7 +42,13 @@
     },
 
     computed: {
-      ...mapGetters('system', ["webConfig", "dataServiceResource"])
+      ...mapGetters('system', ["webConfig", "dataServiceResource", "accessToken"])
+    },
+
+    mounted() {
+      if (this.accessToken) {
+        this.test();
+      }
     },
 
     methods: {
@@ -51,26 +57,37 @@
       validateAndPush() {
         this.updateDataServiceResource(`${this.webConfig.host}:${this.webConfig.port}`)
 
-        // use username and password to send a login request to given host and port
-        ConnectionService.requestWebLogin(this.username, this.password).then(res => {
-          console.log(res.data.data.accessToken, 'access token');
-          this.updateAccessToken(res.data.data.accessToken);
-        })
+        // if token exists
 
-        // must be http
-        this.$wsConnect(`https://${this.dataServiceResource}/lava-ws`,  // FIXME: very bad
-            () => {
-              this.$message.success("Websocket connection established");
-              this.test();
-            },
-            error => {
-              this.$message.error("Disconnected from backend websocket:" + error);
+        // if no token, login
+        if (!localStorage.getItem('access_token')) {
+          // use username and password to send a login request to given host and port
+          ConnectionService.requestWebLogin(this.username, this.password).then(res => {
+            if (res.data.status === 200) {
+              this.$message.success('New Token')
+              console.log(res.data.data.accessToken, 'access token');
+              this.updateAccessToken(res.data.data.accessToken);
+
+              // must be http
+              this.$wsConnect(`https://${this.dataServiceResource}/lava-ws`,  // FIXME: very bad
+                  () => {
+                    this.$message.success("Websocket connection established");
+                    this.test();
+                  },
+                  error => {
+                    this.$message.error("Disconnected from backend websocket:" + error);
+                  }
+              );
+              // this.$router.push({name: 'Dashboard', path: '/'})
+
+              // clear form data
+              this.$refs.loginForm.resetFields();
+
             }
-        );
-        // this.$router.push({name: 'Dashboard', path: '/'})
-
-        // clear form data
-        this.$refs.loginForm.resetFields();
+          });
+        } else {
+          // call access request
+        }
       }
     }
   }
