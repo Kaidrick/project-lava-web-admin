@@ -9,6 +9,9 @@ import AddonManager from "@/modules/addons";
 import LuaDebugger from "@/modules/luaconsole";
 
 import router from "@/router";
+import Vue from 'vue';
+
+const vm = new Vue();
 
 export default {
     namespaced: true,
@@ -52,6 +55,11 @@ export default {
             console.log("test");
 
             context.commit('setConfigured', true);
+        },
+
+        reset(context) {
+            context.commit('setConfigured', false);
+            vm.$wsDisconnect();
         },
 
         updateAccessToken(context, token) {

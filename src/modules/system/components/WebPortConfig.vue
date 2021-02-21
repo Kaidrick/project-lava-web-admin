@@ -47,7 +47,9 @@
 
     mounted() {
       if (this.accessToken) {
-        this.test();
+        console.log('validate and push')
+        // check token, if valid token then proceed to connect to ws
+        this.validateAndPush();
       }
     },
 
@@ -87,6 +89,16 @@
           });
         } else {
           // call access request
+          // must be http
+          this.$wsConnect(`https://${this.dataServiceResource}/lava-ws`,  // FIXME: very bad
+              () => {
+                this.$message.success("Websocket connection established");
+                this.test();
+              },
+              error => {
+                this.$message.error("Disconnected from backend websocket:" + error);
+              }
+          );
         }
       }
     }

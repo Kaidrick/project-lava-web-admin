@@ -52,21 +52,30 @@
 
     data() {
       return {
-        websocket: null
+        websocket: null,
+        timer: null
       }
     },
 
     computed: {
-      ...mapGetters(["status"])
+      ...mapGetters(["status"]),
+      ...mapGetters('system', ['configured'])
     },
 
     activated() {
       console.log("activated");
     },
 
+    beforeDestroy() {
+      console.log(this.$store.state.system.configured, '$store.state.system.configured')
+      clearInterval(this.timer);
+      this.$message.info("Disconnected");
+    },
+
     mounted() {
       console.log("mounted");
-      setInterval(this.loadBackendConnectionStatus, 2000);
+
+      this.timer = setInterval(this.loadBackendConnectionStatus, 2000);
     },
 
     methods: {

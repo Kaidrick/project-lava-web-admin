@@ -94,7 +94,7 @@
     },
 
     methods: {
-      ...mapActions('system', ['freshSystemRouteMap']),
+      ...mapActions('system', ['freshSystemRouteMap', 'reset']),
       ...mapActions('configuration', ['getNavMenus']),
 
       testLogout() {
@@ -104,6 +104,7 @@
         localStorage.removeItem('access_token');
 
         // finally set mask, clean store, or refresh page
+        this.reset();
       },
 
       handleMenuClick(name) {
