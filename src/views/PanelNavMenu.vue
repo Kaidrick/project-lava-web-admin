@@ -90,7 +90,7 @@
       // this.selectedMenu = Array.from(this.routeNamePathMap.keys()).indexOf(this.$route.name);
       this.selectedMenu = Array.from(this.systemRouteMap.keys()).indexOf(this.$route.name);
 
-      console.log(this.$refs.mainNavMenu);
+      // console.log(this.$refs.mainNavMenu);
     },
 
     methods: {
