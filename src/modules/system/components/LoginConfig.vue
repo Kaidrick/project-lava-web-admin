@@ -15,7 +15,7 @@
           <el-input v-model="username"></el-input>
         </el-form-item>
         <el-form-item label="Password">
-          <el-input v-model="password"></el-input>
+          <el-input show-password v-model="password"></el-input>
         </el-form-item>
       </el-form>
       <el-button size="medium" @click="validateAndPush">CONNECT</el-button>
@@ -54,7 +54,7 @@
     },
 
     methods: {
-      ...mapActions('system', ["test", "updateDataServiceResource", "updateAccessToken"]),
+      ...mapActions('system', ["test", "updateDataServiceResource", "updateAccessToken", "updateRefreshToken"]),
 
       validateAndPush() {
         this.updateDataServiceResource(`${this.webConfig.host}:${this.webConfig.port}`)
@@ -65,10 +65,10 @@
         if (!localStorage.getItem('access_token')) {
           // use username and password to send a login request to given host and port
           ConnectionService.requestWebLogin(this.username, this.password).then(res => {
-            if (res.data.status === 200) {
-              this.$message.success('New Token')
-              console.log(res.data.data.accessToken, 'access token');
+            if (res.data.status === 200 && res.data.success === 1) {
+              this.$message.success('Login Success')
               this.updateAccessToken(res.data.data.accessToken);
+              this.updateRefreshToken(res.data.data.refreshToken);
 
               // must be http
               this.$wsConnect(`https://${this.dataServiceResource}/lava-ws`,  // FIXME: very bad

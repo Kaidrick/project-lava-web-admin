@@ -13,6 +13,7 @@ import websocket from "@/modules/system/websocket";
 import util from "@/util";
 // import {option as websocketOption} from './websocket.config';
 import interceptorSetup from './interceptors';
+import dictionary from "@/dictionary";
 
 Vue.config.productionTip = false;
 
@@ -23,6 +24,7 @@ Vue.use(ElementUI);
 Vue.use(VueAxios, axios);
 Vue.use(websocket);
 Vue.use(util);
+Vue.use(dictionary);
 
 store.registerModule('system', system.store)
 router.addRoutes(system.routes);

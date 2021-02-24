@@ -19,13 +19,27 @@ export default function setup() {
 
         // TODO: backend custom exception will provide error code to determine the exact error
         vm.$message.error(`${reject.response.data.status}: ${reject.response.data.message}`);
+
+        // eslint-disable-next-line no-unused-vars
         const status = reject.response.data.status;
-        if (status === 400) {
-            // ignored
-        } else if (status === 403) {
-            //
-            localStorage.removeItem('access_token');
-            store.state.configured = false;
+        if (status === vm.$dict.statusCode.failure) {
+            console.log('failure');
+        }
+
+        // check status and error code
+        console.log(reject.response.data.errorCode, '<--- error code');
+        switch (reject.response.data.errorCode) {
+            case vm.$dict.errorCode.INVALID_ACCESS_TOKEN:
+                localStorage.removeItem('access_token');
+                store.state.configured = false;
+                break;
+
+            // case vm.$dict.errorCode.ACCESS_TOKEN_EXPIRED:
+            //     localStorage.removeItem('access_token');
+
+
+            default:
+                break;
         }
     })
 }

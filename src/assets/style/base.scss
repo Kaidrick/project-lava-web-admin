@@ -300,6 +300,22 @@ span, div {
   }
 }
 
+.el-message--error {
+  .el-message__content {
+    &::before {
+      background-color: #BC3F3C;
+    }
+  }
+}
+
+.el-message--warning {
+  .el-message__content {
+    &::before {
+      background-color: $accent;
+    }
+  }
+}
+
 @import "table-style";
 //.el-table {
 //  background: $primary_light;

@@ -36,7 +36,25 @@ export default {
         systemRouteMap: state => state.systemRouteMap,
         dataServiceResource: state => state.dataServiceResource,
 
-        accessToken: () => localStorage.getItem('access_token')
+        accessToken: () => {
+            const token = localStorage.getItem('access_token')
+            if (token === 'undefined') {
+                localStorage.removeItem('access_token');
+                return null;
+            } else {
+                return token;
+            }
+        },
+
+        refreshToken: () => {
+            const token = localStorage.getItem('refresh_token')
+            if (token === 'undefined') {
+                localStorage.removeItem('access_token');
+                return null;
+            } else {
+                return token;
+            }
+        }
     },
     mutations: {
         setWebConfig: (state, webConfig) => state.webConfig = webConfig,
@@ -47,6 +65,10 @@ export default {
         setAccessToken: (state, token) => {
 
             localStorage.setItem('access_token', token)
+        },
+
+        setRefreshToken: (state, token) => {
+            localStorage.setItem('refresh_token', token)
         }
     },
     actions: {
@@ -65,6 +87,11 @@ export default {
         updateAccessToken(context, token) {
             console.log(token, 'token')
             context.commit('setAccessToken', token);
+        },
+
+        updateRefreshToken(context, token) {
+            console.log(token, 'refresh token');
+            context.commit('setRefreshToken', token);
         },
 
         switchWebSocketConnected(context, boolean) {

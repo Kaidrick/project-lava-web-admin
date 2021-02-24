@@ -102,6 +102,7 @@
 
         // if api call success, remove access token from local storage
         localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
 
         // finally set mask, clean store, or refresh page
         this.reset();

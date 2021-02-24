@@ -36,7 +36,7 @@
 
 <script>
   import PanelNavMenu from "@/views/PanelNavMenu";
-  import WebPortConfig from "@/modules/system/components/WebPortConfig";
+  import WebPortConfig from "@/modules/system/components/LoginConfig";
 
   import { mapGetters, mapActions } from 'vuex';
   import SideDockPanel from "@/components/SideDockPanel";
