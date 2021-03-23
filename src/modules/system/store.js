@@ -8,6 +8,12 @@ import dashboardModule from '@/modules/dashboard';
 import AddonManager from "@/modules/addons";
 import LuaDebugger from "@/modules/luaconsole";
 
+import state from "./state";
+import mutations from "./mutations";
+import getters from "./getters";
+
+import Wizard from "./action-wizard";
+
 import router from "@/router";
 import Vue from 'vue';
 
@@ -15,63 +21,13 @@ const vm = new Vue();
 
 export default {
     namespaced: true,
-    state: {
-        webConfig: {
-            host: 'localhost',
-            port: 8080
-        },
-
-        configured: false,
-
-        websocketConnected: false,
-
-        systemRouteMap: [],
-
-        dataServiceResource: ''
-    },
-    getters: {
-        webConfig: state => state.webConfig,
-        configured: state => state.configured,
-        websocketConnected: state => state.websocketConnected,
-        systemRouteMap: state => state.systemRouteMap,
-        dataServiceResource: state => state.dataServiceResource,
-
-        accessToken: () => {
-            const token = localStorage.getItem('access_token')
-            if (token === 'undefined') {
-                localStorage.removeItem('access_token');
-                return null;
-            } else {
-                return token;
-            }
-        },
-
-        refreshToken: () => {
-            const token = localStorage.getItem('refresh_token')
-            if (token === 'undefined') {
-                localStorage.removeItem('access_token');
-                return null;
-            } else {
-                return token;
-            }
-        }
-    },
-    mutations: {
-        setWebConfig: (state, webConfig) => state.webConfig = webConfig,
-        setConfigured: (state, configured) => state.configured = configured,
-        setWebsocketConnected: (state, websocketConnected) => state.websocketConnected = websocketConnected,
-        setSystemRouteMap: (state, systemRouteMap) => state.systemRouteMap = systemRouteMap,
-        setDataServiceResource: (state, dataServiceResource) => state.dataServiceResource = dataServiceResource,
-        setAccessToken: (state, token) => {
-
-            localStorage.setItem('access_token', token)
-        },
-
-        setRefreshToken: (state, token) => {
-            localStorage.setItem('refresh_token', token)
-        }
-    },
+    state,
+    getters,
+    mutations,
     actions: {
+        // actions for wizard run
+        ...Wizard,
+
         // eslint-disable-next-line no-unused-vars
         test(context) {
             console.log("test");
@@ -82,6 +38,11 @@ export default {
         reset(context) {
             context.commit('setConfigured', false);
             vm.$wsDisconnect();
+        },
+
+        setWizardRun(context, isEnable) {
+            context.commit('setWizardRun', isEnable);
+            localStorage.setItem('wizardRun', isEnable);
         },
 
         updateAccessToken(context, token) {

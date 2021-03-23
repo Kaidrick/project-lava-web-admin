@@ -1,6 +1,7 @@
 import axios from 'axios';
 import store from '@/modules/system/store';
 import Vue from "vue";
+import ConnectionService from "@/services/ConnectionService";
 
 const vm = new Vue();
 
@@ -34,10 +35,19 @@ export default function setup() {
                 store.state.configured = false;
                 break;
 
-            // case vm.$dict.errorCode.ACCESS_TOKEN_EXPIRED:
-            //     localStorage.removeItem('access_token');
+            case vm.$dict.errorCode.ACCESS_TOKEN_EXPIRED:
+                // remove current access token
+                localStorage.removeItem('access_token');
 
+                vm.$message.info("refresh token attempt");
+                // invoke api call to attempt to use refresh token to get a new access token
+                ConnectionService.refreshWebLogin(localStorage.getItem('refresh_token'))
+                    .then(res => {
+                        console.log(res.data);
+                    })
+                // if attempt failed (such as due to refresh token expired), log out user immediately
 
+                break;
             default:
                 break;
         }

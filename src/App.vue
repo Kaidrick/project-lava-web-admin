@@ -1,7 +1,9 @@
 <template>
   <div id="app">
 
-    <web-port-config v-if="!configured"></web-port-config>
+    <web-port-config v-if="!configured && !wizardRun"></web-port-config>
+
+    <setup-wizard v-if="wizardRun"></setup-wizard>
 
     <side-dock-panel :visible="configured">
       <server-info-panel></server-info-panel>
@@ -41,10 +43,11 @@
   import { mapGetters, mapActions } from 'vuex';
   import SideDockPanel from "@/components/SideDockPanel";
   import ServerInfoPanel from "@/views/logging/ServerInfoPanel";
+  import SetupWizard from "@/modules/system/components/SetupWizard";
 
   export default {
     // eslint-disable-next-line vue/no-unused-components
-    components: {ServerInfoPanel, SideDockPanel, WebPortConfig, PanelNavMenu},
+    components: {SetupWizard, ServerInfoPanel, SideDockPanel, WebPortConfig, PanelNavMenu},
     data() {
       return {
         LOCALE_NAMES: {
@@ -59,7 +62,12 @@
     },
 
     computed: {
-      ...mapGetters('system', ['configured'])
+      ...mapGetters('system', ['configured', 'wizardRun'])
+    },
+
+    mounted() {
+      // eslint-disable-next-line no-debugger
+      // debugger;
     },
 
     methods: {

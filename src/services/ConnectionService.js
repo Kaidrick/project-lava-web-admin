@@ -63,6 +63,16 @@ export default {
                 password: password
             })
         })
+    },
+
+    refreshWebLogin(refreshToken) {
+        return http({
+            method: 'post',
+            url: 'token/refresh',
+            data: qs.stringify({
+                refresh_token: refreshToken
+            })
+        });
     }
 
 }
