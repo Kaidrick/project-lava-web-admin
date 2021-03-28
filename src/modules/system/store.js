@@ -16,6 +16,7 @@ import Wizard from "./action-wizard";
 
 import router from "@/router";
 import Vue from 'vue';
+import i18n from "@/i18n";
 
 const vm = new Vue();
 
@@ -70,6 +71,12 @@ export default {
                 map.set(name, path);
             });
             context.commit('setSystemRouteMap', map);
+        },
+
+        updateSystemLocale(context, locale) {
+            context.commit('setSystemLocale', locale);
+            i18n.locale = locale;
+            vm.$message.success(i18n.t("Current system locale is set to {0}.").format(locale));
         },
 
         // eslint-disable-next-line no-unused-vars

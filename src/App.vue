@@ -62,7 +62,7 @@
     },
 
     computed: {
-      ...mapGetters('system', ['configured', 'wizardRun'])
+      ...mapGetters('system', ['configured', 'wizardRun', 'systemLocale'])
     },
 
     mounted() {

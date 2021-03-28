@@ -1,6 +1,17 @@
 {
   "message": "测试国际化",
 
+  "Current system locale is set to {0}.": "界面语言已设置为{0}。",
+
+  "BACK": "返回",
+  "NEXT": "继续",
+  "DONE": "完成",
+
+  "Introduction": "简介",
+  "System": "系统设置",
+  "Interface": "界面设置",
+  "Finish": "设置完成",
+
   "no data": "暂无日志数据",
   "server_info": "服务器信息",
   "panel_connection": "Lava面板连接状态",

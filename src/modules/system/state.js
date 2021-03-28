@@ -1,31 +1,13 @@
-const wizardSteps = [
-    {
-        name: 'Step 0 - Introduction',
-        description: 'Introduction',
-        componentName: ''
-    },
-    {
-        name: 'Step 1 - Ports',
-        description: 'Configure TCP port numbers',
-        componentName: ''
-    },
-    {
-        name: 'Step 2 - GUI Preferences',
-        description: 'Setup GUI side preferences',
-        componentName: ''
-    },
-    {
-        name: 'Step 3 - Welcome to Project Lava',
-        description: 'You are done.',
-        componentName: '',
-        status: 'success'
-    }
-];
+import wizards from './components/wizards';
 
-const wizardStepUpperLimit = wizardSteps.length - 1;
+const wizardStepUpperLimit = Object.values(wizards).length - 1;
 const wizardStepLowerLimit = 0;
 
+const wizardRun = localStorage.getItem('wizard');
+
 export default {
+    systemLocale: 'en',
+
     webConfig: {
         host: 'localhost',
         port: 8080
@@ -33,7 +15,7 @@ export default {
 
     configured: false,
 
-    wizardRun: !(localStorage.getItem('wizard')),
+    wizardRun: (wizardRun === null || wizardRun === undefined) ? true : wizardRun === 'true',
 
     websocketConnected: false,
 
@@ -43,7 +25,7 @@ export default {
 
     wizardStep: 0,
 
-    wizardSteps,
+    wizardComponents: wizards,
 
     wizardStepUpperLimit,
     wizardStepLowerLimit

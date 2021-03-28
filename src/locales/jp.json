@@ -1,3 +1,7 @@
 {
-  "message": "こにちは !!"
+  "message": "こにちは !!",
+
+  "Welcome to Project Lava.": "Welcome to Project Lava.",
+  "BACK": "BACK",
+  "NEXT": "NEXT"
 }

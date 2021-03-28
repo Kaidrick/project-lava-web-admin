@@ -1,0 +1,18 @@
+{
+  "wizard_welcome": "Welcome to Project Lava.",
+  "wizard_description": "This setup wizard will guide you through some of the basic configuration option of Project Lava.",
+  "wizard_content": "These include settings up (local/remote) host address, port number, and necessary Lua scripts for Project Lava backend application to connect to DCS World instance.",
+  "wizard_next_instruction": "Choose your preferred language/locale, and then click NEXT button to continue with the setup wizard.",
+
+  "wizard_system_backend_init": "When Project Lava backend application starts up for the first time, it will generate a super user password in the form of a *.txt file. This file is named \"password.txt\" and can be found in the following directory:",
+  "wizard_system_backend_pw_gen_path": "C:\\Users\\<You Windows User Name>\\Saved Games\\Lava\\config",
+  "wizard_system_backend_instruction": "Please enter the password in the following text box to identify yourself as the super user.",
+
+  "wizard_system_config_host_addr": "Host address refers to the LAN or Internet IP address of the machine that hosts your DCS World server instance. It could be something like ",
+  "wizard_system_config_local_host": "localhost (this very machine)",
+  "wizard_system_config_local_ip": "192.168.0.## (another machine in LAN)",
+  "wizard_system_config_remote_ip": "17.5.7.8 (public to Internet, on a remote machine)",
+  "wizard_system_config_host_addr_instruction": "Please enter your DCS Server host IP address in the following text box",
+
+  "wizard_system_config_tcp_port": "Port refers to the TCP port to be used for backend API service."
+}

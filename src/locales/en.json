@@ -1,6 +1,13 @@
 {
   "message": "hello i18n !!",
 
+  "Current system locale is set to {0}.": "Current system locale is set to {0}.",
+
+  "Welcome to Project Lava.": "Welcome to Project Lava.",
+  "BACK": "BACK",
+  "NEXT": "NEXT",
+  "DONE": "DONE",
+
   "no data": "No data available",
   "server_info": "SERVER INFO",
   "panel_connection": "LavaGUI Connection",

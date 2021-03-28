@@ -9,7 +9,9 @@ export default {
     wizardStep: state => state.wizardStep,
     wizardSteps: state => state.wizardSteps,
 
-    isFinishStep: state => state.wizardStep === state.wizardStepUpperLimit,
+    wizardComponents: state => state.wizardComponents,
+
+    isFinishStep: state => state.wizardStep === state.wizardStepUpperLimit + 1,  // allow last step to be marked as finished
     isInitialStep: state => state.wizardStep === state.wizardStepLowerLimit,
 
     accessToken: () => {
@@ -25,10 +27,12 @@ export default {
     refreshToken: () => {
         const token = localStorage.getItem('refresh_token')
         if (token === 'undefined') {
-            localStorage.removeItem('access_token');
+            localStorage.removeItem('refresh_token');
             return null;
         } else {
             return token;
         }
-    }
+    },
+
+    systemLocale: state => state.systemLocale || localStorage.getItem('locale') || 'en'
 }

@@ -1,0 +1,6 @@
+{
+  "wizard_welcome": "欢迎使用Project Lava。",
+  "wizard_description": "这个配置向导将会帮助你完成Project Lava的一些基础设置。",
+  "wizard_content": "这些包括设置（本地或远程）主机地址、端口号，以及必要的Lua脚本来让Project Lava后端应用程序正确地连接至DCS World服务器。",
+  "wizard_next_instruction": "首先选择你的语言偏好，然后点击”继续“按钮开始配置引导。"
+}

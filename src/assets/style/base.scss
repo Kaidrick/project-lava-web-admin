@@ -68,6 +68,23 @@ span, div {
   }
 }
 
+.el-select-dropdown.el-popper {
+  border: 1px solid $primary_light !important;
+  .el-select-dropdown__wrap {
+    .el-select-dropdown__list {
+      .el-select-dropdown__item {
+        &.selected {
+
+        }
+
+        &.hover {
+          background-color: #42b983;
+        }
+      }
+    }
+  }
+}
+
 .el-tabs {
   .el-tabs__header {
 
