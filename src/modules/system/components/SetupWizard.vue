@@ -4,16 +4,18 @@
       <img class="logo__image-display" alt="Vue logo" :src="lavaLogo">
     </div>
 
-    <el-steps class="wizard-step-bar" align-center :active="wizardStep" finish-status="success">
-      <el-step v-for="(step, index) in wizards"
-               :key="index"
-               :title="step.name" >
-        <template slot="title">
-          <el-button class="clickable-step-title"
-                     type="text" @click="switchCurrentStep(index)">{{ $t(step.name) }}</el-button>
-        </template>
-      </el-step>
-    </el-steps>
+    <div class="wizard-step-bar-wrapper">
+      <el-steps class="wizard-step-bar" align-center :active="wizardStep" finish-status="success">
+        <el-step v-for="(step, index) in wizards"
+                 :key="index"
+                 :title="step.name" >
+          <template slot="title">
+            <el-button class="clickable-step-title"
+                       type="text" @click="switchCurrentStep(index)">{{ $t(step.name) }}</el-button>
+          </template>
+        </el-step>
+      </el-steps>
+    </div>
 
     <div class="content">
       <el-scrollbar style="height: 100%">
@@ -83,21 +85,33 @@
     height: calc(100vh - 100px);
     display: flex;
     flex-direction: column;
+    align-items: center;
 
     .logo {
       margin: 20px auto;
 
+      height: 200px;
+      display: flex;
+      justify-content: center;
+
       .logo__image-display {
-        width: 200px;
-        height: 200px;
+        //width: 200px;
+        //height: 200px;
       }
     }
 
-    .wizard-step-bar {
-      margin: 20px;
+    .wizard-step-bar-wrapper {
+      height: 80px;
+      display: flex;
+      width: 100%;
 
-      .clickable-step-title {
-        font-size: 18px;
+      .wizard-step-bar {
+        margin: auto;
+        width: 100%;
+
+        .clickable-step-title {
+          font-size: 18px;
+        }
       }
     }
 
@@ -158,6 +172,7 @@
 
     .content {
       margin: 20px;
+      height: calc(100vh - 480px);
     }
 
     .wizard-operation-button-wrapper {
@@ -165,6 +180,9 @@
       flex-direction: row;
       justify-content: flex-end;
       margin: 20px;
+      position: absolute;
+      bottom: 0;
+      width: calc(100% - 540px);
 
       .wizard-operation-button-wrapper__previous-button {
         &.active {
