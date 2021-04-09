@@ -90,6 +90,7 @@ export default {
             dispatch('initializeModule', AddonManager);
             dispatch('initializeModule', LuaDebugger);
         },
+
         initializeModule ({ dispatch }, module) {
             Store.registerModule(module.name, module.store);
             Router.addRoutes(module.routes);

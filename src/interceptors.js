@@ -51,5 +51,7 @@ export default function setup() {
             default:
                 break;
         }
+
+        return reject.response;
     })
 }

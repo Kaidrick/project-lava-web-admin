@@ -73,6 +73,17 @@ export default {
                 refresh_token: refreshToken
             })
         });
+    },
+
+    requestLoginInfoValidation(username, password) {
+        return http({
+            method: 'post',
+            url: '/user/validate',
+            data: qs.stringify({
+                username: username,
+                password: password
+            })
+        })
     }
 
 }

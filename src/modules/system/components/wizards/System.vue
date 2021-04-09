@@ -55,7 +55,7 @@
               <el-button @click="ping" size="small">Test Connection</el-button>
             </div>
             <div class="ping-test-operator__result" style="display: flex">
-              <div style="margin: auto auto">{{ 'GOOD' }}</div>
+              <div style="margin: auto auto">{{ pingTestResult }}</div>
             </div>
           </div>
         </div>
@@ -78,6 +78,8 @@ export default {
         hostPortNumber: ''
       },
 
+      pingTestResult: '',
+
       rules: {}
     }
   },
@@ -91,8 +93,18 @@ export default {
 
   methods: {
     ping() {
-      ConnectionService.requestWebLogin("root", this.systemConfigDataForm.rootPassword).then(res => {
-        console.log(res)
+      ConnectionService.requestLoginInfoValidation("root", this.systemConfigDataForm.rootPassword).then(res => {
+        console.log(res, 'reject res?')
+        const { success, data, message } = res.data;
+        if (success === this.$dict.statusCode.success) {
+          if (data.enable) {
+            this.pingTestResult = "CONNECTION OK";
+          } else {
+            this.pingTestResult = "ACCOUNT IS DISABLED";
+          }
+        } else {
+          this.pingTestResult = message;
+        }
       }).catch(e => {
         console.log(e, 'exception');
       })
