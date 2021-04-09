@@ -19,6 +19,7 @@
         </el-form-item>
       </el-form>
       <el-button size="medium" @click="validateAndPush">CONNECT</el-button>
+      <el-button size="medium" @click="() => setWizardRun(true)">RUN SETUP WIZARD</el-button>
 
       <div class="lava-login-info-footer">
         <a href="https://github.com/Kaidrick/Project-Lava" style="color: whitesmoke">https://github.com/Kaidrick/Project-Lava</a>
@@ -54,7 +55,8 @@
     },
 
     methods: {
-      ...mapActions('system', ["test", "updateDataServiceResource", "updateAccessToken", "updateRefreshToken"]),
+      ...mapActions('system', ["test", "updateDataServiceResource", "updateAccessToken", "updateRefreshToken",
+        "setWizardRun"]),
 
       validateAndPush() {
         this.updateDataServiceResource(`${this.webConfig.host}:${this.webConfig.port}`)

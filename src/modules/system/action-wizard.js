@@ -8,6 +8,10 @@ export default {
         vm.$message.info("start wizard with default process");
     },
 
+    wizardSkipAndUseDefaultSettings(context) {
+        context.commit('setWizardRun', false);
+    },
+
     // eslint-disable-next-line no-unused-vars
     wizardNextStep(context) {
         if (context.getters.isFinishStep) {

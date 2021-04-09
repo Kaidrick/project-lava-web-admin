@@ -24,18 +24,29 @@
     </div>
 
     <div class="wizard-operation-button-wrapper">
-      <el-button size="medium"
-                 class="wizard-operation-button-wrapper__previous-button"
-                 :class="{'active': wizardStep > 0}"
-                 @click="wizardPreviousStep">
-        {{ $t('BACK') }}
-      </el-button>
+      <div class="start">
+        <el-button size="medium"
+                   class="wizard-operation-button-wrapper__skip-button"
+                   :class="{'active': wizardStep === 0}"
+                   @click="wizardSkipAndUseDefaultSettings">
+          {{ $t('SKIP AND USE DEFAULT') }}
+        </el-button>
+      </div>
 
-      <el-button size="medium"
-                 class="wizard-operation-button-wrapper__next-button"
-                 @click="wizardNextStep">
-        {{ $t(isFinishStep ? 'DONE' : 'NEXT') }}
-      </el-button>
+      <div class="end">
+        <el-button size="medium"
+                   class="wizard-operation-button-wrapper__previous-button"
+                   :class="{'active': wizardStep > 0}"
+                   @click="wizardPreviousStep">
+          {{ $t('BACK') }}
+        </el-button>
+
+        <el-button size="medium"
+                   class="wizard-operation-button-wrapper__next-button"
+                   @click="wizardNextStep">
+          {{ $t(isFinishStep ? 'DONE' : 'NEXT') }}
+        </el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -57,7 +68,9 @@
     },
 
     computed: {
-      ...mapGetters('system', ['wizardStep', 'wizardComponents', 'isFinishStep', 'isInitialStep']),
+      ...mapGetters('system', [
+          'wizardStep', 'wizardComponents',
+        'isFinishStep', 'isInitialStep']),
 
       currentStepComponent() {
         try {
@@ -70,7 +83,9 @@
     },
 
     methods: {
-      ...mapActions('system', ['wizardNextStep', 'wizardPreviousStep', 'switchCurrentStep']),
+      ...mapActions('system',
+          ['wizardNextStep', 'wizardPreviousStep',
+            'switchCurrentStep', 'wizardSkipAndUseDefaultSettings']),
 
       testComponent() {
         console.log(wizards);
@@ -80,6 +95,8 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "src/assets/style/color-scheme";
+
   .lava-setup-wizard-wrapper {
     padding: 50px 250px;
     height: calc(100vh - 100px);
@@ -178,21 +195,36 @@
     .wizard-operation-button-wrapper {
       display: flex;
       flex-direction: row;
-      justify-content: flex-end;
+      justify-content: space-between;
       margin: 20px;
       position: absolute;
       bottom: 0;
       width: calc(100% - 540px);
 
-      .wizard-operation-button-wrapper__previous-button {
-        &.active {
-          visibility: visible;
-        }
+      .start {
+        .wizard-operation-button-wrapper__skip-button {
+          &.active {
+            visibility: visible;
+          }
 
-        visibility: hidden;
+          visibility: hidden;
+
+          border: 1px solid $secondary_light;
+          background-color: transparent;
+        }
       }
 
-      .wizard-operation-button-wrapper__previous-button, .wizard-operation-button-wrapper__next-button {
+      .end {
+        .wizard-operation-button-wrapper__previous-button {
+          &.active {
+            visibility: visible;
+          }
+
+          visibility: hidden;
+        }
+      }
+
+      .el-button {
         width: 200px;
       }
     }
