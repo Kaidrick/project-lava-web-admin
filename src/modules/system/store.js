@@ -14,7 +14,6 @@ import getters from "./getters";
 
 import Wizard from "./action-wizard";
 
-import router from "@/router";
 import Vue from 'vue';
 import i18n from "@/i18n";
 
@@ -66,7 +65,7 @@ export default {
 
         freshSystemRouteMap(context) {
             const map = new Map();
-            router.options.routes.forEach(r => {
+            Router.options.routes.forEach(r => {
                 let { name, path } = r;
                 map.set(name, path);
             });

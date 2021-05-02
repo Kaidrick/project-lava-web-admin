@@ -20,14 +20,6 @@
                       placeholder='Add "return" in front of the debug command if the command is expected to return a value.'
                       v-model="currentResult"></el-input>
             <span class="console-section-name">Command</span>
-
-            <!--                  <el-scrollbar style="height: 100%">-->
-            <!--                    <el-input class="lua-debug-string-text-area"-->
-            <!--                              type="textarea"-->
-            <!--                              v-model="luaDebugString"-->
-            <!--                              autosize-->
-            <!--                              placeholder="Enter Lua code to be executed in selected environment here."></el-input>-->
-            <!--                  </el-scrollbar>-->
             <div id="codeeditor"></div>
 
           </div>

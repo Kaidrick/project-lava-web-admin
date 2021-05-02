@@ -9,9 +9,6 @@
 
       <!-- TODO: estimate the type of response; text or code -->
       <lua-editor class="note-display" :is-editor="false" :src="response" :read-only="true"></lua-editor>
-<!--      <div class="note-result">-->
-<!--        {{ response }}-->
-<!--      </div>-->
     </div>
     <slot name="operation"></slot>
   </div>

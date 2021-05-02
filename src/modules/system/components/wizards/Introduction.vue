@@ -1,13 +1,6 @@
 <template>
   <div class="wizard-introduction">
     <div class="system-language-selection">
-<!--      <el-select v-model="testSelectedLocale">-->
-<!--        <el-option v-for="(locale, index) in availableLocales"-->
-<!--                   :key="index"-->
-<!--                   :label="locale"-->
-<!--                   :value="locale"></el-option>-->
-<!--      </el-select>-->
-
       <el-button v-for="(locale, index) in availableLocaleNames"
                  :key="index"
                  class="locale-selection-button"

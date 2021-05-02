@@ -107,8 +107,8 @@
             this.timer = setInterval(() => {
               this.getPlayerList().then(() => {
                 this.tableData = this.playerData;
-                this.tableData.forEach(player => player.name = 'Player_' + (Math.random() * 1000000)
-                    .toFixed(0));
+                // this.tableData.forEach(player => player.name = 'Player_' + (Math.random() * 1000000)
+                //     .toFixed(0));
               })
             }, 2000);
         },

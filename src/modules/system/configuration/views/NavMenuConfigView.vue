@@ -2,7 +2,6 @@
   <div class="nav-menu-config-view-wrapper mono-wrapper" v-loading="isLoading">
     <div class="nav-menu-config-view-title">User Menu Settings</div>
     <div class="sp-10"></div>
-    <!--    <el-button @click="testAddRoute">TEST ADD ROUTE</el-button>-->
     <div class="nav-menu-config-tree-display-wrapper">
       <el-tree :data="menus"
                ref="navMenuTree"

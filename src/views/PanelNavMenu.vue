@@ -1,32 +1,6 @@
 <template>
   <div class="nav-menu-wrapper">
     <el-scrollbar style="height: 100%">
-<!--      <el-menu ref="mainNavMenu"-->
-<!--               :default-active="String(selectedMenu)"-->
-<!--               class="nav-menu-vertical"-->
-<!--               text-color="#fff"-->
-<!--               @select="handleMenuSelect"-->
-<!--               active-text-color="#f7b500">-->
-<!--        &lt;!&ndash; TODO: what about nested submenu? &ndash;&gt;-->
-<!--        <el-menu-item @click="handleMenuClick(routeName)"-->
-<!--                      :class="{'is-selected': index === selectedMenu}"-->
-<!--                      v-for="(routeName, index) in systemRouteMap.keys()"-->
-<!--                      :key="index" :index="String(index)">-->
-<!--          {{ $t(routeName) }}-->
-<!--        </el-menu-item>-->
-<!--        &lt;!&ndash; Lava icon and versions &ndash;&gt;-->
-<!--        <div class="lava-info-bar text-center">-->
-<!--          <div class="lava-logo"/>-->
-<!--          <div>Project Lava</div>-->
-<!--          <div>v0.0.1 Alpha</div>-->
-<!--          <div>DCS Version</div>-->
-<!--          <div>DCS.2.5.6</div>-->
-<!--        </div>-->
-<!--        <div>-->
-<!--          WS Connected: {{ websocketConnected }}-->
-<!--        </div>-->
-<!--        <slot></slot>-->
-<!--      </el-menu>-->
       <div>
         <el-button @click="testLogout">LOGOUT</el-button>
       </div>

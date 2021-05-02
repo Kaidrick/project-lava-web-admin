@@ -27,7 +27,6 @@
               <span class="path">{{ item.path }}</span>
             </template>
           </el-autocomplete>
-<!--          <el-input v-model="navMenuForm.path"></el-input>-->
         </el-form-item>
         <el-form-item class="nav-menu-form__input-item" label="Parent Menu" prop="pid">
           <el-select v-model="navMenuForm.pid">

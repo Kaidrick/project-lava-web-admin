@@ -6,7 +6,7 @@
                destroy-on-close>
         <div slot="title">{{ plugin.name }} ({{plugin.ident}})</div>
       <div class="iframe-wrapper" v-loading="isLoading">
-        <iframe ref="customViewFrame" class="view-frame" :src="src"></iframe>
+        <iframe :title="plugin.ident" ref="customViewFrame" class="view-frame" :src="src"></iframe>
       </div>
     </el-dialog>
 </template>
