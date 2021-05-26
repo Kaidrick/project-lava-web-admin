@@ -93,7 +93,9 @@ export default {
       this.isLoading = true;
 
       this.getNavMenus().then(res => {
-        this.menus = tree.listToTreeOrdered(res.data.data, (a, b) => a.ordinal - b.ordinal);
+        if (res.data.data !== null) {
+          this.menus = tree.listToTreeOrdered(res.data.data, (a, b) => a.ordinal - b.ordinal);
+        }
       }).finally(() => this.isLoading = false);
     },
 

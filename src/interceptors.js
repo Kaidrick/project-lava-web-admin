@@ -39,15 +39,28 @@ export default function setup() {
                 // remove current access token
                 localStorage.removeItem('access_token');
 
-                vm.$message.info("refresh token attempt");
                 // invoke api call to attempt to use refresh token to get a new access token
                 ConnectionService.refreshWebLogin(localStorage.getItem('refresh_token'))
                     .then(res => {
-                        console.log(res.data);
+                        const {accessToken, refreshToken} = res.data.data;
+                        localStorage.setItem('access_token', accessToken);
+                        localStorage.setItem('refresh_token', refreshToken);
+                        window.location.reload();
+                    })
+                    .catch(e => {
+                        console.log(e)
                     })
                 // if attempt failed (such as due to refresh token expired), log out user immediately
 
                 break;
+
+            case vm.$dict.errorCode.REFRESH_TOKEN_EXPIRED:
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('refresh_token');
+
+                window.location.reload();
+                break;
+
             default:
                 break;
         }
