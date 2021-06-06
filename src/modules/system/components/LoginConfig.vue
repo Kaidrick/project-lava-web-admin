@@ -55,7 +55,7 @@
     },
 
     methods: {
-      ...mapActions('system', ["test", "updateDataServiceResource", "updateAccessToken", "updateRefreshToken",
+      ...mapActions('system', ["test", "updateDataServiceResource", "updateUserName", "updateAccessToken", "updateRefreshToken",
         "setWizardRun"]),
 
       validateAndPush() {
@@ -72,16 +72,23 @@
               this.updateAccessToken(res.data.data.accessToken);
               this.updateRefreshToken(res.data.data.refreshToken);
 
+              this.updateUserName(this.username);
+
+              console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+              this.$stomp.activate();
+              console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+
               // must be http
-              this.$wsConnect(`https://${this.dataServiceResource}/lava-ws`,  // FIXME: very bad
-                  () => {
-                    this.$message.success("Websocket connection established");
-                    this.test();
-                  },
-                  error => {
-                    this.$message.error("Disconnected from backend websocket:" + error);
-                  }
-              );
+              // this.$wsConnect(`https://${this.dataServiceResource}/lava-ws`,  // FIXME: very bad
+              //     () => {
+              //       this.$message.success("Websocket connection established");
+              //       this.test();
+              //       this.$wsPing();
+              //     },
+              //     error => {
+              //       this.$message.error("Disconnected from backend websocket:" + error);
+              //     }
+              // );
               // this.$router.push({name: 'Dashboard', path: '/'})
 
               // clear form data
@@ -90,17 +97,25 @@
             }
           });
         } else {
+          // test new stomp
+          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+          this.$stomp.activate();
+          console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+
           // call access request
           // must be http
-          this.$wsConnect(`https://${this.dataServiceResource}/lava-ws`,  // FIXME: very bad
-              () => {
-                this.$message.success("Websocket connection established");
-                this.test();
-              },
-              error => {
-                this.$message.error("Disconnected from backend websocket:" + error);
-              }
-          );
+          // this.$wsConnect(`https://${this.dataServiceResource}/lava-ws`,  // FIXME: very bad
+          //     () => {
+          //       this.$message.success("Websocket connection established");
+          //       this.test();
+
+          // this.$stompSend();
+          //       this.$wsPing();
+          //     },
+          //     error => {
+          //       this.$message.error("Disconnected from backend websocket:" + error);
+          //     }
+          // );
         }
       }
     }

@@ -9,6 +9,7 @@
     "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'"
   },
   "dependencies": {
+    "@stomp/stompjs": "^6.1.0",
     "codemirror": "^5.57.0",
     "core-js": "^3.6.5",
     "echarts": "^4.9.0",

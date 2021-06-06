@@ -45,6 +45,10 @@ export default {
             localStorage.setItem('wizardRun', isEnable);
         },
 
+        updateUserName(context, username) {
+            context.commit('setUserName', username);
+        },
+
         updateAccessToken(context, token) {
             console.log(token, 'token')
             context.commit('setAccessToken', token);

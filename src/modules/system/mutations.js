@@ -8,6 +8,11 @@ export default {
     setWebsocketConnected: (state, websocketConnected) => state.websocketConnected = websocketConnected,
     setSystemRouteMap: (state, systemRouteMap) => state.systemRouteMap = systemRouteMap,
     setDataServiceResource: (state, dataServiceResource) => state.dataServiceResource = dataServiceResource,
+
+    setUserName: (state, username) => {
+        localStorage.setItem('username', username);
+    },
+
     setAccessToken: (state, token) => {
         localStorage.setItem('access_token', token)
     },

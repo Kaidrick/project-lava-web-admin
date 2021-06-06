@@ -82,7 +82,7 @@
       ...mapActions(["loadBackendConnectionStatus"]),
 
       handleTestSendMessage() {
-        this.$wsSend("bad idea!");
+        this.$stomp.publish("test message wtf", {});
       }
     }
   }

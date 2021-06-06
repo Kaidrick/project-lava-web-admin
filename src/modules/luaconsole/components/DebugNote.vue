@@ -41,6 +41,10 @@
 
     mounted() {
       // console.log(this.noteData.code);
+
+      // push to message queue
+      this.$stomp.publish()
+
       LuaDebugService.sendLuaDebugString({
         luaString: this.noteData.code,
         level: this.noteData.type,

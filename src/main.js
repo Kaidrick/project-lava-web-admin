@@ -10,6 +10,7 @@ import store from './store';
 
 import system from '@/modules/system';
 import websocket from "@/modules/system/websocket";
+import stomp from "@/modules/system/stomp";
 import util from "@/util";
 // import {option as websocketOption} from './websocket.config';
 import interceptorSetup from './interceptors';
@@ -23,6 +24,7 @@ interceptorSetup();
 Vue.use(ElementUI);
 Vue.use(VueAxios, axios);
 Vue.use(websocket);
+Vue.use(stomp);
 Vue.use(util);
 Vue.use(dictionary);
 

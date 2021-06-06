@@ -18,12 +18,25 @@ let exchangeName = "frontend.exchange";
 
 let stompEndpointUrl = "https://localhost:8080/lava-ws";
 
+let callbacks = {
+    success: new Function(),
+    fail: new Function(),
+}
+
 // eslint-disable-next-line no-unused-vars
-function connect(url=stompEndpointUrl, successCallback, failCallback) {
-    socket = new SockJS(url);
+function create(url, successCallback, failCallback) {
+    socket = new SockJS(url)
     stompClient = Stomp.over(socket);
     stompClient.heartbeat.outgoing = 2000;
-    stompClient.heartbeat.incoming = 2000;
+    stompClient.heartbeat.incoming = 4000;
+    stompClient.reconnect_delay = 5000;
+
+    callbacks.success = successCallback;
+    callbacks.fail = failCallback;
+}
+
+// eslint-disable-next-line no-unused-vars
+function reconnect() {
     stompClient.connect(
         {},
         frame => {
@@ -37,19 +50,27 @@ function connect(url=stompEndpointUrl, successCallback, failCallback) {
 
             subscriptions.push(subscription);
 
-            successCallback && successCallback();
+            callbacks.success && callbacks.success();
 
             console.log(store);
             store.state.websocketConnected = connected;
+
+            sendPing();
         },
         error => {
             console.log("ws connection error: " + error);
             connected = false;
             store.state.websocketConnected = connected;
 
-            failCallback && failCallback();
+            callbacks.fail && callbacks.fail();
         }
-    );
+    )
+}
+
+// eslint-disable-next-line no-unused-vars
+function connect(url=stompEndpointUrl, successCallback, failCallback) {
+    create(url, successCallback, failCallback);
+    reconnect();
 }
 
 /**
@@ -71,6 +92,14 @@ function send(message) {
             // header
         });
     }
+}
+
+function sendPing() {
+    stompClient.ws.send('\x0A');
+}
+
+function sendRaw(message) {
+    stompClient.ws.send(message);
 }
 
 function disconnect() {
@@ -98,6 +127,12 @@ export default {
         Vue.prototype.$wsDisconnect = disconnect;
 
         Vue.prototype.$wsSubscribe = subscribe;
+
+        Vue.prototype.$wsPing = sendPing;
+
+        Vue.prototype.$wsSendRaw = sendRaw;
+
+        Vue.prototype.$wsReconnect = reconnect;
     }
 
 }

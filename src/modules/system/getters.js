@@ -34,5 +34,7 @@ export default {
         }
     },
 
+    userName: () => localStorage.getItem('username'),
+
     systemLocale: state => state.systemLocale || localStorage.getItem('locale') || 'en'
 }
