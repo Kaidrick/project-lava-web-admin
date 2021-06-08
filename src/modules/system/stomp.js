@@ -1,4 +1,8 @@
+import http from 'axios';
 import store from '@/store';
+import Vue from "vue";
+
+const vm = new Vue();
 
 // eslint-disable-next-line no-unused-vars
 import {Client, StompConfig, Versions, StompHeaders, IPublishParams} from "@stomp/stompjs";
@@ -6,6 +10,13 @@ import {Client, StompConfig, Versions, StompHeaders, IPublishParams} from "@stom
 const frontendExchangeEndpoint = "/app/frontend.exchange";
 
 let url = "wss://localhost:8080/lava-ws/websocket";
+
+function requestWebsocketHandshakeToken() {
+    return http({
+        method: 'get',
+        url: '/app/ws-token',
+    })
+}
 
 /**
  * @type Client
@@ -15,14 +26,12 @@ let stomper
 let config = new StompConfig();
 config.brokerURL = url;
 config.beforeConnect = () => {
-    console.log("before connect!")
     stomper.connectHeaders = {
         'lava-user-ident': "root"
     }
 }
 config.heartbeatIncoming = 10000;
 config.heartbeatOutgoing = 5000;
-config.onWebSocketError = t => console.log("ws error: ", t);
 config.onConnect = c => {
     console.log('connected', c)
     store.dispatch('system/test');
@@ -46,6 +55,23 @@ stomper.debug = function(str) {
     console.log(str);
 };
 
+stomper._schedule_reconnect = function () {
+    if (stomper.reconnectDelay > 0) {
+        stomper.debug(`STOMP: scheduling reconnection in ${stomper.reconnectDelay}ms`);
+
+        // only reschedule if an one-time token can be requested for handshake
+        stomper._reconnector = setTimeout(() => {
+            stomper.debug("Requesting new handshake token...");
+            requestWebsocketHandshakeToken().then(res => {
+                if (res.data.success === vm.$dict.statusCode.success) {
+                    stomper.configure({brokerURL: `${url}?token=${res.data.data}`});
+                    stomper._connect();
+                }
+            })
+        }, stomper.reconnectDelay);
+    }
+}
+
 // let client = Stomp.over(new SockJs(url));
 // let client = Stomp.client(url, ['v12.stomp']);
 // client.reconnect_delay = 3000;
@@ -55,7 +81,12 @@ stomper.debug = function(str) {
  * Activate Stomp over websocket connection.
  */
 function stompActivate() {
-    stomper.activate();
+    requestWebsocketHandshakeToken().then(res => {
+        if (res.data.success === vm.$dict.statusCode.success) {
+            stomper.configure({brokerURL: `${url}?token=${res.data.data}`});
+            stomper.activate();
+        }
+    })
 }
 
 /**
