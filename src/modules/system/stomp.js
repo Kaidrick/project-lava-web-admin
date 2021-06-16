@@ -126,7 +126,7 @@ function stompPublish(body, headers) {
      * @type {IPublishParams}
      */
     const frame = {
-        destination: frontendExchangeEndpoint,
+        destination: `${frontendExchangeEndpoint}/${localStorage.getItem('username')}`,
         headers
     };
 
